@@ -45,7 +45,7 @@ const quiz = async (): Promise<void> => {
 					ctx.telegram.sendMessage(ctx.message.chat.id, `Aooo! Hai dimenticato il cazzo di trattino. Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!`);
 				} else {
 					store.game.get("master").find({ username: ctx.update.message.from.username }).assign(json).write();
-					const quiz = await ctx.telegram.sendMessage(master.group_id, `🎮 3...2...1... VIA! Il master ha impostato la parola!\n\n💁‍♂️ Suggerimento: ${json.description || ""}`);
+					const quiz = await ctx.telegram.sendMessage(master.group_id, `⏱ ${json.description || ""}`);
 					ctx.telegram.pinChatMessage(master.group_id, quiz.message_id, { disable_notification: true });
 				}
 			} else {
@@ -58,7 +58,9 @@ const quiz = async (): Promise<void> => {
 
 			if (ctx.update.message.text.trim().toLowerCase() == master.question.trim().toLowerCase()) {
 				if (ctx.update.message.from.username) {
-					const user_score = store.scores.get("scores").find({ group_id: ctx.message.chat.id, id: ctx.update.message.from.id });
+					store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
+					store.scores.defaults({ scores: [] }).write();
+					const user_score = store.scores.get("scores").find({ group_id: master.group_id, id: ctx.update.message.from.id });
 
 					ctx.telegram.sendMessage(master.group_id, `🏆 HAI VINTO ${ctx.update.message.from.first_name} (@${ctx.update.message.from.username})!!!\n\n✍️ La risposta giusta era: ${ctx.update.message.text.trim()}\n👑 Ora sei il nuovo master! ⚽️ Il tuo punteggio é ${(user_score.value()?.score || 0) + 10} 🔥\n\nContatta in privato @${ctx.botInfo.username} (clicca sul nickname) e segui le istruzioni.`);
 
@@ -67,9 +69,6 @@ const quiz = async (): Promise<void> => {
 					json.description = "";
 					json.group_id = ctx.message.chat.id;
 					store.game.get("master").find({ group_id: ctx.message.chat.id }).assign(json).write();
-
-					store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-					store.scores.defaults({ scores: [] }).write();
 
 					if (user_score.value()) {
 						user_score.assign({ score: user_score.value().score + 10 }).write();
