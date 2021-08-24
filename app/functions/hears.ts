@@ -13,7 +13,7 @@ import lowdbFileSync from "lowdb/adapters/FileSync";
 import configs from "@configs/config";
 import { getMasterFromChatID, getMasterFromName } from "./databases";
 
-const store = { users: null, game: null };
+const store = { users: null, game: null, scores: null };
 
 /**
  * hears: any taxt from bot chat
@@ -24,7 +24,7 @@ const store = { users: null, game: null };
 const quiz = async (): Promise<void> => {
 	bot.on("text", async (ctx) => {
 		store.game = lowdb(new lowdbFileSync(configs.databases.game));
-		if (ctx.message.chat.id > 0) {
+		if (ctx.message.chat.id > 0) { // is chat with bot
 			const master = await getMasterFromName(ctx.update.message.from.username);
 
 			if (master.username === ctx.update.message.from.username) {
@@ -47,16 +47,32 @@ const quiz = async (): Promise<void> => {
 			} else {
 				ctx.telegram.sendMessage(ctx.message.chat.id, `Non sei tu il master al momento, se è un errore puoi usare: /master @TUO_NICKNAME`);
 			}
-		} else if (ctx.message.chat.id < 0) {
+		} else if (ctx.message.chat.id < 0) { // is group
 			const master = await getMasterFromChatID(ctx.message.chat.id);
 
 			if (ctx.update.message.text.trim().toLowerCase() == master.question.trim().toLowerCase()) {
-				ctx.telegram.sendMessage(master.group_id, `ESATTO ${ctx.update.message.from.first_name} (@${ctx.update.message.from.username})!!!\n\nLa risposta giusta era: ${ctx.update.message.text.trim()}\nOra sei il nuovo master!\n\nContatta in privato @QuizQuickAnswerBot (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi un trattino per dare un suggerimento, esempio:\n\nformichiere - animale bello con naso lungo`);
-				const json: any = ctx.update.message.from;
-				json.question = "";
-				json.description = "";
-				json.group_id = ctx.message.chat.id;
-				store.game.get("master").find({ group_id: ctx.message.chat.id }).assign(json).write();
+				if (ctx.update.message.from.username) {
+					ctx.telegram.sendMessage(master.group_id, `ESATTO ${ctx.update.message.from.first_name} (@${ctx.update.message.from.username})!!!\n\nLa risposta giusta era: ${ctx.update.message.text.trim()}\nOra sei il nuovo master!\n\nContatta in privato @QuizQuickAnswerBot (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi un trattino per dare un suggerimento, esempio:\n\nformichiere - animale bello con naso lungo`);
+					const json: any = ctx.update.message.from;
+					json.question = "";
+					json.description = "";
+					json.group_id = ctx.message.chat.id;
+					store.game.get("master").find({ group_id: ctx.message.chat.id }).assign(json).write();
+
+					store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
+					store.scores.defaults({ scores: [] }).write();
+					const user_score = store.scores.get("scores").find({ group_id: ctx.message.chat.id, id: ctx.update.message.from.id });
+
+					if (user_score.value()) {
+						user_score.assign({ score: user_score.value().score + 10 }).write();
+					} else {
+						const json_score: any = ctx.update.message.from;
+						json_score.score = 10;
+						store.scores.get("scores").push(json_score).write();
+					}
+				} else {
+					ctx.telegram.sendMessage(master.group_id, `ESATTO ${ctx.update.message.from.first_name}!! Ma non puoi diventare master perchè non hai impostato un username su telegram. Vai nelle impostazioni di telegram, entra su modifica in alto e imposta un @nickname! Il master è rimasto ${master.first_name} (@${master.username}).`);
+				}
 			}
 		}
 

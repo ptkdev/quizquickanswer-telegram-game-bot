@@ -14,7 +14,10 @@ import lowdb from "lowdb";
 import lowdbFileSync from "lowdb/adapters/FileSync";
 import configs from "@configs/config";
 
-const store = { users: null, game: null };
+const store = { users: null, game: null, scores: null };
+
+store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
+store.scores.defaults({ scores: [] }).write();
 
 store.users = lowdb(new lowdbFileSync(configs.databases.users));
 store.users.defaults({ users: [] }).write();
@@ -34,8 +37,6 @@ const quit = async (): Promise<void> => {
 		ctx.leaveChat();
 	});
 };
-
-
 
 /**
  * command: /master
@@ -78,6 +79,32 @@ const setMaster = async (): Promise<void> => {
 };
 
 /**
+ * command: /score
+ * =====================
+ * Get user score
+ *
+ */
+const getScoreUser = async (): Promise<void> => {
+	bot.command("score", (ctx) => {
+
+		if (ctx.message.chat.id < 0) { // is group chat
+			if (ctx.update.message.text.trim() === "/score") {
+				ctx.telegram.sendMessage(ctx.message.chat.id, `Inserisci un nickname, ad esempio: /score @ptkdev`);
+			} else {
+				const username = ctx.update.message.text.replace("/score ", "").replace("@", "").trim();
+
+				store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
+				store.scores.defaults({ scores: [] }).write();
+				const score = store.scores.get("scores").find({ group_id: ctx.message.chat.id, id: ctx.update.message.from.id }).value();
+				ctx.telegram.sendMessage(ctx.message.chat.id, `${ctx.update.message.from.first_name} (@${username}) il tuo punteggio in questo gruppo è di ${score?.score || 0} punti!`);
+			}
+		} else {
+			ctx.telegram.sendMessage(ctx.message.chat.id, `Puoi usare questo comando solo in un gruppo telegram!`);
+		}
+	});
+};
+
+/**
  * command: /start
  * =====================
  * Send welcome message
@@ -105,5 +132,5 @@ const launch = async (): Promise<void> => {
 	bot.launch();
 };
 
-export { launch, quit, setMaster, start };
+export { launch, quit, setMaster, getScoreUser, start };
 export default launch;
