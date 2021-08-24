@@ -44,7 +44,7 @@ Funny quiz game, play with friends on your telegram group!
 1. Add [@QuizQuickAnswerBot](https://t.me/QuizQuickAnswerBot) to your Telegram group
 2. Make **@QuizQuickAnswerBot** admin of your group
 3. Run `/start` or `/start@QuizQuickAnswerBot`
-4. Make your master of game, run `/master @YOUR_NICKNAME`
+4. Make yourself master of game, run `/master @YOUR_NICKNAME`
 5. Follow instructions and Play with friends!
 
 ## 🎮 How to play
@@ -52,7 +52,7 @@ Funny quiz game, play with friends on your telegram group!
 1. Set a master with `/master @YOUR_NICKNAME`
 2. Master send private message to `@QuizQuickAnswerBot`
 3. Master write question with syntax: `QUESTION - TIP`, example: `gameboy - '90s' portable console`
-4. The frinds try answer quickly in the telegram group. Who reply with right answer is the new master!
+4. Friends try to answer quickly in the telegram group. Who reply with right answer is the new master!
 
 **OFFICIAL ENGLISH TELEGRAM GROUP OF BOT**: [@QuizQuickAnswerGroup](https://t.me/QuizQuickAnswerGroup)
 
