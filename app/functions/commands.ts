@@ -48,7 +48,7 @@ const setMaster = async (): Promise<void> => {
 	bot.command("master", (ctx) => {
 
 		if (ctx.message.chat.id < 0) { // is group chat
-			if (ctx.update.message.text.trim() === "/master") {
+			if (ctx.update.message.text.trim() === "/master" || ctx.update.message.text.trim() === "/master@QuizQuickAnswerBot") {
 				ctx.telegram.sendMessage(ctx.message.chat.id, `Inserisci un nickname, ad esempio: /master @ptkdev`);
 			} else {
 				const username = ctx.update.message.text.replace("/master ", "").replace("@", "").trim();
@@ -86,17 +86,19 @@ const setMaster = async (): Promise<void> => {
  */
 const getScoreUser = async (): Promise<void> => {
 	bot.command("score", (ctx) => {
-
 		if (ctx.message.chat.id < 0) { // is group chat
-			if (ctx.update.message.text.trim() === "/score") {
-				ctx.telegram.sendMessage(ctx.message.chat.id, `Inserisci un nickname, ad esempio: /score @ptkdev`);
-			} else {
-				const username = ctx.update.message.text.replace("/score ", "").replace("@", "").trim();
-
+			if (ctx.update.message.text.trim() === "/score" || ctx.update.message.text.trim() === "/score@QuizQuickAnswerBot") {
 				store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
 				store.scores.defaults({ scores: [] }).write();
 				const score = store.scores.get("scores").find({ group_id: ctx.message.chat.id, id: ctx.update.message.from.id }).value();
-				ctx.telegram.sendMessage(ctx.message.chat.id, `${ctx.update.message.from.first_name} (@${username}) il tuo punteggio in questo gruppo è di ${score?.score || 0} punti!`);
+				ctx.telegram.sendMessage(ctx.message.chat.id, `${ctx.update.message.from.first_name || ""} (@${ctx.update.message.from.username || ""}) il tuo punteggio in questo gruppo è di ${score?.score || 0} punti!`);
+			} else {
+				const username = ctx.update.message.text.replace("/score ", "").replace("/score@QuizQuickAnswerBot", "").replace("@", "").trim();
+
+				store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
+				store.scores.defaults({ scores: [] }).write();
+				const score = store.scores.get("scores").find({ group_id: ctx.message.chat.id, username: username }).value();
+				ctx.telegram.sendMessage(ctx.message.chat.id, `Il punteggio di @${username} in questo gruppo è di ${score?.score || 0} punti!`);
 			}
 		} else {
 			ctx.telegram.sendMessage(ctx.message.chat.id, `Puoi usare questo comando solo in un gruppo telegram!`);
