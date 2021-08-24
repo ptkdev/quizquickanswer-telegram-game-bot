@@ -120,9 +120,14 @@ const getTopScores = async (): Promise<void> => {
 			store.scores.defaults({ scores: [] }).write();
 			const top_scores = store.scores.get("scores").sort((a, b) => b?.score - a?.score).slice(0, 10).value();
 			const scores_message = top_scores.map((s: any, index: number) =>
-				`${getTopScoreEmoji(index)} ${s.first_name} (${s.username}) - ${s.score} punt${s.score === 1 ? "o" : "i"} \n\n`
+				`${getTopScoreEmoji(index)} ${s.first_name} (@${s.username}) - ${s.score} punt${s.score === 1 ? "o" : "i"} \n\n`
 			).join("");
-			ctx.telegram.sendMessage(ctx.message.chat.id, scores_message);
+
+			if (scores_message) {
+				ctx.telegram.sendMessage(ctx.message.chat.id, scores_message);
+			} else {
+				ctx.telegram.sendMessage(ctx.message.chat.id, `Classifica non disponibile per questo gruppo!`);
+			}
 
 		} else {
 			ctx.telegram.sendMessage(ctx.message.chat.id, `Puoi usare questo comando solo in un gruppo telegram!`);

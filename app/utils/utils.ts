@@ -1,36 +1,36 @@
 export function getTopScoreEmoji(index: number): any {
-	let medalEmoji = "";
+	let medal_emoji = "";
 	switch (index) {
 		case 0:
-			medalEmoji = "🥇";
+			medal_emoji = "🥇";
 			break;
 		case 1:
-			medalEmoji = "🥈";
+			medal_emoji = "🥈";
 			break;
 		case 2:
-			medalEmoji = "🥉";
+			medal_emoji = "🥉";
 			break;
 		case 3:
-			medalEmoji = "4️⃣";
+			medal_emoji = "4️⃣";
 			break;
 		case 4:
-			medalEmoji = "5️⃣";
+			medal_emoji = "5️⃣";
 			break;
 		case 5:
-			medalEmoji = "6️⃣";
+			medal_emoji = "6️⃣";
 			break;
 		case 6:
-			medalEmoji = "7️⃣";
+			medal_emoji = "7️⃣";
 			break;
 		case 7:
-			medalEmoji = "8️⃣";
+			medal_emoji = "8️⃣";
 			break;
 		case 8:
-			medalEmoji = "9️⃣";
+			medal_emoji = "9️⃣";
 			break;
 		case 9:
-			medalEmoji = "🔟";
+			medal_emoji = "💩";
 			break;
 	}
-	return medalEmoji;
+	return medal_emoji;
 }
