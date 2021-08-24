@@ -15,6 +15,7 @@ import * as hears from "@app/functions/hears";
 	await command.start();
 	await command.setMaster();
 	await command.getScoreUser();
+	await command.getTopScores();
 	await hears.quiz();
 
 	await command.launch();

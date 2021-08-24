@@ -13,6 +13,7 @@ import * as databases from "@app/functions/databases";
 import lowdb from "lowdb";
 import lowdbFileSync from "lowdb/adapters/FileSync";
 import configs from "@configs/config";
+import { getTopScoreEmoji } from "../utils/utils";
 
 const store = { users: null, game: null, scores: null };
 
@@ -52,6 +53,10 @@ const setMaster = async (): Promise<void> => {
 				ctx.telegram.sendMessage(ctx.message.chat.id, `Inserisci un nickname, ad esempio: /master @ptkdev`);
 			} else {
 				const username = ctx.update.message.text.replace("/master ", "").replace("@", "").trim();
+				const botUsername = ctx.botInfo.username;
+
+
+
 
 				const json = {
 					"id": 0,
@@ -70,7 +75,7 @@ const setMaster = async (): Promise<void> => {
 				} else {
 					store.game.get("master").push(json).write();
 				}
-				ctx.telegram.sendMessage(ctx.message.chat.id, `Ora sei diventato master @${username}! Contatta in privato @QuizQuickAnswerBot (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi un trattino per dare un suggerimento, esempio:\n\nformichiere - animale bello con naso lungo`);
+				ctx.telegram.sendMessage(ctx.message.chat.id, `Ora sei diventato master @${username} !Contatta in privato @${botUsername} (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi un trattino per dare un suggerimento, esempio: \n\nformichiere - animale bello con naso lungo`);
 			}
 		} else {
 			ctx.telegram.sendMessage(ctx.message.chat.id, `Puoi usare questo comando solo in un gruppo telegram!`);
@@ -106,6 +111,25 @@ const getScoreUser = async (): Promise<void> => {
 	});
 };
 
+
+const getTopScores = async (): Promise<void> => {
+	bot.command("top10", (ctx) => {
+		if (ctx.message.chat.id < 0) { // is group chat
+
+			store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
+			store.scores.defaults({ scores: [] }).write();
+			const top_scores = store.scores.get("scores").sort((a, b) => b?.score - a?.score).slice(0, 10).value();
+			const scores_message = top_scores.map((s: any, index: number) =>
+				`${getTopScoreEmoji(index)} ${s.first_name} (${s.username}) - ${s.score} punt${s.score === 1 ? "o" : "i"} \n\n`
+			).join("");
+			ctx.telegram.sendMessage(ctx.message.chat.id, scores_message);
+
+		} else {
+			ctx.telegram.sendMessage(ctx.message.chat.id, `Puoi usare questo comando solo in un gruppo telegram!`);
+		}
+	});
+};
+
 /**
  * command: /start
  * =====================
@@ -117,7 +141,7 @@ const start = async (): Promise<void> => {
 		databases.writeUser(ctx.update.message.from);
 
 		if (ctx.message.chat.id < 0) { // is group chat
-			ctx.telegram.sendMessage(ctx.message.chat.id, `Prima di iniziare a giocare rendi questo bot amministratore. Successivamente diventa master lanciando il comando: /master @${ctx.update.message.from.username}`);
+			ctx.telegram.sendMessage(ctx.message.chat.id, `Prima di iniziare a giocare rendi questo bot amministratore.Successivamente diventa master lanciando il comando: /master @${ctx.update.message.from.username}`);
 		} else {
 			ctx.telegram.sendMessage(ctx.message.chat.id, `Scrivi la parola o frase che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, esempio:\n\nformichiere - animale bello con naso lungo\n\nformichiere è la parola o frase che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale bello con naso lungo).`);
 		}
@@ -134,5 +158,5 @@ const launch = async (): Promise<void> => {
 	bot.launch();
 };
 
-export { launch, quit, setMaster, getScoreUser, start };
+export { launch, quit, setMaster, getScoreUser, start, getTopScores };
 export default launch;

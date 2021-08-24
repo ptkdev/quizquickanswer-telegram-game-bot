@@ -93,5 +93,10 @@
 		"game telegram",
 		"game bot telegram"
 	],
-	"contributors": []
+	"contributors": [
+		{
+			"name": "Ali Shadman",
+			"url": "https://github.com/AliShadman95"
+		}
+	]
 }

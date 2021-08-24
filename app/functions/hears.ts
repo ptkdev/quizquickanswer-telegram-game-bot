@@ -15,6 +15,8 @@ import { getMasterFromChatID, getMasterFromName } from "./databases";
 
 const store = { users: null, game: null, scores: null };
 
+store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
+store.scores.defaults({ scores: [] }).write();
 /**
  * hears: any taxt from bot chat
  * =====================
@@ -52,7 +54,12 @@ const quiz = async (): Promise<void> => {
 
 			if (ctx.update.message.text.trim().toLowerCase() == master.question.trim().toLowerCase()) {
 				if (ctx.update.message.from.username) {
-					ctx.telegram.sendMessage(master.group_id, `ESATTO ${ctx.update.message.from.first_name} (@${ctx.update.message.from.username})!!!\n\nLa risposta giusta era: ${ctx.update.message.text.trim()}\nOra sei il nuovo master!\n\nContatta in privato @QuizQuickAnswerBot (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi un trattino per dare un suggerimento, esempio:\n\nformichiere - animale bello con naso lungo`);
+
+					const botUsername = ctx.botInfo.username;
+					const userScore = store.scores.get("scores").find({ group_id: ctx.message.chat.id, id: ctx.update.message.from.id }).value();
+
+
+					ctx.telegram.sendMessage(master.group_id, `ESATTO ${ctx.update.message.from.first_name} (@${ctx.update.message.from.username})!!!\n\nLa risposta giusta era: ${ctx.update.message.text.trim()}\nOra sei il nuovo master!\n\nIl tuo punteggio é ${userScore?.score} 🔥\n\n Contatta in privato @${botUsername} (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi un trattino per dare un suggerimento, esempio:\n\nformichiere - animale bello con naso lungo`);
 					const json: any = ctx.update.message.from;
 					json.question = "";
 					json.description = "";
