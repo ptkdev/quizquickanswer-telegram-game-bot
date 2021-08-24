@@ -17,7 +17,7 @@ import type { ModuleInterface, ModuleResponseInterface } from "@app/types/module
  *
  * Print hello-world
  *
- * @interface [ModuleInterface ModuleResponseInterface](https://github.com/ptkdev-boilerplate/node-telegram-bot-boilerplate/blob/main/app/types/module.type.ts)
+ * @interface [ModuleInterface ModuleResponseInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/types/module.type.ts)
  *
  * @param {string} {text} - input string
  *

@@ -10,6 +10,18 @@
 import bot from "@app/functions/telegraf";
 import * as databases from "@app/functions/databases";
 
+import lowdb from "lowdb";
+import lowdbFileSync from "lowdb/adapters/FileSync";
+import configs from "@configs/config";
+
+const store = { users: null, game: null };
+
+store.users = lowdb(new lowdbFileSync(configs.databases.users));
+store.users.defaults({ users: [] }).write();
+
+store.game = lowdb(new lowdbFileSync(configs.databases.game));
+store.game.defaults({ master: [] }).write();
+
 /**
  * command: /quit
  * =====================
@@ -23,15 +35,45 @@ const quit = async (): Promise<void> => {
 	});
 };
 
+
+
 /**
- * command: /photo
+ * command: /master
  * =====================
- * Send photo from picsum to chat
+ * Set master game
  *
  */
-const sendPhoto = async (): Promise<void> => {
-	bot.command("photo", (ctx) => {
-		ctx.replyWithPhoto("https://picsum.photos/200/300/");
+const setMaster = async (): Promise<void> => {
+	bot.command("master", (ctx) => {
+
+		if (ctx.message.chat.id < 0) { // is group chat
+			if (ctx.update.message.text.trim() === "/master") {
+				ctx.telegram.sendMessage(ctx.message.chat.id, `Inserisci un nickname, ad esempio: /master @ptkdev`);
+			} else {
+				const username = ctx.update.message.text.replace("/master ", "").replace("@", "").trim();
+
+				const json = {
+					"id": 0,
+					"is_bot": false,
+					"first_name": "",
+					"username": username,
+					"language_code": "",
+					"question": "",
+					"description": "",
+					"group_id": ctx.message.chat.id
+				};
+
+				store.game = lowdb(new lowdbFileSync(configs.databases.game));
+				if (store.game.get("master").find({ group_id: ctx.message.chat.id }).value()) {
+					store.game.get("master").find({ group_id: ctx.message.chat.id }).assign(json).write();
+				} else {
+					store.game.get("master").push(json).write();
+				}
+				ctx.telegram.sendMessage(ctx.message.chat.id, `Ora sei diventato master @${username}! Contatta in privato @QuizQuickAnswerBot (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi un trattino per dare un suggerimento, esempio:\n\nformichiere - animale bello con naso lungo`);
+			}
+		} else {
+			ctx.telegram.sendMessage(ctx.message.chat.id, `Puoi usare questo comando solo in un gruppo telegram!`);
+		}
 	});
 };
 
@@ -42,10 +84,14 @@ const sendPhoto = async (): Promise<void> => {
  *
  */
 const start = async (): Promise<void> => {
-	bot.start((ctx) => {
+	bot.start(async (ctx) => {
 		databases.writeUser(ctx.update.message.from);
 
-		ctx.telegram.sendMessage(ctx.message.chat.id, `Welcome! Try send /photo command or write any text`);
+		if (ctx.message.chat.id < 0) { // is group chat
+			ctx.telegram.sendMessage(ctx.message.chat.id, `Prima di iniziare a giocare rendi questo bot amministratore. Successivamente diventa master lanciando il comando: /master @${ctx.update.message.from.username}`);
+		} else {
+			ctx.telegram.sendMessage(ctx.message.chat.id, `Scrivi la parola o frase che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, esempio:\n\nformichiere - animale bello con naso lungo\n\nformichiere è la parola o frase che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale bello con naso lungo).`);
+		}
 	});
 };
 
@@ -59,5 +105,5 @@ const launch = async (): Promise<void> => {
 	bot.launch();
 };
 
-export { launch, quit, sendPhoto, start };
+export { launch, quit, setMaster, start };
 export default launch;

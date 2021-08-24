@@ -1,5 +1,5 @@
 {
-	"name": "node-telegram-bot-boilerplate",
+	"name": "quizquickanswer-telegram-game-bot",
 	"script": "dist/core/bot.js",
 	"watch": true,
 	"max_restarts": 999,

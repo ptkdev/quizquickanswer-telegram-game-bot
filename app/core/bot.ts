@@ -13,7 +13,8 @@ import * as hears from "@app/functions/hears";
 (async () => {
 	await command.quit();
 	await command.start();
-	await command.sendPhoto();
-	await hears.text();
+	await command.setMaster();
+	await hears.quiz();
+
 	await command.launch();
 })();

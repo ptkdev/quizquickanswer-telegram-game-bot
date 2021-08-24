@@ -4,6 +4,6 @@
 		"license": "CC BY 4.0",
 		"contributors": ["Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)"]
 	},
-	"app_name": "node-telegram-bot-boilerplate",
+	"app_name": "quizquickanswer-telegram-game-bot",
 	"hello": "Ciao Mondo!"
 }

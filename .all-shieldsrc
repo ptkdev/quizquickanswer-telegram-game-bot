@@ -8,7 +8,7 @@
 			"id": "header-badges",
 			"badges": [
 				{
-					"url": "https://github.com/ptkdev-boilerplate/node-telegram-bot-boilerplate/blob/main/CHANGELOG.md",
+					"url": "https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/CHANGELOG.md",
 					"color": "lightgray",
 					"label": "version",
 					"message": "v{{version}}",
@@ -18,16 +18,16 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://www.npmjs.com/package/@ptkdev/node-telegram-bot-boilerplate",
+					"url": "https://www.npmjs.com/package/@ptkdev/quizquickanswer-telegram-game-bot",
 					"color": "#CC3534",
 					"label": "npm",
 					"logo": "npm",
 					"style": "flat",
-					"custom": "/npm/v/@ptkdev/node-telegram-bot-boilerplate?color=CC3534&logo=npm",
+					"custom": "/npm/v/@ptkdev/quizquickanswer-telegram-game-bot?color=CC3534&logo=npm",
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev-boilerplate/node-telegram-bot-boilerplate/blob/main/LICENSE.md",
+					"url": "https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/LICENSE.md",
 					"color": "brightgreen",
 					"label": "license",
 					"message": "{{license}}",
@@ -256,7 +256,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev-boilerplate?q=svelte",
+					"url": "https://github.com/ptkdev?q=svelte",
 					"color": "#f368e0",
 					"label": "👔 Boilerplate",
 					"message": "Svelte",
@@ -265,7 +265,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev-boilerplate?q=webcomponent",
+					"url": "https://github.com/ptkdev?q=webcomponent",
 					"color": "#f368e0",
 					"label": "👔 Boilerplate",
 					"message": "WebComponents",
@@ -274,7 +274,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev-boilerplate?q=bot",
+					"url": "https://github.com/ptkdev?q=bot",
 					"color": "#f368e0",
 					"label": "👔 Boilerplate",
 					"message": "BOT",
@@ -283,7 +283,7 @@
 					"platform": "shields"
 				},
 				{
-					"url": "https://github.com/ptkdev-boilerplate?q=node",
+					"url": "https://github.com/ptkdev?q=node",
 					"color": "#f368e0",
 					"label": "👔 Boilerplate",
 					"message": "Node",
