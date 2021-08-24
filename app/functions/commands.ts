@@ -118,7 +118,7 @@ const getTopScores = async (): Promise<void> => {
 
 			store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
 			store.scores.defaults({ scores: [] }).write();
-			const top_scores = store.scores.get("scores").sort((a, b) => b?.score - a?.score).slice(0, 10).value();
+			const top_scores = store.scores.get("scores").find({ group_id: ctx.message.chat.id }).sort((a, b) => b?.score - a?.score).slice(0, 10).value();
 			const scores_message = top_scores.map((s: any, index: number) =>
 				`${getTopScoreEmoji(index)} ${s.first_name} (@${s.username}) - ${s.score} punt${s.score === 1 ? "o" : "i"} \n\n`
 			).join("");
