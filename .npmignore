@@ -1,0 +1,7 @@
+**/*
+|.github
+!/dist/**/*
+!/extra/**/*
+!*.d.ts
+!*.md
+!*.json
