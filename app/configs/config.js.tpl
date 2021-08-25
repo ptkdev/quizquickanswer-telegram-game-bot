@@ -9,7 +9,7 @@ module.exports = {
 		token: "BOT_TOKEN",
 	},
 
-	"databases": { users: "databases/users.json", game: "databases/game.json", scores: "databases/scores.json" },
+	"databases": { users: "databases/users.json", game: "databases/game.json", scores: "databases/scores.json", questions : "databases/questions.json" },
 
 	// Debug
 	"debug": true,

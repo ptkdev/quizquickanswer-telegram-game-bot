@@ -12,12 +12,14 @@ import lowdb from "lowdb";
 import lowdbFileSync from "lowdb/adapters/FileSync";
 import configs from "@configs/config";
 import { getMasterFromChatID, getMasterFromName } from "./databases";
-import { COPYFILE_EXCL } from "constants";
 
-const store = { users: null, game: null, scores: null };
+const store = { users: null, game: null, scores: null, questions: null };
 
 store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
 store.scores.defaults({ scores: [] }).write();
+
+store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
+store.questions.defaults({ questions: [] }).write();
 /**
  * hears: any taxt from bot chat
  * =====================
@@ -62,7 +64,12 @@ const quiz = async (): Promise<void> => {
 					store.scores.defaults({ scores: [] }).write();
 					const user_score = store.scores.get("scores").find({ group_id: master.group_id, id: ctx.update.message.from.id });
 
-					ctx.telegram.sendMessage(master.group_id, `🏆 HAI VINTO ${ctx.update.message.from.first_name} (@${ctx.update.message.from.username})!!!\n\n✍️ La risposta giusta era: ${ctx.update.message.text.trim()}\n👑 Ora sei il nuovo master! ⚽️ Il tuo punteggio é ${(user_score.value()?.score || 0) + 10} 🔥\n\nContatta in privato @${ctx.botInfo.username} (clicca sul nickname) e segui le istruzioni.`);
+					store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
+					store.questions.defaults({ questions: [] }).write();
+					const user_questions = store.questions.get("questions").find({ group_id: ctx.message.chat.id, username: ctx.update.message.from.username }).value();
+
+
+					ctx.telegram.sendMessage(master.group_id, `🏆 *HAI VINTO* ${ctx.update.message.from.first_name} \\(@${ctx.update.message.from.username}\\)\\!\\!\\!\n\n✍️ La risposta giusta era: *${ctx.update.message.text.trim()}*\n👑 Ora sei il nuovo *master*\\! ⚽️ Il tuo punteggio é *${user_questions ? (user_score.value()?.score || 0) + 10 + user_questions.good_questions - user_questions.bad_questions : (user_score.value()?.score || 0) + 10}* 🔥\n\nContatta in privato @${ctx.botInfo.username} \\(clicca sul nickname\\) e segui le istruzioni\\.`, { parse_mode: "MarkdownV2" });
 
 					const json: any = ctx.update.message.from;
 					json.question = "";
