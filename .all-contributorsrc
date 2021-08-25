@@ -20,6 +20,18 @@
 				"doc",
 				"bug"
 			]
+		},
+		{
+			"login": "AliShadman95",
+			"name": "Alì Shadman",
+			"avatar_url": "https://avatars1.githubusercontent.com/u/50172746?v=4",
+			"profile": "",
+			"contributions": [
+				"code",
+				"translation",
+				"doc",
+				"bug"
+			]
 		}
 	],
 	"contributorsPerLine": 6,

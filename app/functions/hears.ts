@@ -40,9 +40,9 @@ const quiz = async (): Promise<void> => {
 				json.group_id = master.group_id;
 
 				if (json.question === undefined || json.question === "") {
-					ctx.telegram.sendMessage(ctx.message.chat.id, `Aooo! Ma che cazzo stai a scrive? Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!`);
+					ctx.telegram.sendMessage(ctx.message.chat.id, `🤬 Aooo! Ma che cazzo stai a scrive? Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!`);
 				} else if (json.description === undefined || json.description === "") {
-					ctx.telegram.sendMessage(ctx.message.chat.id, `Aooo! Hai dimenticato il cazzo di trattino. Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!`);
+					ctx.telegram.sendMessage(ctx.message.chat.id, `🤬 Aooo! Hai dimenticato il cazzo di trattino. Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!`);
 				} else {
 					store.game.get("master").find({ username: ctx.update.message.from.username }).assign(json).write();
 					const quiz = await ctx.telegram.sendMessage(master.group_id, `⏱ ${json.description || ""}`);
