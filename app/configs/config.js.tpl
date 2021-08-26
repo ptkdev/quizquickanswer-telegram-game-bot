@@ -10,6 +10,7 @@ module.exports = {
 	},
 
 	"databases": { users: "databases/users.json", game: "databases/game.json", scores: "databases/scores.json", questions : "databases/questions.json" },
+	"database": { URL: "MONGO_DB_CONNECTION_STRING" },
 
 	// Debug
 	"debug": true,

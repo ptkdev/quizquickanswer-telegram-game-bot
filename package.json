@@ -49,10 +49,13 @@
 		"pre-commit": "npm run contributors-generate && npm run all-shields-generate && npm run lint-fix && npm run test",
 		"pkg-clean": "rm -rf node_modules package-lock.json && npm install && husky install",
 		"pkg-update": "npm update",
-		"pkg-upgrade": "npx npm-check-updates -u && npm install && husky install"
+		"pkg-upgrade": "npx npm-check-updates -u && npm install && husky install",
+		"postinstall": "rm ./node_modules/mongoose/index.d.ts",
+		"snippet": "ts-node snippets/mongodb.ts"
 	},
 	"dependencies": {
 		"lowdb": "^1.0.0",
+		"mongoose": "^5.13.8",
 		"pm2": "^5.1.1",
 		"telegraf": "^4.4.1"
 	},
