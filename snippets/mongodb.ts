@@ -3,30 +3,24 @@ import configs from "../app/configs/config";
 import { Schema, model, connect } from "mongoose";
 import type { TelegramUserInterface } from "../app/types/databases.type";
 
-
 const schema = new Schema<TelegramUserInterface>({
-
     id: { type: String, required: true },
     is_bot: { type: Boolean, required: true },
     first_name: { type: String, required: true },
     username: { type: String, required: true },
-    launguage_code: String
-
+    launguage_code: String,
 });
 
 
 const user_model = model<TelegramUserInterface>("User", schema);
 
-
 (async function (): Promise<void> {
     // 4. Connect to MongoDB
     await connect(configs.database.URL, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
     });
 })();
-
-
 
 /* (async function createUser() {  // Create User
     const doc = new user_model({
@@ -41,8 +35,6 @@ const user_model = model<TelegramUserInterface>("User", schema);
 })();
  */
 
-
-
 /*
 (async function deleteUser(id = 1): Promise<void> {  // Delete User
     user_model.findOneAndDelete({ id }, function (err, user) {
@@ -53,7 +45,6 @@ const user_model = model<TelegramUserInterface>("User", schema);
 
     });
 })(); */
-
 
 /*
 (async function updateUser(id = 1): Promise<void> {  // Update User
@@ -67,7 +58,6 @@ const user_model = model<TelegramUserInterface>("User", schema);
 })();
  */
 
-
 /* (async function findUser(id = 2): Promise<void> {  // Find User
 
     user_model.findOne({ id }, function (err, user) {
@@ -78,7 +68,6 @@ const user_model = model<TelegramUserInterface>("User", schema);
     });
 
 })(); */
-
 
 /* (async function findUsers(avatar = "https://i.imgur.com/dM7Thhn.png"): Promise<void> {  // Find Users
 

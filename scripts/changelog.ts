@@ -12,7 +12,11 @@ import * as fs from "fs";
 
 declare const __dirname;
 
-const changelog = `# v1.0.0 (${new Date().toLocaleString("en-us", { month: "long", year: "numeric", day: "numeric" })})
+const changelog = `# v1.0.0 (${new Date().toLocaleString("en-us", {
+	month: "long",
+	year: "numeric",
+	day: "numeric",
+})})
 
 -   First release
 
@@ -21,4 +25,6 @@ const changelog = `# v1.0.0 (${new Date().toLocaleString("en-us", { month: "long
 `;
 
 fs.unlinkSync(`${__dirname}/../CHANGELOG.md`);
-fs.writeFileSync(`${__dirname}/../CHANGELOG.md`, `${changelog}`, { encoding: "utf8" });
+fs.writeFileSync(`${__dirname}/../CHANGELOG.md`, `${changelog}`, {
+	encoding: "utf8",
+});

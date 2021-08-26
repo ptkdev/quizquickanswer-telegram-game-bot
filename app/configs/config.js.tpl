@@ -9,7 +9,7 @@ module.exports = {
 		token: "BOT_TOKEN",
 	},
 
-	"databases": { users: "databases/users.json", game: "databases/game.json", scores: "databases/scores.json", questions : "databases/questions.json" },
+	"databases": { users: "databases/users.json", game: "databases/game.json", scores: "databases/scores.json", settings: "databases/settings.json", questions: "databases/questions.json" },
 	"database": { URL: "MONGO_DB_CONNECTION_STRING" },
 
 	// Debug
