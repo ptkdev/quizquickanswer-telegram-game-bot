@@ -127,9 +127,9 @@ const user_model = model<TelegramUserInterface>("User", schema);
             "language_code": "it"
         }
     ]
-}): Promise<void> {  // Insert JSON
+}, model = user_model): Promise<void> {  // Insert JSON
     const data = json[Object.keys(json)[0]];
-    user_model.insertMany(data, function (err, users) {
+    model.insertMany(data, function (err, users) {
         if (err) {
             return err;
         }
