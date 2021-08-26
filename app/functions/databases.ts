@@ -47,14 +47,22 @@ const getMasterFromChatID = async (chat_id: number): Promise<any> => {
 	store.game = lowdb(new lowdbFileSync(configs.databases.game));
 	const master = store.game.get("master").find({ group_id: chat_id }).value();
 
-	return { username: master?.username, group_id: master?.group_id, question: master?.question };
+	return {
+		username: master?.username,
+		group_id: master?.group_id,
+		question: master?.question,
+	};
 };
 
 const getMasterFromName = async (username: string): Promise<any> => {
 	store.game = lowdb(new lowdbFileSync(configs.databases.game));
 	const master = store.game.get("master").find({ username: username }).value();
 
-	return { username: master?.username, group_id: master?.group_id, question: master?.question };
+	return {
+		username: master?.username,
+		group_id: master?.group_id,
+		question: master?.question,
+	};
 };
 
 export { store, writeUser, getMasterFromChatID, getMasterFromName };

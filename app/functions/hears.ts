@@ -66,13 +66,19 @@ const hears = async (): Promise<void> => {
 				if (ctx.update.message.from.username) {
 					store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
 					store.scores.defaults({ scores: [] }).write();
-					const user_score = store.scores.get("scores").find({ group_id: master.group_id, id: ctx.update.message.from.id });
+					const user_score = store.scores.get("scores").find({
+						group_id: master.group_id,
+						id: ctx.update.message.from.id,
+					});
 
 					store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
 					store.questions.defaults({ questions: [] }).write();
 					const user_questions = store.questions
 						.get("questions")
-						.find({ group_id: ctx.message.chat.id, username: ctx.update.message.from.username })
+						.find({
+							group_id: ctx.message.chat.id,
+							username: ctx.update.message.from.username,
+						})
 						.value();
 
 					ctx.telegram.sendMessage(
