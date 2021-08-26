@@ -16,4 +16,5 @@ const translations = {
 	it,
 };
 
+export { it, en };
 export default translations;
