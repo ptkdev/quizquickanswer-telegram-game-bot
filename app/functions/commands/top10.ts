@@ -13,7 +13,7 @@ import translate from "@app/functions/translate";
 import lowdb from "lowdb";
 import lowdbFileSync from "lowdb/adapters/FileSync";
 import configs from "@configs/config";
-import { getTopScoreEmoji } from "@app/utils/utils";
+import { getTopScoreEmoji } from "@app/functions/common/utils/utils";
 
 const store = { users: null, game: null, scores: null, questions: null };
 
