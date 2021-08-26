@@ -1,5 +1,11 @@
-import * as command from "@app/functions/commands";
-import * as hears from "@app/functions/hears";
+import quit from "@app/functions/commands/quit";
+import start from "@app/functions/commands/start";
+import master from "@app/functions/commands/master";
+import score from "@app/functions/commands/score";
+import top10 from "@app/functions/commands/top10";
+import voteQuestion from "@app/functions/commands/votequestion";
+import launch from "@app/functions/commands/launch";
+import hears from "@app/functions/hears";
 
 /**
  * Start bot
@@ -11,13 +17,13 @@ import * as hears from "@app/functions/hears";
  *
  */
 (async () => {
-	await command.quit();
-	await command.start();
-	await command.setMaster();
-	await command.getScoreUser();
-	await command.getTopScores();
-	await command.voteQuestion();
-	await hears.quiz();
+	await quit();
+	await start();
+	await master();
+	await top10();
+	await score();
+	await voteQuestion();
+	await hears();
 
-	await command.launch();
+	await launch();
 })();

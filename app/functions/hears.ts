@@ -21,13 +21,14 @@ store.scores.defaults({ scores: [] }).write();
 
 store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
 store.questions.defaults({ questions: [] }).write();
+
 /**
  * hears: any taxt from bot chat
  * =====================
  * Listen any text user write
  *
  */
-const quiz = async (): Promise<void> => {
+const hears = async (): Promise<void> => {
 	bot.on("text", async (ctx) => {
 		store.game = lowdb(new lowdbFileSync(configs.databases.game));
 
@@ -115,5 +116,5 @@ const quiz = async (): Promise<void> => {
 	});
 };
 
-export { quiz };
-export default { quiz };
+export { hears };
+export default hears;
