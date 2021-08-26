@@ -7,10 +7,7 @@
  * @license: MIT License
  *
  */
-const locale = {
-	en: require("../translations/en.json"),
-	it: require("../translations/it.json"),
-};
+import translations from "@app/routes/translations";
 
 /**
  * Replace Params
@@ -24,7 +21,7 @@ const locale = {
  * @return {string} text - text with replaced token
  *
  */
-const replace_params = (text: string, language_params: string): string => {
+const replaceParams = (text: string, language_params: string): string => {
 	for (const [key, value] of Object.entries(language_params)) {
 		text = text.replace(`##${key}##`, value);
 	}
@@ -43,7 +40,7 @@ const replace_params = (text: string, language_params: string): string => {
  *
  */
 const check = (language_id: string): string => {
-	return locale["it"][language_id]; // TODO: Get from "settings" database
+	return translations["it"][language_id]; // TODO: Get from "settings" database
 };
 
 /**
@@ -61,7 +58,7 @@ const translate = (language_id: string, language_params = null): string => {
 	let text = "";
 	text = check(language_id);
 	if (language_params != null) {
-		text = replace_params(text, language_params);
+		text = replaceParams(text, language_params);
 	}
 
 	return text;

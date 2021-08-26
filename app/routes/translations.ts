@@ -11,4 +11,9 @@
 import en from "@translations/en.json";
 import it from "@translations/it.json";
 
-export default { en, it };
+const translations = {
+	en,
+	it,
+};
+
+export default translations;
