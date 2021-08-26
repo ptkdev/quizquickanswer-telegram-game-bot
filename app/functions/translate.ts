@@ -7,10 +7,7 @@
  * @license: MIT License
  *
  */
-const locale = {
-	en: require("../translations/en.json"),
-	it: require("../translations/it.json"),
-};
+import * as locale from "@app/routes/translations";
 
 /**
  * Replace Params
