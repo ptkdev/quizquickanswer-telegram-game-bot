@@ -1,26 +1,20 @@
 /* eslint-disable indent */
 import configs from "../app/configs/config";
 import { Schema, model, connect } from "mongoose";
+import type { TelegramUserInterface } from "../app/types/databases.type";
 
-// 1. Create an interface representing a document in MongoDB.
-interface User {
-    id: string;
-    name: string;
-    email: string;
-    avatar?: string;
-}
 
-// 2. Create a Schema corresponding to the document interface.
-const schema = new Schema<User>({
+const schema = new Schema<TelegramUserInterface>({
 
     id: { type: String, required: true },
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    avatar: String
+    is_bot: { type: Boolean, required: true },
+    first_name: { type: String, required: true },
+    username: { type: String, required: true },
+    launguage_code: String
+
 });
 
-// 3. Create a Model.
-const UserModel = model<User>("User", schema);
+const user_model = model<TelegramUserInterface>("User", schema);
 
 
 (async function (): Promise<void> {
@@ -34,7 +28,7 @@ const UserModel = model<User>("User", schema);
 
 
 /* (async function createUser() {  // Create User
-    const doc = new UserModel({
+    const doc = new user_model({
         id: "3",
         name: "Mario",
         email: "mario@initech.com",
@@ -50,7 +44,7 @@ const UserModel = model<User>("User", schema);
 
 /*
 (async function deleteUser(id = 1): Promise<void> {  // Delete User
-    UserModel.findOneAndDelete({ id }, function (err, user) {
+    user_model.findOneAndDelete({ id }, function (err, user) {
         if (err) {
             return err;
         }
@@ -62,7 +56,7 @@ const UserModel = model<User>("User", schema);
 
 /*
 (async function updateUser(id = 1): Promise<void> {  // Update User
-    UserModel.findOneAndUpdate({ id }, { name: "Francesco" }, function (err, user) {
+    user_model.findOneAndUpdate({ id }, { name: "Francesco" }, function (err, user) {
         if (err) {
             return err;
         }
@@ -75,7 +69,7 @@ const UserModel = model<User>("User", schema);
 
 /* (async function findUser(id = 2): Promise<void> {  // Find User
 
-    UserModel.findOne({ id }, function (err, user) {
+    user_model.findOne({ id }, function (err, user) {
         if (err) {
             return err;
         }
@@ -87,11 +81,59 @@ const UserModel = model<User>("User", schema);
 
 /* (async function findUsers(avatar = "https://i.imgur.com/dM7Thhn.png"): Promise<void> {  // Find Users
 
-    UserModel.find({ avatar }, function (err, users) {  // Come primo parametro mettere la condizione di ricerca es :{name: "pippo"}, o lasciare oggetto vuoto per trovarli tutti
+    user_model.find({ avatar }, function (err, users) {  // Come primo parametro mettere la condizione di ricerca es :{name: "pippo"}, o lasciare oggetto vuoto per trovarli tutti
         if (err) {
             return err;
         }
         console.log(`Those are the users: ${users}`);
+    });
+
+
+})(); */
+
+
+
+/* (async function insertJSON(json = {
+    "users": [
+        {
+            "id": 523350454,
+            "is_bot": false,
+            "first_name": "Ali",
+            "username": "ashd95",
+            "language_code": "it"
+        }, {
+            "id": 523350454,
+            "is_bot": false,
+            "first_name": "Ali",
+            "username": "ashd95",
+            "language_code": "it"
+        }, {
+            "id": 523350454,
+            "is_bot": false,
+            "first_name": "Ali",
+            "username": "ashd95",
+            "language_code": "it"
+        }, {
+            "id": 523350454,
+            "is_bot": false,
+            "first_name": "Ali",
+            "username": "ashd95",
+            "language_code": "it"
+        }, {
+            "id": 523350454,
+            "is_bot": false,
+            "first_name": "Ali",
+            "username": "ashd95",
+            "language_code": "it"
+        }
+    ]
+}): Promise<void> {  // Insert JSON
+    const data = json[Object.keys(json)[0]];
+    user_model.insertMany(data, function (err, users) {
+        if (err) {
+            return err;
+        }
+        console.log(`Users inserted`);
     });
 
 
