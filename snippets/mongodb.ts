@@ -4,22 +4,21 @@ import { Schema, model, connect } from "mongoose";
 import type { TelegramUserInterface } from "../app/types/databases.type";
 
 const schema = new Schema<TelegramUserInterface>({
-    id: { type: String, required: true },
-    is_bot: { type: Boolean, required: true },
-    first_name: { type: String, required: true },
-    username: { type: String, required: true },
-    launguage_code: String,
+	id: { type: String, required: true },
+	is_bot: { type: Boolean, required: true },
+	first_name: { type: String, required: true },
+	username: { type: String, required: true },
+	launguage_code: String,
 });
-
 
 const user_model = model<TelegramUserInterface>("User", schema);
 
 (async function (): Promise<void> {
-    // 4. Connect to MongoDB
-    await connect(configs.database.URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+	// 4. Connect to MongoDB
+	await connect(configs.database.URL, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	});
 })();
 
 /* (async function createUser() {  // Create User
@@ -80,9 +79,3 @@ const user_model = model<TelegramUserInterface>("User", schema);
 
 
 })(); */
-
-
-
-
-
-

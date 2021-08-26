@@ -75,13 +75,12 @@ export interface TelegramUserInterface {
 	 * @param { string } language_code - user code language from OS
 	 *
 	 */
-	language_code?: string,
-	question?: string,
-	description?: string,
-	score?: number,
-	group_id?: number
+	language_code?: string;
+	question?: string;
+	description?: string;
+	score?: number;
+	group_id?: number;
 }
-
 
 /**
  * Game Interface
@@ -103,11 +102,8 @@ export interface GameInterface {
 	 * @param { object } - - master of the game
 	 *
 	 */
-	master: TelegramUserInterface,
-
+	master: TelegramUserInterface;
 }
-
-
 
 /**
  * Question Interface
@@ -123,7 +119,6 @@ export interface GameInterface {
  *
  */
 export interface QuestionsInterface {
-
 	/**
 	 * Questions Interface
 	 * =====================
@@ -133,7 +128,7 @@ export interface QuestionsInterface {
 	 * @param { string } username - user username from telegram
 	 *
 	 */
-	username?: string,
+	username?: string;
 	/**
 	 * Questions Interface
 	 * =====================
@@ -143,7 +138,7 @@ export interface QuestionsInterface {
 	 * @param { string } good_questions - user good questions count
 	 *
 	 */
-	good_questions?: number
+	good_questions?: number;
 	/**
 	 * Questions Interface
 	 * =====================
@@ -153,7 +148,7 @@ export interface QuestionsInterface {
 	 * @param { number } bad_questions - user bad questions count
 	 *
 	 */
-	bad_questions?: number
+	bad_questions?: number;
 	/**
 	 * Questions Interface
 	 * =====================
@@ -163,6 +158,5 @@ export interface QuestionsInterface {
 	 * @param { string } group_id - user group id
 	 *
 	 */
-	group_id?: number
-
+	group_id?: number;
 }
