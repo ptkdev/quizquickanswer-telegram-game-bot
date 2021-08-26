@@ -14,6 +14,7 @@ const schema = new Schema<TelegramUserInterface>({
 
 });
 
+
 const user_model = model<TelegramUserInterface>("User", schema);
 
 
@@ -93,51 +94,6 @@ const user_model = model<TelegramUserInterface>("User", schema);
 
 
 
-/* (async function insertJSON(json = {
-    "users": [
-        {
-            "id": 523350454,
-            "is_bot": false,
-            "first_name": "Ali",
-            "username": "ashd95",
-            "language_code": "it"
-        }, {
-            "id": 523350454,
-            "is_bot": false,
-            "first_name": "Ali",
-            "username": "ashd95",
-            "language_code": "it"
-        }, {
-            "id": 523350454,
-            "is_bot": false,
-            "first_name": "Ali",
-            "username": "ashd95",
-            "language_code": "it"
-        }, {
-            "id": 523350454,
-            "is_bot": false,
-            "first_name": "Ali",
-            "username": "ashd95",
-            "language_code": "it"
-        }, {
-            "id": 523350454,
-            "is_bot": false,
-            "first_name": "Ali",
-            "username": "ashd95",
-            "language_code": "it"
-        }
-    ]
-}, model = user_model): Promise<void> {  // Insert JSON
-    const data = json[Object.keys(json)[0]];
-    model.insertMany(data, function (err, users) {
-        if (err) {
-            return err;
-        }
-        console.log(`Users inserted`);
-    });
-
-
-})(); */
 
 
 

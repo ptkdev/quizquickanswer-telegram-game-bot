@@ -78,4 +78,91 @@ export interface TelegramUserInterface {
 	language_code?: string,
 	question?: string,
 	description?: string,
+	score?: number,
+	group_id?: number
+}
+
+
+/**
+ * Game Interface
+ * =====================
+ *
+ *
+ * @interface [GameInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+ *
+ * @param { object } master - master of the game
+ *
+ */
+export interface GameInterface {
+	/**
+	 * GameInterface
+	 * =====================
+	 *
+	 * @interface [GameInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 *
+	 * @param { object } - - master of the game
+	 *
+	 */
+	master: TelegramUserInterface,
+
+}
+
+
+
+/**
+ * Question Interface
+ * =====================
+ *
+ *
+ * @interface [QuestionInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+ *
+ * @param { string } username - user username from telegram
+ * @param { number } good_questions - user good questions count
+ * @param { number } bad_questions - user bad questions count
+ * @param { string } group_id - user group id
+ *
+ */
+export interface QuestionsInterface {
+
+	/**
+	 * Questions Interface
+	 * =====================
+	 *
+	 * @interface [QuestionsInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 *
+	 * @param { string } username - user username from telegram
+	 *
+	 */
+	username?: string,
+	/**
+	 * Questions Interface
+	 * =====================
+	 *
+	 * @interface [QuestionsUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 *
+	 * @param { string } good_questions - user good questions count
+	 *
+	 */
+	good_questions?: number
+	/**
+	 * Questions Interface
+	 * =====================
+	 *
+	 * @interface [QuestionsUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 *
+	 * @param { number } bad_questions - user bad questions count
+	 *
+	 */
+	bad_questions?: number
+	/**
+	 * Questions Interface
+	 * =====================
+	 *
+	 * @interface [QuestionsUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 *
+	 * @param { string } group_id - user group id
+	 *
+	 */
+	group_id?: number
+
 }
