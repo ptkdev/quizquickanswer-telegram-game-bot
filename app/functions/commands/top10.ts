@@ -53,8 +53,8 @@ const top10 = async (): Promise<void> => {
 						.value();
 					return user_questions
 						? {
-							...s,
-							score: s.score + user_questions.good_questions - user_questions.bad_questions,
+								...s,
+								score: s.score + user_questions.good_questions - user_questions.bad_questions,
 						  }
 						: s;
 				})

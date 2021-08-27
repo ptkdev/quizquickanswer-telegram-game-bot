@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import configs from "../app/configs/config";
 import { Schema, model, connect } from "mongoose";
 import type { TelegramUserInterface, GameInterface, QuestionsInterface } from "../app/types/databases.type";

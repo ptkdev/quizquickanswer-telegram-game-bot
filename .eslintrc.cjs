@@ -49,13 +49,6 @@ module.exports = {
 				"beforeColon": false
 			}
 		],
-		"indent": [
-			"error",
-			"tab",
-			{
-				"SwitchCase": 1
-			}
-		],
 		"quotes": [
 			"error",
 			"double",
@@ -108,4 +101,4 @@ module.exports = {
 		"jsdoc/require-returns-check": 1,
 		"jsdoc/require-hyphen-before-param-description": 1
 	}
-}
+};

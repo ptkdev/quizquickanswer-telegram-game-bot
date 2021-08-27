@@ -70,10 +70,10 @@ const voteQuestion = async (): Promise<void> => {
 							...user_questions.value(),
 							...(is_good_question
 								? {
-									good_questions: user_questions.value().good_questions + 1,
+										good_questions: user_questions.value().good_questions + 1,
 								  }
 								: {
-									bad_questions: user_questions.value().bad_questions + 1,
+										bad_questions: user_questions.value().bad_questions + 1,
 								  }),
 						})
 						.write();
@@ -98,10 +98,10 @@ const voteQuestion = async (): Promise<void> => {
 					user_score + user_questions.value().good_questions - user_questions.value().bad_questions;
 				const message = is_good_question
 					? `*Votazione andata a buon fine*\\! 🗳 \n\n*Complimenti @${username}* hai ricevuto un voto *positivo*, ottima domanda\\! 🔥\n\nIl tuo punteggio è di *${combinedPoints}* punt${
-						combinedPoints === 1 ? "o" : "i"
+							combinedPoints === 1 ? "o" : "i"
 					  }\\! ⚽️`
 					: `*Votazione andata a buon fine*\\! 🗳 \n\n@*${username}* hai ricevuto un voto *negativo*, puoi fare di meglio la prossima volta\\. 💩 \n\nIl tuo punteggio è di *${combinedPoints}* punt${
-						combinedPoints === 1 ? "o" : "i"
+							combinedPoints === 1 ? "o" : "i"
 					  }\\! ⚽️`;
 				ctx.telegram.sendMessage(ctx.message.chat.id, message, {
 					parse_mode: "MarkdownV2",
