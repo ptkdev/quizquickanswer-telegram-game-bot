@@ -9,7 +9,6 @@ import voteQuestion from "@app/functions/commands/votequestion";
 import launch from "@app/functions/commands/launch";
 import hears from "@app/functions/hears";
 
-
 /**
  * Start bot
  * =====================
