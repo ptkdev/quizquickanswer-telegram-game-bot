@@ -38,7 +38,10 @@ const score = async (): Promise<void> => {
 	bot.command("score", (ctx) => {
 		if (ctx.message.chat.id < 0) {
 			// is group chat
-			if (ctx.update.message.text.trim() === "/score" || ctx.update.message.text.trim() === "/score@QuizQuickAnswerBot") {
+			if (
+				ctx.update.message.text.trim() === "/score" ||
+				ctx.update.message.text.trim() === "/score@QuizQuickAnswerBot"
+			) {
 				store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
 				store.scores.defaults({ scores: [] }).write();
 
@@ -73,7 +76,11 @@ const score = async (): Promise<void> => {
 					{ parse_mode: "MarkdownV2" },
 				);
 			} else {
-				const username = ctx.update.message.text.replace("/score ", "").replace("/score@QuizQuickAnswerBot", "").replace("@", "").trim();
+				const username = ctx.update.message.text
+					.replace("/score ", "")
+					.replace("/score@QuizQuickAnswerBot", "")
+					.replace("@", "")
+					.trim();
 
 				store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
 				store.scores.defaults({ scores: [] }).write();
@@ -82,7 +89,10 @@ const score = async (): Promise<void> => {
 				store.questions.defaults({ questions: [] }).write();
 
 				const score = store.scores.get("scores").find({ group_id: ctx.message.chat.id, username }).value();
-				const user_questions = store.questions.get("questions").find({ group_id: ctx.message.chat.id, username }).value();
+				const user_questions = store.questions
+					.get("questions")
+					.find({ group_id: ctx.message.chat.id, username })
+					.value();
 
 				if (user_questions) {
 					score.score += user_questions.good_questions - user_questions.bad_questions;

@@ -89,7 +89,10 @@ const hears = async (): Promise<void> => {
 							bot_username: ctx.botInfo.username,
 							answer: ctx.update.message.text.trim(),
 							score: user_questions
-								? (user_score.value()?.score || 0) + 10 + user_questions.good_questions - user_questions.bad_questions
+								? (user_score.value()?.score || 0) +
+								  10 +
+								  user_questions.good_questions -
+								  user_questions.bad_questions
 								: (user_score.value()?.score || 0) + 10,
 						}),
 					);

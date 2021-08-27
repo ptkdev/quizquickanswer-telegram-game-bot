@@ -53,9 +53,9 @@ const top10 = async (): Promise<void> => {
 						.value();
 					return user_questions
 						? {
-							...s,
-							score: s.score + user_questions.good_questions - user_questions.bad_questions,
-						}
+								...s,
+								score: s.score + user_questions.good_questions - user_questions.bad_questions,
+						  }
 						: s;
 				})
 				.sort((a, b) => b?.score - a?.score)
@@ -67,7 +67,12 @@ const top10 = async (): Promise<void> => {
 
 			const scores_message = top_scores
 				.map((s: any, index: number) => {
-					return `${getTopScoreEmoji(index)} *${s.first_name}* \\(@${s.username}\\) \\- *${s.score}* punt${s.score === 1 ? "o" : "i"} \n\n`;
+					return translate("top10_command_list", {
+						emoji: getTopScoreEmoji(index),
+						first_name: s.first_name,
+						username: s.username,
+						score: s.score,
+					});
 				})
 				.join("");
 

@@ -10,6 +10,7 @@ const user_schema = new Schema<TelegramUserInterface>({
 	username: { type: String, required: true },
 	launguage_code: String,
 });
+
 const master_schema = new Schema<TelegramUserInterface>({
 	id: { type: String, required: true },
 	is_bot: { type: Boolean, required: true },
@@ -33,6 +34,7 @@ const scores_schema = new Schema<TelegramUserInterface>({
 	group_id: Number,
 	score: Number,
 });
+
 const questions_schema = new Schema<QuestionsInterface>({
 	username: { type: String, required: true },
 	good_questions: { type: Number, required: true },

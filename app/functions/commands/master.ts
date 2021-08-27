@@ -38,7 +38,10 @@ const master = async (): Promise<void> => {
 	bot.command("master", (ctx) => {
 		if (ctx.message.chat.id < 0) {
 			// is group chat
-			if (ctx.update.message.text.trim() === "/master" || ctx.update.message.text.trim() === "/master@QuizQuickAnswerBot") {
+			if (
+				ctx.update.message.text.trim() === "/master" ||
+				ctx.update.message.text.trim() === "/master@QuizQuickAnswerBot"
+			) {
 				ctx.telegram.sendMessage(ctx.message.chat.id, translate("master_command_empty"));
 			} else {
 				const username = ctx.update.message.text.replace("/master ", "").replace("@", "").trim();

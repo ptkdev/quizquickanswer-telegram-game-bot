@@ -3,8 +3,8 @@ module.exports = {
 	testEnvironment: "node",
 	globals: {
 		"ts-jest": {
-			"tsconfig": "tsconfig.json",
-			"compiler": "ttypescript"
-		}
+			tsconfig: "tsconfig.json",
+			compiler: "ttypescript",
+		},
 	},
 };

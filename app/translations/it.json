@@ -18,5 +18,6 @@
 	"score_command_show_with_username": "Il punteggio di *@##username##* in questo gruppo è di *##score##* punti\\!",
 	"start_command_group": "Prima di iniziare a giocare rendi questo bot amministratore. Successivamente diventa master lanciando il comando: /master ##username##",
 	"start_command_private": "Scrivi la parola o frase che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, esempio:\n\nformichiere - animale bello con naso lungo\n\nformichiere è la parola o frase che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale bello con naso lungo).",
-	"top10_command_not_available": "Classifica non disponibile per questo gruppo!"
+	"top10_command_not_available": "Classifica non disponibile per questo gruppo!",
+	"top10_command_list": "##emoji## *##first_name##* \\(##username##\\) \\- *##score##* punti\n\n"
 }
