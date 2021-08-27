@@ -53,7 +53,7 @@
 		"pkg-upgrade": "npx npm-check-updates -u && npm install && husky install",
 		"postinstall": "rm ./node_modules/mongoose/index.d.ts",
 		"snippet": "ts-node snippets/mongodb.ts",
-		"migrate" : "ts-node scripts/migration.ts"
+		"migrate": "ts-node scripts/migration.ts"
 	},
 	"dependencies": {
 		"lowdb": "^1.0.0",
