@@ -1,6 +1,5 @@
 /* eslint-disable indent */
 import configs from "../../../configs/config";
-import type { TelegramUserInterface } from "../../../../app/types/databases.type";
 import Mongoose from "mongoose";
 
 
@@ -12,23 +11,23 @@ let database: Mongoose.connection;
  * Connects to mongo DB 
  *
  */
-export const connect: any = () => {
+export const connectDB = async (): Promise<void> => {
     if (database) {
         return;
     }
-    Mongoose.connect(configs.database.URL, {
-        useNewUrlParser: true,
-        useFindAndModify: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-    });
-    database = Mongoose.connection;
-    database.once("open", async () => {
+    try {
+        await Mongoose.connect(configs.database.URL, {
+            useNewUrlParser: true,
+            useFindAndModify: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+        });
+        database = Mongoose.connection;
         console.log("Connected to database");
-    });
-    database.on("error", () => {
-        console.log("Error connecting to database");
-    });
+
+    } catch (err) {
+        console.log("Failed to connect to MongoDB - ", err);
+    }
 };
 
 
@@ -38,10 +37,16 @@ export const connect: any = () => {
  * Disconnect to mongo DB
  *
  */
-export const disconnect: any = () => {
+export const disconnectDB = async (): Promise<void> => {
     if (!database) {
         return;
     }
-    Mongoose.disconnect();
+    try {
+        Mongoose.disconnect();
+        console.log("Disconnected from database");
+    } catch (err) {
+        console.log("Failed to disconnect from MongoDB - ", err);
+    }
+
 };
 

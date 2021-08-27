@@ -1,4 +1,4 @@
-import { connect } from "@app/functions/common/database/index";
+import { connectDB } from "@app/functions/common/database/index";
 import commands from "@app/routes/commands";
 
 /**
@@ -11,7 +11,8 @@ import commands from "@app/routes/commands";
  *
  */
 (async () => {
-	connect();
+	await connectDB();
+
 	await commands.quit();
 	await commands.start();
 	await commands.master();
