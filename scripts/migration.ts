@@ -168,8 +168,6 @@ const getModel: any = (key) => {
 		],
 	},
 ): Promise<void> {
-	// Insert JSON
-
 	Object.keys(json).forEach((key) =>
 		getModel(key).insertMany(json[key], function (err, users) {
 			if (err) {

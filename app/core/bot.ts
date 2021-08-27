@@ -1,3 +1,4 @@
+import { connectDB } from "@app/functions/common/database/index";
 import commands from "@app/routes/commands";
 
 /**
@@ -10,6 +11,8 @@ import commands from "@app/routes/commands";
  *
  */
 (async () => {
+	await connectDB();
+
 	await commands.quit();
 	await commands.start();
 	await commands.master();
