@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { Schema, model } from "mongoose";
-import type { QuestionsInterface } from "../../../types/databases.type";
+import type { QuestionsInterface } from "../../../../types/databases.type";
 
 const schema = new Schema<QuestionsInterface>({
 	username: { type: String, required: true },

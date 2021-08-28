@@ -1,4 +1,4 @@
-import { connectDB, disconnectDB } from "@app/functions/common/database/index";
+import { connectDB, disconnectDB } from "@app/functions/common/api/database/index";
 import commands from "@app/routes/commands";
 
 /**

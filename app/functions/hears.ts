@@ -8,13 +8,10 @@
  *
  */
 import bot from "@app/functions/telegraf";
-import lowdb from "lowdb";
-import lowdbFileSync from "lowdb/adapters/FileSync";
-import configs from "@configs/config";
 import translate from "@app/functions/translate";
-import { getQuestion, deleteQuestion, addQuestion, updateQuestion } from "@app/functions/common/database/questions";
-import { getScore, addScore, updateScore } from "@app/functions/common/database/scores";
-import { getMaster, updateMaster } from "@app/functions/common/database/master";
+import { getQuestion } from "@app/functions/common/api/database/questions";
+import { getScore, addScore, updateScore } from "@app/functions/common/api/database/scores";
+import { getMaster, updateMaster } from "@app/functions/common/api/database/master";
 import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
 
 /**
