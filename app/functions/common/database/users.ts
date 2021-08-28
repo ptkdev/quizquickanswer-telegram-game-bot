@@ -1,13 +1,16 @@
-/* eslint-disable indent */
 import { Schema, model } from "mongoose";
-import type { TelegramUserInterface } from "../../../types/databases.type";
+import type { TelegramUserInterface } from "@app/types/databases.type";
+import type { GameInterface } from "@app/types/game.type.js";
 
-const schema = new Schema<TelegramUserInterface>({
+const schema = new Schema<GameInterface>({
 	id: { type: String, required: true },
 	is_bot: { type: Boolean, required: true },
 	first_name: { type: String, required: true },
 	username: { type: String, required: true },
 	launguage_code: String,
+	question: String,
+	description: String,
+	group_id: Number,
 });
 
 const user_model = model<TelegramUserInterface>("User", schema);
