@@ -13,6 +13,10 @@ import lowdbFileSync from "lowdb/adapters/FileSync";
 import configs from "@configs/config";
 import { getMasterFromChatID, getMasterFromName } from "./databases";
 import translate from "@app/functions/translate";
+/* import { getQuestion, deleteQuestion, addQuestion, updateQuestion } from "@app/functions/common/database/questions";
+import { getScore, addScore, updateScore, deleteScore } from "@app/functions/common/database/scores";
+import { getMaster, updateMaster } from "@app/functions/common/database/master"; */
+import { TelegramUserInterface } from "@app/types/databases.type";
 
 const store = { users: null, game: null, scores: null, questions: null };
 
@@ -35,11 +39,12 @@ const hears = async (): Promise<void> => {
 		if (ctx.message.chat.id > 0) {
 			// is chat with bot
 			const master = await getMasterFromName(ctx.update.message.from.username);
+			/* const master: TelegramUserInterface = await getMaster({ username: ctx.update.message.from.username }); */
 
-			if (master.username === ctx.update.message.from.username) {
+			if (master?.username === ctx.update.message.from.username) {
 				const text = ctx.update.message.text.split("-");
 
-				const json: any = ctx.update.message.from;
+				const json: TelegramUserInterface = ctx.update.message.from;
 				json.question = text[0]?.trim()?.toLowerCase();
 				json.description = text[1]?.trim();
 				json.group_id = master.group_id;
@@ -50,6 +55,8 @@ const hears = async (): Promise<void> => {
 					ctx.telegram.sendMessage(ctx.message.chat.id, translate("hears_missing_tip"));
 				} else {
 					store.game.get("master").find({ username: ctx.update.message.from.username }).assign(json).write();
+					/* await updateMaster({ username: ctx.update.message.from.username }, master); */
+
 					const quiz = await ctx.telegram.sendMessage(master.group_id, `⏱ ${json.description || ""}`);
 					ctx.telegram.pinChatMessage(master.group_id, quiz.message_id, { disable_notification: true });
 				}

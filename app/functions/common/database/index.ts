@@ -17,7 +17,7 @@ export const connectDB = async (): Promise<void> => {
 	try {
 		await Mongoose.connect(configs.database.URL, {
 			useNewUrlParser: true,
-			useFindAndModify: true,
+			useFindAndModify: false,
 			useUnifiedTopology: true,
 			useCreateIndex: true,
 		});

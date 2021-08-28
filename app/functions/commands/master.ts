@@ -9,12 +9,14 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
+import { getMaster, addMaster, updateMaster } from "@app/functions/common/database/master";
+import { TelegramUserInterface } from "@app/types/databases.type";
 
-import lowdb from "lowdb";
+/* import lowdb from "lowdb";
 import lowdbFileSync from "lowdb/adapters/FileSync";
 import configs from "@configs/config";
-
-const store = { users: null, game: null, scores: null, questions: null };
+ */
+/* const store = { users: null, game: null, scores: null, questions: null };
 
 store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
 store.scores.defaults({ scores: [] }).write();
@@ -26,7 +28,7 @@ store.game = lowdb(new lowdbFileSync(configs.databases.game));
 store.game.defaults({ master: [] }).write();
 
 store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-store.questions.defaults({ questions: [] }).write();
+store.questions.defaults({ questions: [] }).write(); */
 
 /**
  * command: /master
@@ -35,7 +37,7 @@ store.questions.defaults({ questions: [] }).write();
  *
  */
 const master = async (): Promise<void> => {
-	bot.command("master", (ctx) => {
+	bot.command("master", async (ctx) => {
 		if (ctx.message.chat.id < 0) {
 			// is group chat
 			if (
@@ -57,11 +59,14 @@ const master = async (): Promise<void> => {
 					group_id: ctx.message.chat.id,
 				};
 
-				store.game = lowdb(new lowdbFileSync(configs.databases.game));
-				if (store.game.get("master").find({ group_id: ctx.message.chat.id }).value()) {
-					store.game.get("master").find({ group_id: ctx.message.chat.id }).assign(json).write();
+				/* store.game = lowdb(new lowdbFileSync(configs.databases.game)); */
+				const master: TelegramUserInterface = await getMaster({ group_id: ctx.message.chat.id });
+				if (master) {
+					await updateMaster({}, json);
+					/* store.game.get("master").find({ group_id: ctx.message.chat.id }).assign(json).write(); */
 				} else {
-					store.game.get("master").push(json).write();
+					/* store.game.get("master").push(json).write(); */
+					await addMaster(json);
 				}
 				ctx.telegram.sendMessage(
 					ctx.message.chat.id,
