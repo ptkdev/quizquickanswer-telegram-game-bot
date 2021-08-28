@@ -1,6 +1,5 @@
 /* eslint-disable indent */
 import { Schema, model } from "mongoose";
-import { string } from "yargs";
 import type { TelegramUserInterface } from "../../../../types/databases.type";
 
 const schema = new Schema<TelegramUserInterface>({

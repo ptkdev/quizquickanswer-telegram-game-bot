@@ -9,24 +9,9 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
-
-import lowdb from "lowdb";
-import lowdbFileSync from "lowdb/adapters/FileSync";
-import configs from "@configs/config";
-
-const store = { users: null, game: null, scores: null, questions: null };
-
-store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-store.scores.defaults({ scores: [] }).write();
-
-store.users = lowdb(new lowdbFileSync(configs.databases.users));
-store.users.defaults({ users: [] }).write();
-
-store.game = lowdb(new lowdbFileSync(configs.databases.game));
-store.game.defaults({ master: [] }).write();
-
-store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-store.questions.defaults({ questions: [] }).write();
+import { getScore } from "@app/functions/common/api/database/scores";
+import { getQuestion } from "@app/functions/common/api/database/questions";
+import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.type";
 
 /**
  * command: /score
@@ -35,33 +20,21 @@ store.questions.defaults({ questions: [] }).write();
  *
  */
 const score = async (): Promise<void> => {
-	bot.command("score", (ctx) => {
+	bot.command("score", async (ctx) => {
 		if (ctx.message.chat.id < 0) {
 			// is group chat
 			if (
 				ctx.update.message.text.trim() === "/score" ||
 				ctx.update.message.text.trim() === "/score@QuizQuickAnswerBot"
 			) {
-				store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-				store.scores.defaults({ scores: [] }).write();
-
-				store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-				store.questions.defaults({ questions: [] }).write();
-
-				const score = store.scores
-					.get("scores")
-					.find({
-						group_id: ctx.message.chat.id,
-						id: ctx.update.message.from.id,
-					})
-					.value();
-				const user_questions = store.questions
-					.get("questions")
-					.find({
-						group_id: ctx.message.chat.id,
-						username: ctx.update.message.from.username,
-					})
-					.value();
+				const score: TelegramUserInterface = await getScore({
+					group_id: ctx.message.chat.id,
+					id: ctx.update.message.from.id,
+				});
+				const user_questions: QuestionsInterface = await getQuestion({
+					group_id: ctx.message.chat.id,
+					username: ctx.update.message.from.username,
+				});
 
 				if (user_questions) {
 					score.score += user_questions.good_questions - user_questions.bad_questions;
@@ -82,17 +55,11 @@ const score = async (): Promise<void> => {
 					.replace("@", "")
 					.trim();
 
-				store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-				store.scores.defaults({ scores: [] }).write();
-
-				store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-				store.questions.defaults({ questions: [] }).write();
-
-				const score = store.scores.get("scores").find({ group_id: ctx.message.chat.id, username }).value();
-				const user_questions = store.questions
-					.get("questions")
-					.find({ group_id: ctx.message.chat.id, username })
-					.value();
+				const score: TelegramUserInterface = await getScore({ group_id: ctx.message.chat.id, username });
+				const user_questions: QuestionsInterface = await getQuestion({
+					group_id: ctx.message.chat.id,
+					username,
+				});
 
 				if (user_questions) {
 					score.score += user_questions.good_questions - user_questions.bad_questions;
