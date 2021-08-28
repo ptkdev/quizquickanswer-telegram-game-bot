@@ -76,10 +76,38 @@ export const updateScore = async (
 
  */
 export const getScore = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
-	const user = await scores_model.findOne(search, function (err, user) {
-		if (err) {
-			return err;
-		}
-	});
-	return user;
+	try {
+		const user = await scores_model.findOne(search, function (err) {
+			if (err) {
+				return err;
+			}
+		});
+		return user;
+	} catch (error) {
+		return error;
+	}
+};
+
+/**
+ * Scores CRUD
+ * =====================
+ * Get multiple user with score from DB
+ *
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
+ * @return {TelegramUserInterface[]} user.
+
+ */
+export const getMultipleScores = async (
+	search: Record<string, number | string | boolean>,
+): Promise<TelegramUserInterface[]> => {
+	try {
+		const user = await scores_model.find(search, function (err) {
+			if (err) {
+				return err;
+			}
+		});
+		return user || [];
+	} catch (error) {
+		return error;
+	}
 };
