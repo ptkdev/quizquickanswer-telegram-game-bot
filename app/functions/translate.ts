@@ -9,6 +9,18 @@
  */
 import translations from "@app/routes/translations";
 
+interface TranslateParamsInterface {
+	username?: string;
+	bot_username?: string;
+	first_name?: string;
+	master_first_name?: string;
+	master_username?: string;
+	text?: string;
+	emoji?: string;
+	answer?: string;
+	score?: number;
+}
+
 /**
  * Replace Params
  * =====================
@@ -21,7 +33,7 @@ import translations from "@app/routes/translations";
  * @return {string} text - text with replaced token
  *
  */
-const replaceParams = (text: string, language_params: string): string => {
+const replaceParams = (text: string, language_params: TranslateParamsInterface): string => {
 	for (const [key, value] of Object.entries(language_params)) {
 		text = text.replace(`##${key}##`, value);
 	}
@@ -54,10 +66,10 @@ const check = (language_id: string): string => {
  * @return {string} text - text of available translation
  *
  */
-const translate = (language_id: string, language_params = null): string => {
+const translate = (language_id: string, language_params?: TranslateParamsInterface): string => {
 	let text = "";
 	text = check(language_id);
-	if (language_params != null) {
+	if (language_params) {
 		text = replaceParams(text, language_params);
 	}
 

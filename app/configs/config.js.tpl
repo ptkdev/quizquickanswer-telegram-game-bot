@@ -1,34 +1,41 @@
 module.exports = {
 	// Server
-	"server": {
-		"port": 5000,
+	server: {
+		port: 5000,
 	},
 
-	"telegram": { // from @botfather on telegram
+	telegram: {
+		// from @botfather on telegram
 		username: "BOT_USERNAME",
 		token: "BOT_TOKEN",
 	},
 
-	"databases": { users: "databases/users.json", game: "databases/game.json", scores: "databases/scores.json", settings: "databases/settings.json", questions: "databases/questions.json" },
-	"database": { URL: "MONGO_DB_CONNECTION_STRING" },
+	databases: {
+		users: "databases/users.json",
+		game: "databases/game.json",
+		scores: "databases/scores.json",
+		settings: "databases/settings.json",
+		questions: "databases/questions.json",
+	},
+	database: { URL: "MONGO_DB_CONNECTION_STRING" }, // mongodb://localhost:27017/quizquickanswerdb
 
 	// Debug
-	"debug": true,
+	debug: true,
 
 	// LOGS
-	"log": {
-		"path": {
-			"debug_log": "./logs/debug.log",
-			"error_log": "./logs/errors.log"
+	log: {
+		path: {
+			debug_log: "./logs/debug.log",
+			error_log: "./logs/errors.log",
 		},
-		"language": "en", // set language of log type, NOTE: please help with translations! (optional, default en - values: en|it|pl)
-		"colors": "enabled",  // enable/disable colors in terminal (optional, default enabled - values: true|enabled or false|disabled)
-		"debug": "enabled",   // enable/disable all logs with method debug (optional, default enabled - values: true|enabled or false|disabled)
-		"info": "enabled",    // enable/disable all logs with method info (optional, default enabled - values: true|enabled or false|disabled)
-		"warning": "enabled", // enable/disable all logs with method warning (optional, default enabled -  values: true|enabled or false|disabled)
-		"error": "enabled",   // enable/disable all logs with method errors (optional, default enabled - values: true|enabled or false|disabled)
-		"sponsor": "enabled", // enable/disable all logs with method sponsor (optional, default enabled - values: true|enabled or false|disabled)
-		"write": "enabled",   // write the logs into a file, you need set path values (optional, default disabled - values: true|enabled or false|disabled)
-		"type": "log"   // format of logs in files (optional, default log - values: log|json)
-	}
+		language: "en", // set language of log type, NOTE: please help with translations! (optional, default en - values: en|it|pl)
+		colors: "enabled", // enable/disable colors in terminal (optional, default enabled - values: true|enabled or false|disabled)
+		debug: "enabled", // enable/disable all logs with method debug (optional, default enabled - values: true|enabled or false|disabled)
+		info: "enabled", // enable/disable all logs with method info (optional, default enabled - values: true|enabled or false|disabled)
+		warning: "enabled", // enable/disable all logs with method warning (optional, default enabled -  values: true|enabled or false|disabled)
+		error: "enabled", // enable/disable all logs with method errors (optional, default enabled - values: true|enabled or false|disabled)
+		sponsor: "enabled", // enable/disable all logs with method sponsor (optional, default enabled - values: true|enabled or false|disabled)
+		write: "enabled", // write the logs into a file, you need set path values (optional, default disabled - values: true|enabled or false|disabled)
+		type: "log", // format of logs in files (optional, default log - values: log|json)
+	},
 };

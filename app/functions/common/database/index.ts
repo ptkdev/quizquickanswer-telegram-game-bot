@@ -1,5 +1,4 @@
-/* eslint-disable indent */
-import configs from "../../../configs/config";
+import configs from "@configs/config";
 import Mongoose from "mongoose";
 
 let database: Mongoose.connection;
