@@ -13,7 +13,7 @@ const schema = new Schema<GameInterface>({
 	group_id: Number,
 });
 
-const user_model = model<TelegramUserInterface>("User", schema);
+const query = model<TelegramUserInterface>("User", schema);
 
 /**
  * Users CRUD
@@ -22,8 +22,8 @@ const user_model = model<TelegramUserInterface>("User", schema);
  *
  * @param {TelegramUserInterface} user - user to add
  */
-export const addUser = async (user: TelegramUserInterface): Promise<void> => {
-	const doc = new user_model(user);
+const addUser = async (user: TelegramUserInterface): Promise<void> => {
+	const doc = new query(user);
 	await doc.save();
 
 	console.log("User Created");
@@ -36,8 +36,8 @@ export const addUser = async (user: TelegramUserInterface): Promise<void> => {
  *
  * @param {number } id - user id to remove
  */
-export const deleteUser = async (id: number): Promise<void> => {
-	user_model.findOneAndDelete({ id }, function (err, user) {
+const deleteUser = async (id: number): Promise<void> => {
+	query.findOneAndDelete({ id }, function (err, user) {
 		if (err) {
 			return err;
 		}
@@ -53,8 +53,8 @@ export const deleteUser = async (id: number): Promise<void> => {
  * @param {number } id - user id to update
  * @param {TelegramUserInterface} user - user info to update
  */
-export const updateUser = async (id: number, user: TelegramUserInterface): Promise<void> => {
-	user_model.findOneAndUpdate({ id }, user, function (err, user) {
+const updateUser = async (id: number, user: TelegramUserInterface): Promise<void> => {
+	query.findOneAndUpdate({ id }, user, function (err, user) {
 		if (err) {
 			return err;
 		}
@@ -69,11 +69,14 @@ export const updateUser = async (id: number, user: TelegramUserInterface): Promi
  *
  * @param {number } id - user id to retrieve
  */
-export const getUser = async (id: number): Promise<void> => {
-	const user = await user_model.findOne({ id }, function (err, user) {
+const getUser = async (id: number): Promise<void> => {
+	const user = await query.findOne({ id }, function (err, user) {
 		if (err) {
 			return err;
 		}
 	});
 	console.log(user);
 };
+
+export { getUser, updateUser, deleteUser, addUser };
+export default { getUser, updateUser, deleteUser, addUser };

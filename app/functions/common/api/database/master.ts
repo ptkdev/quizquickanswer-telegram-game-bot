@@ -13,7 +13,7 @@ const schema = new Schema<TelegramUserInterface>({
 	description: String,
 });
 
-const master_model = model<TelegramUserInterface>("Master", schema);
+const query = model<TelegramUserInterface>("Master", schema);
 
 /**
  * Master CRUD
@@ -22,9 +22,9 @@ const master_model = model<TelegramUserInterface>("Master", schema);
  *
  * @param {TelegramUserInterface} user - user master to add
  */
-export const addMaster = async (user: TelegramUserInterface): Promise<void> => {
+const addMaster = async (user: TelegramUserInterface): Promise<void> => {
 	try {
-		const doc = new master_model(user);
+		const doc = new query(user);
 		await doc.save();
 
 		console.log("Master created");
@@ -40,9 +40,9 @@ export const addMaster = async (user: TelegramUserInterface): Promise<void> => {
  *
  * @param {string} id - user id to remove
  */
-export const deleteMaster = async (id: string): Promise<void> => {
+const deleteMaster = async (id: string): Promise<void> => {
 	try {
-		master_model.findOneAndDelete({ id }, function (err) {
+		query.findOneAndDelete({ id }, function (err) {
 			if (err) {
 				return err;
 			}
@@ -60,13 +60,13 @@ export const deleteMaster = async (id: string): Promise<void> => {
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @param {TelegramUserInterface} user - data to update
  */
-export const updateMaster = async (
+const updateMaster = async (
 	search: Record<string, number | string | boolean>,
 	user: TelegramUserInterface,
 ): Promise<void> => {
 	console.log(user);
 	try {
-		master_model.findOneAndUpdate(search, user, function (err) {
+		query.findOneAndUpdate(search, user, function (err) {
 			if (err) {
 				return err;
 			}
@@ -85,9 +85,9 @@ export const updateMaster = async (
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @return {TelegramUserInterface} user.
  */
-export const getMaster = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
+const getMaster = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
 	try {
-		const user = await master_model.findOne(search, function (err) {
+		const user = await query.findOne(search, function (err) {
 			if (err) {
 				return err;
 			}
@@ -98,3 +98,6 @@ export const getMaster = async (search: Record<string, number | string | boolean
 		return null;
 	}
 };
+
+export { getMaster, updateMaster, deleteMaster, addMaster };
+export default { getMaster, updateMaster, deleteMaster, addMaster };

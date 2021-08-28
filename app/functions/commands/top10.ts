@@ -10,44 +10,23 @@
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
 
-import lowdb from "lowdb";
-import lowdbFileSync from "lowdb/adapters/FileSync";
-import configs from "@configs/config";
+import telegram from "@app/functions/common/api/telegram";
+import db from "@app/functions/common/api/database";
 import { getTopScoreEmoji } from "@app/functions/common/utils/utils";
 
-const store = { users: null, game: null, scores: null, questions: null };
-
-store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-store.scores.defaults({ scores: [] }).write();
-
-store.users = lowdb(new lowdbFileSync(configs.databases.users));
-store.users.defaults({ users: [] }).write();
-
-store.game = lowdb(new lowdbFileSync(configs.databases.game));
-store.game.defaults({ master: [] }).write();
-
-store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-store.questions.defaults({ questions: [] }).write();
-
 const top10 = async (): Promise<void> => {
-	bot.command("top10", (ctx) => {
-		if (ctx.message.chat.id < 0) {
+	bot.command("top10", async (ctx) => {
+		if ((await telegram.api.message.getGroupID(ctx)) < 0) {
 			// is group chat
-
-			store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-			store.scores.defaults({ scores: [] }).write();
-
-			store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-			store.questions.defaults({ questions: [] }).write();
 
 			const top_scores = store.scores
 				.get("scores")
-				.filter({ group_id: ctx.message.chat.id })
-				.map((s) => {
+				.filter({ group_id: await telegram.api.message.getGroupID(ctx) })
+				.map(async (s) => {
 					const user_questions = store.questions
 						.get("questions")
 						.find({
-							group_id: ctx.message.chat.id,
+							group_id: await telegram.api.message.getGroupID(ctx),
 							username: s.username,
 						})
 						.value();
@@ -62,9 +41,6 @@ const top10 = async (): Promise<void> => {
 				.slice(0, 10)
 				.value();
 
-			store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-			store.questions.defaults({ questions: [] }).write();
-
 			const scores_message = top_scores
 				.map((s: any, index: number) => {
 					return translate("top10_command_list", {
@@ -77,14 +53,17 @@ const top10 = async (): Promise<void> => {
 				.join("");
 
 			if (scores_message) {
-				ctx.telegram.sendMessage(ctx.message.chat.id, scores_message, {
+				ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), scores_message, {
 					parse_mode: "MarkdownV2",
 				});
 			} else {
-				ctx.telegram.sendMessage(ctx.message.chat.id, translate("top10_command_not_available"));
+				ctx.telegram.sendMessage(
+					await telegram.api.message.getGroupID(ctx),
+					translate("top10_command_not_available"),
+				);
 			}
 		} else {
-			ctx.telegram.sendMessage(ctx.message.chat.id, translate("command_only_group"));
+			ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), translate("command_only_group"));
 		}
 	});
 };
