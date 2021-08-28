@@ -1,5 +1,5 @@
 import configs from "../app/configs/config";
-import { Schema, model, connect } from "mongoose";
+import { Schema, model, connect, disconnect } from "mongoose";
 import type { TelegramUserInterface, GameInterface, QuestionsInterface } from "../app/types/databases.type";
 
 const user_schema = new Schema<TelegramUserInterface>({
@@ -86,34 +86,6 @@ const getModel: any = (key) => {
 				username: "ashd95",
 				language_code: "it",
 			},
-			{
-				id: 523350454,
-				is_bot: false,
-				first_name: "Ali",
-				username: "ashd95",
-				language_code: "it",
-			},
-			{
-				id: 523350454,
-				is_bot: false,
-				first_name: "Ali",
-				username: "ashd95",
-				language_code: "it",
-			},
-			{
-				id: 523350454,
-				is_bot: false,
-				first_name: "Ali",
-				username: "ashd95",
-				language_code: "it",
-			},
-			{
-				id: 523350454,
-				is_bot: false,
-				first_name: "Ali",
-				username: "ashd95",
-				language_code: "it",
-			},
 		],
 		master: [
 			{
@@ -176,3 +148,8 @@ const getModel: any = (key) => {
 	);
 	console.log(`Migration completed`);
 })();
+
+process.on("SIGINT", async function (params) {
+	await disconnect();
+	process.exit(0);
+});

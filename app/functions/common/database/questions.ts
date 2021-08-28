@@ -63,13 +63,14 @@ export const updateQuestion = async (username: string, user: QuestionsInterface)
  * =====================
  * Get user with questions from DB
  *
- * @param {string} username - username to retrieve
- */
-export const getQuestion = async (username: string): Promise<void> => {
-	const user = await questions_model.findOne({ username }, function (err, user) {
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
+ * @return {TelegramUserInterface} user.
+ *  */
+export const getQuestion = async (search: Record<string, number | string | boolean>): Promise<QuestionsInterface> => {
+	const user = await questions_model.findOne(search, function (err) {
 		if (err) {
 			return err;
 		}
 	});
-	console.log(user);
+	return user;
 };

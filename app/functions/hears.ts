@@ -11,20 +11,11 @@ import bot from "@app/functions/telegraf";
 import lowdb from "lowdb";
 import lowdbFileSync from "lowdb/adapters/FileSync";
 import configs from "@configs/config";
-import { getMasterFromChatID, getMasterFromName } from "./databases";
 import translate from "@app/functions/translate";
-/* import { getQuestion, deleteQuestion, addQuestion, updateQuestion } from "@app/functions/common/database/questions";
-import { getScore, addScore, updateScore, deleteScore } from "@app/functions/common/database/scores";
-import { getMaster, updateMaster } from "@app/functions/common/database/master"; */
-import { TelegramUserInterface } from "@app/types/databases.type";
-
-const store = { users: null, game: null, scores: null, questions: null };
-
-store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-store.scores.defaults({ scores: [] }).write();
-
-store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-store.questions.defaults({ questions: [] }).write();
+import { getQuestion, deleteQuestion, addQuestion, updateQuestion } from "@app/functions/common/database/questions";
+import { getScore, addScore, updateScore } from "@app/functions/common/database/scores";
+import { getMaster, updateMaster } from "@app/functions/common/database/master";
+import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
 
 /**
  * hears: any taxt from bot chat
@@ -34,12 +25,9 @@ store.questions.defaults({ questions: [] }).write();
  */
 const hears = async (): Promise<void> => {
 	bot.on("text", async (ctx) => {
-		store.game = lowdb(new lowdbFileSync(configs.databases.game));
-
 		if (ctx.message.chat.id > 0) {
 			// is chat with bot
-			const master = await getMasterFromName(ctx.update.message.from.username);
-			/* const master: TelegramUserInterface = await getMaster({ username: ctx.update.message.from.username }); */
+			const master: TelegramUserInterface = await getMaster({ username: ctx.update.message.from.username });
 
 			if (master?.username === ctx.update.message.from.username) {
 				const text = ctx.update.message.text.split("-");
@@ -54,8 +42,7 @@ const hears = async (): Promise<void> => {
 				} else if (json.description === undefined || json.description === "") {
 					ctx.telegram.sendMessage(ctx.message.chat.id, translate("hears_missing_tip"));
 				} else {
-					store.game.get("master").find({ username: ctx.update.message.from.username }).assign(json).write();
-					/* await updateMaster({ username: ctx.update.message.from.username }, master); */
+					await updateMaster({}, json);
 
 					const quiz = await ctx.telegram.sendMessage(master.group_id, `⏱ ${json.description || ""}`);
 					ctx.telegram.pinChatMessage(master.group_id, quiz.message_id, { disable_notification: true });
@@ -67,26 +54,19 @@ const hears = async (): Promise<void> => {
 
 		if (ctx.message.chat.id < 0) {
 			// is group
-			const master = await getMasterFromChatID(ctx.message.chat.id);
+			const master: TelegramUserInterface = await getMaster({ group_id: ctx.message.chat.id });
 
 			if (ctx.update.message.text.trim().toLowerCase() == master.question.trim().toLowerCase()) {
 				if (ctx.update.message.from.username) {
-					store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-					store.scores.defaults({ scores: [] }).write();
-					const user_score = store.scores.get("scores").find({
+					const user_score: TelegramUserInterface = await getScore({
 						group_id: master.group_id,
 						id: ctx.update.message.from.id,
 					});
 
-					store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-					store.questions.defaults({ questions: [] }).write();
-					const user_questions = store.questions
-						.get("questions")
-						.find({
-							group_id: ctx.message.chat.id,
-							username: ctx.update.message.from.username,
-						})
-						.value();
+					const user_questions: QuestionsInterface = await getQuestion({
+						group_id: ctx.message.chat.id,
+						username: ctx.update.message.from.username,
+					});
 
 					ctx.telegram.sendMessage(
 						master.group_id,
@@ -96,26 +76,33 @@ const hears = async (): Promise<void> => {
 							bot_username: ctx.botInfo.username,
 							answer: ctx.update.message.text.trim(),
 							score: user_questions
-								? (user_score.value()?.score || 0) +
+								? (user_score?.score || 0) +
 								  10 +
 								  user_questions.good_questions -
 								  user_questions.bad_questions
-								: (user_score.value()?.score || 0) + 10,
+								: (user_score?.score || 0) + 10,
 						}),
 					);
 
-					const json: any = ctx.update.message.from;
+					const json: TelegramUserInterface = ctx.update.message.from;
 					json.question = "";
 					json.description = "";
 					json.group_id = ctx.message.chat.id;
-					store.game.get("master").find({ group_id: ctx.message.chat.id }).assign(json).write();
+					await updateMaster({ group_id: ctx.message.chat.id }, json);
 
-					if (user_score.value()) {
-						user_score.assign({ score: user_score.value().score + 10 }).write();
+					if (user_score) {
+						user_score.score += 10;
+						await updateScore(
+							{
+								group_id: master.group_id,
+								id: ctx.update.message.from.id,
+							},
+							user_score,
+						);
 					} else {
-						const json_score: any = ctx.update.message.from;
+						const json_score: TelegramUserInterface = ctx.update.message.from;
 						json_score.score = 10;
-						store.scores.get("scores").push(json_score).write();
+						await addScore(json_score);
 					}
 				} else {
 					ctx.telegram.sendMessage(

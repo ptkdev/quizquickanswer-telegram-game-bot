@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import { Schema, model } from "mongoose";
+import { string } from "yargs";
 import type { TelegramUserInterface } from "../../../types/databases.type";
 
 const schema = new Schema<TelegramUserInterface>({
@@ -9,6 +10,8 @@ const schema = new Schema<TelegramUserInterface>({
 	username: { type: String, required: true },
 	launguage_code: String,
 	group_id: { type: Number, required: true },
+	question: String,
+	description: String,
 });
 
 const master_model = model<TelegramUserInterface>("Master", schema);
@@ -55,10 +58,14 @@ export const deleteMaster = async (id: string): Promise<void> => {
  * =====================
  * Update master from DB
  *
- * @param {unknown} search - search condition e.g {id:"123"}
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @param {TelegramUserInterface} user - data to update
  */
-export const updateMaster = async (search: unknown, user: TelegramUserInterface): Promise<void> => {
+export const updateMaster = async (
+	search: Record<string, number | string | boolean>,
+	user: TelegramUserInterface,
+): Promise<void> => {
+	console.log(user);
 	try {
 		master_model.findOneAndUpdate(search, user, function (err) {
 			if (err) {
@@ -76,10 +83,10 @@ export const updateMaster = async (search: unknown, user: TelegramUserInterface)
  * =====================
  * Get master from DB
  *
- * @param {Record<string, number>} search - search condition e.g {id:"123"}
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @return {TelegramUserInterface} user.
  */
-export const getMaster = async (search: Record<string, unknown>): Promise<TelegramUserInterface> => {
+export const getMaster = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
 	try {
 		const user = await master_model.findOne(search, function (err) {
 			if (err) {

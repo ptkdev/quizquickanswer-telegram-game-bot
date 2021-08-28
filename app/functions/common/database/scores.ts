@@ -51,11 +51,14 @@ export const deleteScore = async (id: number): Promise<void> => {
  * =====================
  * Update score from DB
  *
- * @param {number } id - user id to update
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @param {TelegramUserInterface} user - user info with score to update
  */
-export const updateScore = async (id: number, user: TelegramUserInterface): Promise<void> => {
-	scores_model.findOneAndUpdate({ id }, user, function (err, user) {
+export const updateScore = async (
+	search: Record<string, number | string | boolean>,
+	user: TelegramUserInterface,
+): Promise<void> => {
+	scores_model.findOneAndUpdate(search, user, function (err, user) {
 		if (err) {
 			return err;
 		}
@@ -68,13 +71,15 @@ export const updateScore = async (id: number, user: TelegramUserInterface): Prom
  * =====================
  * Get user with score from DB
  *
- * @param {number } id - user id to retrieve
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
+ * @return {TelegramUserInterface} user.
+
  */
-export const getScore = async (id: number): Promise<void> => {
-	const user = await scores_model.findOne({ id }, function (err, user) {
+export const getScore = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
+	const user = await scores_model.findOne(search, function (err, user) {
 		if (err) {
 			return err;
 		}
 	});
-	console.log(user);
+	return user;
 };

@@ -1,7 +1,7 @@
 import configs from "@configs/config";
 import Mongoose from "mongoose";
 
-let database: Mongoose.connection;
+let database: Mongoose.Connection;
 
 /**
  * MongoDB Connection
@@ -11,6 +11,7 @@ let database: Mongoose.connection;
  */
 export const connectDB = async (): Promise<void> => {
 	if (database) {
+		console.log("trying to connect but have already a connection");
 		return;
 	}
 	try {
@@ -35,11 +36,14 @@ export const connectDB = async (): Promise<void> => {
  */
 export const disconnectDB = async (): Promise<void> => {
 	if (!database) {
+		console.log("tried to disconnect but dont have connections");
 		return;
 	}
 	try {
-		Mongoose.disconnect();
-		console.log("Disconnected from database");
+		await Mongoose.disconnect(() => {
+			console.log("Disconnected from database");
+			process.exit(0);
+		});
 	} catch (err) {
 		console.log("Failed to disconnect from MongoDB - ", err);
 	}
