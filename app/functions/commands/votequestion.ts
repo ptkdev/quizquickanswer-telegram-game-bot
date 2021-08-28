@@ -9,57 +9,41 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
-
-import lowdb from "lowdb";
-import lowdbFileSync from "lowdb/adapters/FileSync";
-import configs from "@configs/config";
-
-const store = { users: null, game: null, scores: null, questions: null };
-
-store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-store.scores.defaults({ scores: [] }).write();
-
-store.users = lowdb(new lowdbFileSync(configs.databases.users));
-store.users.defaults({ users: [] }).write();
-
-store.game = lowdb(new lowdbFileSync(configs.databases.game));
-store.game.defaults({ master: [] }).write();
-
-store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-store.questions.defaults({ questions: [] }).write();
+import telegram from "@app/functions/common/api/telegram";
 
 const voteQuestion = async (): Promise<void> => {
-	bot.command(["badquestion", "goodquestion"], (ctx) => {
-		if (ctx.message.chat.id < 0) {
+	bot.command(["badquestion", "goodquestion"], async (ctx) => {
+		if ((await telegram.api.message.getGroupID(ctx)) < 0) {
 			// is group chat
 
-			const username = ctx.update.message.text
+			const username = (await telegram.api.message.getText(ctx))
 				.replace("/goodquestion", "")
 				.replace("/badquestion", "")
 				.replace("@", "")
 				.trim();
-			if (username === ctx.update.message.from.username) {
-				ctx.telegram.sendMessage(ctx.message.chat.id, translate("goodquestion_not_autovote"), {
-					parse_mode: "MarkdownV2",
-				});
+			if (username === (await telegram.api.message.getUsername(ctx))) {
+				ctx.telegram.sendMessage(
+					await telegram.api.message.getGroupID(ctx),
+					translate("goodquestion_not_autovote"),
+					{
+						parse_mode: "MarkdownV2",
+					},
+				);
 				return;
 			}
 
 			if (username !== "") {
-				store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-				store.questions.defaults({ questions: [] }).write();
-
-				store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-				store.scores.defaults({ scores: [] }).write();
-
-				const group_id = ctx.update.message.chat.id;
-				const is_good_question = ctx.update.message.text.split(" ")[0] === "/goodquestion";
+				const group_id = telegram.api.message.getCurrentGroupID(ctx);
+				const is_good_question = (await telegram.api.message.getText(ctx).split(" ")[0]) === "/goodquestion";
 
 				const user_questions = store.questions
 					.get("questions")
-					.find({ group_id: ctx.message.chat.id, username });
+					.find({ group_id: await telegram.api.message.getGroupID(ctx), username });
 				const user_score =
-					store.scores.get("scores").find({ group_id: ctx.message.chat.id, username }).value()?.score || 0;
+					store.scores
+						.get("scores")
+						.find({ group_id: await telegram.api.message.getGroupID(ctx), username })
+						.value()?.score || 0;
 
 				if (user_questions.value()) {
 					// if voted user is in the question DB
@@ -103,12 +87,12 @@ const voteQuestion = async (): Promise<void> => {
 					: `*Votazione andata a buon fine*\\! 🗳 \n\n@*${username}* hai ricevuto un voto *negativo*, puoi fare di meglio la prossima volta\\. 💩 \n\nIl tuo punteggio è di *${combinedPoints}* punt${
 							combinedPoints === 1 ? "o" : "i"
 					  }\\! ⚽️`;
-				ctx.telegram.sendMessage(ctx.message.chat.id, message, {
+				ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), message, {
 					parse_mode: "MarkdownV2",
 				});
 			}
 		} else {
-			ctx.telegram.sendMessage(ctx.message.chat.id, translate("command_only_group"));
+			ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), translate("command_only_group"));
 		}
 	});
 };

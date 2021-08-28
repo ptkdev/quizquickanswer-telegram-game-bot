@@ -14,7 +14,7 @@ const schema = new Schema<TelegramUserInterface>({
 	score: { type: Number, required: true },
 });
 
-const scores_model = model<TelegramUserInterface>("Scores", schema);
+const query = model<TelegramUserInterface>("Scores", schema);
 
 /**
  * Scores CRUD
@@ -23,8 +23,8 @@ const scores_model = model<TelegramUserInterface>("Scores", schema);
  *
  * @param {TelegramUserInterface} user - user with score to add
  */
-export const addScore = async (user: TelegramUserInterface): Promise<void> => {
-	const doc = new scores_model(user);
+const addScore = async (user: TelegramUserInterface): Promise<void> => {
+	const doc = new query(user);
 	await doc.save();
 
 	console.log("User with score created");
@@ -37,8 +37,8 @@ export const addScore = async (user: TelegramUserInterface): Promise<void> => {
  *
  * @param {number } id - user id with score to remove
  */
-export const deleteScore = async (id: number): Promise<void> => {
-	scores_model.findOneAndDelete({ id }, function (err, user) {
+const deleteScore = async (id: number): Promise<void> => {
+	query.findOneAndDelete({ id }, function (err, user) {
 		if (err) {
 			return err;
 		}
@@ -54,11 +54,11 @@ export const deleteScore = async (id: number): Promise<void> => {
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @param {TelegramUserInterface} user - user info with score to update
  */
-export const updateScore = async (
+const updateScore = async (
 	search: Record<string, number | string | boolean>,
 	user: TelegramUserInterface,
 ): Promise<void> => {
-	scores_model.findOneAndUpdate(search, user, function (err, user) {
+	query.findOneAndUpdate(search, user, function (err, user) {
 		if (err) {
 			return err;
 		}
@@ -75,9 +75,9 @@ export const updateScore = async (
  * @return {TelegramUserInterface} user.
 
  */
-export const getScore = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
+const getScore = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
 	try {
-		const user = await scores_model.findOne(search, function (err) {
+		const user = await query.findOne(search, function (err) {
 			if (err) {
 				return err;
 			}
@@ -97,11 +97,11 @@ export const getScore = async (search: Record<string, number | string | boolean>
  * @return {TelegramUserInterface[]} user.
 
  */
-export const getMultipleScores = async (
+const getMultipleScores = async (
 	search: Record<string, number | string | boolean>,
 ): Promise<TelegramUserInterface[]> => {
 	try {
-		const user = await scores_model.find(search, function (err) {
+		const user = await query.find(search, function (err) {
 			if (err) {
 				return err;
 			}
@@ -111,3 +111,6 @@ export const getMultipleScores = async (
 		return error;
 	}
 };
+
+export { getMultipleScores, getScore, updateScore, deleteScore, addScore };
+export default { getMultipleScores, getScore, updateScore, deleteScore, addScore };

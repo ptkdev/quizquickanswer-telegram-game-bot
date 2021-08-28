@@ -9,7 +9,7 @@ const schema = new Schema<QuestionsInterface>({
 	bad_questions: { type: Number, required: true },
 });
 
-const questions_model = model<QuestionsInterface>("Questions", schema);
+const query = model<QuestionsInterface>("Questions", schema);
 
 /**
  * Questions CRUD
@@ -18,8 +18,8 @@ const questions_model = model<QuestionsInterface>("Questions", schema);
  *
  * @param {QuestionsInterface} user - user with questions to add
  */
-export const addQuestion = async (user: QuestionsInterface): Promise<void> => {
-	const doc = new questions_model(user);
+const addQuestion = async (user: QuestionsInterface): Promise<void> => {
+	const doc = new query(user);
 	await doc.save();
 
 	console.log("User with questions created");
@@ -32,8 +32,8 @@ export const addQuestion = async (user: QuestionsInterface): Promise<void> => {
  *
  * @param {number} username - username to remove
  */
-export const deleteQuestion = async (username: string): Promise<void> => {
-	questions_model.findOneAndDelete({ username }, function (err, user) {
+const deleteQuestion = async (username: string): Promise<void> => {
+	query.findOneAndDelete({ username }, function (err, user) {
 		if (err) {
 			return err;
 		}
@@ -49,8 +49,8 @@ export const deleteQuestion = async (username: string): Promise<void> => {
  * @param {number} username - username to update
  * @param {QuestionsInterface} user - user info with questions to update
  */
-export const updateQuestion = async (username: string, user: QuestionsInterface): Promise<void> => {
-	questions_model.findOneAndUpdate({ username }, user, function (err, user) {
+const updateQuestion = async (username: string, user: QuestionsInterface): Promise<void> => {
+	query.findOneAndUpdate({ username }, user, function (err, user) {
 		if (err) {
 			return err;
 		}
@@ -66,11 +66,14 @@ export const updateQuestion = async (username: string, user: QuestionsInterface)
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @return {TelegramUserInterface} user.
  *  */
-export const getQuestion = async (search: Record<string, number | string | boolean>): Promise<QuestionsInterface> => {
-	const user = await questions_model.findOne(search, function (err) {
+const getQuestion = async (search: Record<string, number | string | boolean>): Promise<QuestionsInterface> => {
+	const user = await query.findOne(search, function (err) {
 		if (err) {
 			return err;
 		}
 	});
 	return user;
 };
+
+export { getQuestion, updateQuestion, deleteQuestion, addQuestion };
+export default { getQuestion, updateQuestion, deleteQuestion, addQuestion };

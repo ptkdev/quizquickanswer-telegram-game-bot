@@ -9,7 +9,10 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
-import { getMaster, addMaster, updateMaster } from "@app/functions/common/api/database/master";
+
+import db from "@app/functions/common/api/database";
+import telegram from "@app/functions/common/api/telegram";
+
 import { TelegramUserInterface } from "@app/types/databases.type";
 
 /**
@@ -20,15 +23,18 @@ import { TelegramUserInterface } from "@app/types/databases.type";
  */
 const master = async (): Promise<void> => {
 	bot.command("master", async (ctx) => {
-		if (ctx.message.chat.id < 0) {
+		if ((await telegram.api.message.getGroupID(ctx)) < 0) {
 			// is group chat
 			if (
-				ctx.update.message.text.trim() === "/master" ||
-				ctx.update.message.text.trim() === "/master@QuizQuickAnswerBot"
+				(await telegram.api.message.getText(ctx)).trim() === "/master" ||
+				(await telegram.api.message.getText(ctx)).trim() === "/master@QuizQuickAnswerBot"
 			) {
-				ctx.telegram.sendMessage(ctx.message.chat.id, translate("master_command_empty"));
+				ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), translate("master_command_empty"));
 			} else {
-				const username = ctx.update.message.text.replace("/master ", "").replace("@", "").trim();
+				const username = (await telegram.api.message.getText(ctx))
+					.replace("/master ", "")
+					.replace("@", "")
+					.trim();
 
 				const json = {
 					id: 0,
@@ -38,17 +44,19 @@ const master = async (): Promise<void> => {
 					language_code: "",
 					question: "",
 					description: "",
-					group_id: ctx.message.chat.id,
+					group_id: await telegram.api.message.getGroupID(ctx),
 				};
 
-				const master: TelegramUserInterface = await getMaster({ group_id: ctx.message.chat.id });
+				const master: TelegramUserInterface = await db.master.getMaster({
+					group_id: await telegram.api.message.getGroupID(ctx),
+				});
 				if (master) {
-					await updateMaster({}, json);
+					await db.master.updateMaster({}, json);
 				} else {
-					await addMaster(json);
+					await db.master.addMaster(json);
 				}
 				ctx.telegram.sendMessage(
-					ctx.message.chat.id,
+					await telegram.api.message.getGroupID(ctx),
 					translate("master_command_success", {
 						username: username,
 						bot_username: ctx.botInfo.username,
@@ -56,7 +64,7 @@ const master = async (): Promise<void> => {
 				);
 			}
 		} else {
-			ctx.telegram.sendMessage(ctx.message.chat.id, translate("command_only_group"));
+			ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), translate("command_only_group"));
 		}
 	});
 };
