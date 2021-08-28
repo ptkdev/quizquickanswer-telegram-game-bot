@@ -9,64 +9,37 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
+import { getMultipleScores } from "@app/functions/common/api/database/scores";
+import { getQuestion } from "@app/functions/common/api/database/questions";
 
-import lowdb from "lowdb";
-import lowdbFileSync from "lowdb/adapters/FileSync";
-import configs from "@configs/config";
 import { getTopScoreEmoji } from "@app/functions/common/utils/utils";
-
-const store = { users: null, game: null, scores: null, questions: null };
-
-store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-store.scores.defaults({ scores: [] }).write();
-
-store.users = lowdb(new lowdbFileSync(configs.databases.users));
-store.users.defaults({ users: [] }).write();
-
-store.game = lowdb(new lowdbFileSync(configs.databases.game));
-store.game.defaults({ master: [] }).write();
-
-store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-store.questions.defaults({ questions: [] }).write();
+import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.type";
 
 const top10 = async (): Promise<void> => {
-	bot.command("top10", (ctx) => {
+	bot.command("top10", async (ctx) => {
 		if (ctx.message.chat.id < 0) {
 			// is group chat
 
-			store.scores = lowdb(new lowdbFileSync(configs.databases.scores));
-			store.scores.defaults({ scores: [] }).write();
+			const top_scores: TelegramUserInterface[] = await getMultipleScores({ group_id: ctx.message.chat.id });
 
-			store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-			store.questions.defaults({ questions: [] }).write();
+			let mapped_scores: TelegramUserInterface[] = await Promise.all(
+				top_scores.map(async (s: TelegramUserInterface) => {
+					const user_questions: QuestionsInterface = await getQuestion({
+						group_id: ctx.message.chat.id,
+						username: s.username,
+					});
 
-			const top_scores = store.scores
-				.get("scores")
-				.filter({ group_id: ctx.message.chat.id })
-				.map((s) => {
-					const user_questions = store.questions
-						.get("questions")
-						.find({
-							group_id: ctx.message.chat.id,
-							username: s.username,
-						})
-						.value();
-					return user_questions
-						? {
-								...s,
-								score: s.score + user_questions.good_questions - user_questions.bad_questions,
-						  }
-						: s;
-				})
-				.sort((a, b) => b?.score - a?.score)
-				.slice(0, 10)
-				.value();
+					if (user_questions) {
+						s.score += user_questions.good_questions - user_questions.bad_questions;
+					}
+					return s;
+				}),
+			);
 
-			store.questions = lowdb(new lowdbFileSync(configs.databases.questions));
-			store.questions.defaults({ questions: [] }).write();
+			mapped_scores = mapped_scores.sort((a, b) => b?.score - a?.score).slice(0, 10);
 
-			const scores_message = top_scores
-				.map((s: any, index: number) => {
+			const scores_message = mapped_scores
+				.map((s: TelegramUserInterface, index: number) => {
 					return translate("top10_command_list", {
 						emoji: getTopScoreEmoji(index),
 						first_name: s.first_name,
