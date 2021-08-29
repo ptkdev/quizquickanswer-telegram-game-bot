@@ -9,14 +9,15 @@
  *
  */
 import { Schema, model } from "mongoose";
-import type { TelegramUserInterface } from "../../../types/databases.type";
+import type { TelegramUserInterface } from "@app/types/databases.type";
+import { getEmptyTelegramUserInterface } from "@app/functions/utils/utils";
 
 const schema = new Schema<TelegramUserInterface>({
-	id: { type: String, required: true },
+	id: { type: Number, required: true },
 	is_bot: { type: Boolean, required: true },
 	first_name: { type: String, required: false },
 	username: { type: String, required: true },
-	launguage_code: String,
+	language_code: String,
 	group_id: { type: Number, required: true },
 	question: String,
 	description: String,
@@ -49,9 +50,9 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
-		query.findOneAndDelete(search, function (err) {
-			if (err) {
-				return err;
+		query.findOneAndDelete(search, function (error) {
+			if (error) {
+				console.log(error);
 			}
 		});
 	} catch (error) {
@@ -72,9 +73,9 @@ const update = async (
 	user: TelegramUserInterface,
 ): Promise<void> => {
 	try {
-		query.findOneAndUpdate(search, user, function (err) {
-			if (err) {
-				return err;
+		query.findOneAndUpdate(search, user, function (error) {
+			if (error) {
+				console.log(error);
 			}
 		});
 	} catch (error) {
@@ -92,15 +93,15 @@ const update = async (
  */
 const get = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
 	try {
-		const user = await query.findOne(search, function (err) {
-			if (err) {
-				return err;
+		const user = await query.findOne(search, function (error) {
+			if (error) {
+				return getEmptyTelegramUserInterface(error);
 			}
 		});
 		return user;
 	} catch (error) {
 		console.log(error);
-		return null;
+		return getEmptyTelegramUserInterface(error);
 	}
 };
 

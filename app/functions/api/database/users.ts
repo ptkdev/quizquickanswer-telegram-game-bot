@@ -11,6 +11,7 @@
 import { Schema, model } from "mongoose";
 import type { TelegramUserInterface } from "@app/types/databases.type";
 import type { GameInterface } from "@app/types/game.type.js";
+import { getEmptyTelegramUserInterface } from "@app/functions/utils/utils";
 
 const schema = new Schema<GameInterface>({
 	id: { type: String, required: true },
@@ -92,17 +93,16 @@ const update = async (
  * @return {TelegramUserInterface[]} user.
 
  */
-const get = async (search: Record<string, number | string | boolean>): Promise<void> => {
+const get = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
 	try {
-		const user = await query.findOne(search, function (err) {
-			if (err) {
-				return err;
+		const user = await query.findOne(search, function (error) {
+			if (error) {
+				return getEmptyTelegramUserInterface(error);
 			}
 		});
 		return user;
 	} catch (error) {
-		console.log(error);
-		return error;
+		return getEmptyTelegramUserInterface(error);
 	}
 };
 

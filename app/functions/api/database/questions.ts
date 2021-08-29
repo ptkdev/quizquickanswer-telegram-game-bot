@@ -10,6 +10,7 @@
  */
 import { Schema, model } from "mongoose";
 import type { QuestionsInterface } from "../../../types/databases.type";
+import { getEmptyQuestionsInterface } from "@app/functions/utils/utils";
 
 const schema = new Schema<QuestionsInterface>({
 	username: { type: String, required: true },
@@ -82,18 +83,19 @@ const update = async (search: Record<string, number | string | boolean>, user: Q
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @return {TelegramUserInterface} user.
- *  */
+ *
+ */
 const get = async (search: Record<string, number | string | boolean>): Promise<QuestionsInterface> => {
 	try {
-		const user = await query.findOne(search, function (err) {
-			if (err) {
-				return err;
+		const user = await query.findOne(search, function (error) {
+			if (error) {
+				return getEmptyQuestionsInterface(error);
 			}
 		});
 		return user;
 	} catch (error) {
 		console.log(error);
-		return error;
+		return getEmptyQuestionsInterface(error);
 	}
 };
 

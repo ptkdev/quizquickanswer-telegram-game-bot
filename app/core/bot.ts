@@ -25,7 +25,7 @@ import commands from "@app/routes/commands";
 	await commands.launch();
 })();
 
-process.on("SIGINT", async function (params) {
+process.on("SIGINT", async function () {
 	// on Cntr-C
 	await db.connection.disconnectDB();
 });
