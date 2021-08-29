@@ -46,7 +46,7 @@ const getText = (ctx: any): string => {
 	return ctx?.update?.message?.text || ctx?.message?.text || "";
 };
 
-const send = (ctx: any, group_id: number, text: string, options: any = null): any => {
+const send = (ctx: any, group_id: number, text: string, options: any = { parse_mode: "HTML" }): any => {
 	if (group_id && text) {
 		const message = ctx.telegram.sendMessage(group_id, text, options);
 

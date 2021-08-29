@@ -50,7 +50,6 @@ const score = async (): Promise<void> => {
 						username: telegram.api.message.getUsername(ctx) || "",
 						score: score?.score || 0,
 					}),
-					{ parse_mode: "MarkdownV2" },
 				);
 			} else {
 				const username = telegram.api.message
@@ -80,7 +79,6 @@ const score = async (): Promise<void> => {
 						username: username,
 						score: score?.score || 0,
 					}),
-					{ parse_mode: "MarkdownV2" },
 				);
 			}
 		} else {

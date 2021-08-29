@@ -51,7 +51,7 @@ const hears = async (): Promise<void> => {
 				} else {
 					await db.master.update({}, json);
 
-					const quiz = await telegram.api.message.send(ctx, master.group_id, `⏱ ${json.description || ""}`);
+					const quiz = telegram.api.message.send(ctx, master.group_id, `⏱ ${json.description || ""}`);
 					ctx.telegram.pinChatMessage(master.group_id, quiz.message_id, { disable_notification: true });
 				}
 			} else {
@@ -84,7 +84,7 @@ const hears = async (): Promise<void> => {
 							first_name: telegram.api.message.getUserFirstName(ctx),
 							username: telegram.api.message.getUsername(ctx),
 							bot_username: telegram.api.bot.getUsername(ctx),
-							answer: ctx.update.message.text.trim(),
+							answer: telegram.api.message.getText(ctx),
 							score: user_questions
 								? (user_score?.score || 0) +
 								  10 +

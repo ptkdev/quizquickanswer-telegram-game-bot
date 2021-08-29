@@ -6,18 +6,18 @@
 	},
 	"app_name": "Quiz Quick Answer Bot",
 	"command_only_group": "Puoi usare questo comando solo in un gruppo telegram!",
-	"goodquestion_not_autovote": "⛔️ Mi dispiace, non puoi *votarti da solo*\\!",
+	"goodquestion_not_autovote": "⛔️ Mi dispiace, non puoi <b>votarti da solo</b>!",
 	"haers_not_you_master": "📵 Non sei tu il master al momento, se è un errore puoi usare: /master @TUO_NICKNAME",
 	"hears_missing_question": "🤬 Aooo! Ma che cazzo stai a scrive? Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!",
 	"hears_missing_tip": "🤬 Aooo! Hai dimenticato il cazzo di trattino. Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!",
-	"hears_win": "🏆 *HAI VINTO* ##first_name## \\(@$##username##\\)\\!\\!\\!\n\n✍️ La risposta giusta era: *##text##*\n👑 Ora sei il nuovo *master*\\! ⚽️ Il tuo punteggio é *##score##* 🔥\n\nContatta in privato @##bot_username## \\(clicca sul nickname\\) e segui le istruzioni\\.",
+	"hears_win": "🏆 <b>HAI VINTO</b> ##first_name## (@##username##)!!!\n\n✍️ La risposta giusta era: <b>##answer##</b>\n👑 Ora sei il nuovo <b>master</b>! ⚽️ Il tuo punteggio é <b>##score##</b> 🔥\n\nContatta in privato @##bot_username## (clicca sul nickname) e segui le istruzioni.",
 	"hears_win_but_not_master": "🏆 HAI VINTO ##first_name##!! Ma non puoi diventare master perchè non hai impostato un username su telegram. Vai nelle impostazioni di telegram, entra su modifica in alto e imposta un @nickname! Il master è rimasto ##master_first_name## (@##master_username##).",
 	"master_command_empty": "Inserisci un nickname, ad esempio: /master @ptkdev",
 	"master_command_success": "Ora sei diventato master @##username##! Contatta in privato @##bot_username## (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi un trattino per dare un suggerimento, esempio: \n\nformichiere - animale bello con naso lungo",
-	"score_command_show": "*##first_name##* \\(@##username##\\) il tuo punteggio in questo gruppo è di *##score##* punti\\!",
-	"score_command_show_with_username": "Il punteggio di *@##username##* in questo gruppo è di *##score##* punti\\!",
+	"score_command_show": "<b>##first_name##</b> (@##username##) il tuo punteggio in questo gruppo è di <b>##score##</b> punti!",
+	"score_command_show_with_username": "Il punteggio di <b>@##username##</b> in questo gruppo è di <b>##score##</b> punti!",
 	"start_command_group": "Prima di iniziare a giocare rendi questo bot amministratore. Successivamente diventa master lanciando il comando: /master ##username##",
 	"start_command_private": "Scrivi la parola o frase che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, esempio:\n\nformichiere - animale bello con naso lungo\n\nformichiere è la parola o frase che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale bello con naso lungo).",
 	"top10_command_not_available": "Classifica non disponibile per questo gruppo!",
-	"top10_command_list": "##emoji## *##first_name##* \\(##username##\\) \\- *##score##* punti\n\n"
+	"top10_command_list": "##emoji## <b>##first_name##</b> (##username##) - <b>##score##</b> punti\n\n"
 }
