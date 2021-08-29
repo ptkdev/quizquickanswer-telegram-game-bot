@@ -5,7 +5,7 @@ import score from "@app/functions/commands/score";
 import top10 from "@app/functions/commands/top10";
 import voteQuestion from "@app/functions/commands/votequestion";
 import launch from "@app/functions/commands/launch";
-import hears from "@app/functions/hears";
+import hears from "@app/functions/commands/hears";
 
 const commands = { quit, start, master, score, top10, voteQuestion, launch, hears };
 

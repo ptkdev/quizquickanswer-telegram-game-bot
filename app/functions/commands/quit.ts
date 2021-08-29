@@ -8,9 +8,9 @@
  * @license: MIT License
  *
  */
-import bot from "@app/functions/telegraf";
+import bot from "@app/core/telegraf";
 
-import telegram from "@app/functions/common/api/telegram";
+import telegram from "@routes/api/telegram";
 
 /**
  * command: /quit

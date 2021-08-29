@@ -8,12 +8,12 @@
  * @license: MIT License
  *
  */
-import bot from "@app/functions/telegraf";
-import translate from "@app/functions/translate";
+import bot from "@app/core/telegraf";
+import translate from "@translations/translate";
 
-import telegram from "@app/functions/common/api/telegram";
-import db from "@app/functions/common/api/database";
-import { getTopScoreEmoji } from "@app/functions/common/utils/utils";
+import telegram from "@routes/api/telegram";
+import db from "@routes/api/database";
+import { getTopScoreEmoji } from "@app/functions/utils/utils";
 import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
 
 const top10 = async (): Promise<void> => {

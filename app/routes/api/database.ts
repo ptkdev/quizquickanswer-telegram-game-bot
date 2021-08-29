@@ -8,11 +8,11 @@
  * @license: MIT License
  *
  */
-import connection from "@app/functions/common/api/database/connection";
-import master from "@app/functions/common/api/database/master";
-import questions from "@app/functions/common/api/database/questions";
-import scores from "@app/functions/common/api/database/scores";
-import users from "@app/functions/common/api/database/users";
+import connection from "@app/functions/api/database/connection";
+import master from "@app/functions/api/database/master";
+import questions from "@app/functions/api/database/questions";
+import scores from "@app/functions/api/database/scores";
+import users from "@app/functions/api/database/users";
 
 const db = {
 	connection: connection,

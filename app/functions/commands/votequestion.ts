@@ -8,10 +8,10 @@
  * @license: MIT License
  *
  */
-import bot from "@app/functions/telegraf";
-import translate from "@app/functions/translate";
-import db from "@app/functions/common/api/database";
-import telegram from "@app/functions/common/api/telegram";
+import bot from "@app/core/telegraf";
+import translate from "@translations/translate";
+import db from "@routes/api/database";
+import telegram from "@routes/api/telegram";
 import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.type";
 
 const voteQuestion = async (): Promise<void> => {

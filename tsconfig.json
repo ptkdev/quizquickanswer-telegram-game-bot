@@ -17,6 +17,7 @@
 			"@databases/*": ["./database/*"],
 			"@translations/*": ["./app/translations/*"],
 			"@configs/*": ["./app/configs/*"],
+			"@routes/*": ["./app/routes/*"],
 			"@app/*": ["./app/*"]
 		},
 		"typeRoots": ["app/**/types", "node_modules/@types"],

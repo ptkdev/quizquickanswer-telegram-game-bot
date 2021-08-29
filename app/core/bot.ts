@@ -1,4 +1,4 @@
-import db from "@app/functions/common/api/database";
+import db from "@routes/api/database";
 import commands from "@app/routes/commands";
 
 /**

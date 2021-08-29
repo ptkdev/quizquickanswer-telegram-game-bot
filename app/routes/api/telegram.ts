@@ -9,8 +9,8 @@
  *
  */
 
-import message from "@app/functions/common/api/telegram/message";
-import bot from "@app/functions/common/api/telegram/bot";
+import message from "@app/functions/api/telegram/message";
+import bot from "@app/functions/api/telegram/bot";
 
 const telegram = {
 	api: {

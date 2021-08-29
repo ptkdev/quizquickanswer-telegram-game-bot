@@ -8,9 +8,9 @@
  * @license: MIT License
  *
  */
-import bot from "@app/functions/telegraf";
-import translate from "@app/functions/translate";
-import db from "@app/functions/common/api/database";
+import bot from "@app/core/telegraf";
+import translate from "@translations/translate";
+import db from "@routes/api/database";
 import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
 
 /**

@@ -8,7 +8,7 @@
  * @license: MIT License
  *
  */
-import bot from "@app/functions/telegraf";
+import bot from "@app/core/telegraf";
 
 /**
  * Run bot
