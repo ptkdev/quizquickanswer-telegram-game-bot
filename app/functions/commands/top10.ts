@@ -10,40 +10,39 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
-
+import { getMultipleScores } from "@app/functions/common/api/database/scores";
+import { getQuestion } from "@app/functions/common/api/database/questions";
 import telegram from "@app/functions/common/api/telegram";
 import db from "@app/functions/common/api/database";
 import { getTopScoreEmoji } from "@app/functions/common/utils/utils";
+import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
 
 const top10 = async (): Promise<void> => {
 	bot.command("top10", async (ctx) => {
 		if ((await telegram.api.message.getGroupID(ctx)) < 0) {
 			// is group chat
+			const top_scores: TelegramUserInterface[] = await db.scores.getMultipleScores({
+				group_id: ctx.message.chat.id,
+			});
 
-			const top_scores = store.scores
-				.get("scores")
-				.filter({ group_id: await telegram.api.message.getGroupID(ctx) })
-				.map(async (s) => {
-					const user_questions = store.questions
-						.get("questions")
-						.find({
-							group_id: await telegram.api.message.getGroupID(ctx),
-							username: s.username,
-						})
-						.value();
-					return user_questions
-						? {
-								...s,
-								score: s.score + user_questions.good_questions - user_questions.bad_questions,
-						  }
-						: s;
-				})
-				.sort((a, b) => b?.score - a?.score)
-				.slice(0, 10)
-				.value();
+			let mapped_scores: TelegramUserInterface[] = await Promise.all(
+				top_scores.map(async (s: TelegramUserInterface) => {
+					const user_questions: QuestionsInterface = await db.questions.getQuestion({
+						group_id: ctx.message.chat.id,
+						username: s.username,
+					});
 
-			const scores_message = top_scores
-				.map((s: any, index: number) => {
+					if (user_questions) {
+						s.score += user_questions.good_questions - user_questions.bad_questions;
+					}
+					return s;
+				}),
+			);
+
+			mapped_scores = mapped_scores.sort((a, b) => b?.score - a?.score).slice(0, 10);
+
+			const scores_message = mapped_scores
+				.map((s: TelegramUserInterface, index: number) => {
 					return translate("top10_command_list", {
 						emoji: getTopScoreEmoji(index),
 						first_name: s.first_name,
