@@ -10,7 +10,7 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
-
+import db from "@app/functions/common/api/database";
 import telegram from "@app/functions/common/api/telegram";
 
 /**
@@ -21,7 +21,7 @@ import telegram from "@app/functions/common/api/telegram";
  */
 const start = async (): Promise<void> => {
 	bot.start(async (ctx) => {
-		databases.writeUser(ctx.update.message.from);
+		db.users.add(ctx.update.message.from);
 
 		if ((await telegram.api.message.getGroupID(ctx)) < 0) {
 			// is group chat

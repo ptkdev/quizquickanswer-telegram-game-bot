@@ -32,27 +32,32 @@ const query = model<TelegramUserInterface>("User", schema);
  *
  * @param {TelegramUserInterface} user - user to add
  */
-const addUser = async (user: TelegramUserInterface): Promise<void> => {
-	const doc = new query(user);
-	await doc.save();
-
-	console.log("User Created");
+const add = async (user: TelegramUserInterface): Promise<void> => {
+	try {
+		const doc = new query(user);
+		await doc.save();
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
  * Users CRUD
  * =====================
- * Delete user from DB
+ * Remove user from DB
  *
- * @param {number } id - user id to remove
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  */
-const deleteUser = async (id: number): Promise<void> => {
-	query.findOneAndDelete({ id }, function (err, user) {
-		if (err) {
-			return err;
-		}
-		console.log("User deleted");
-	});
+const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
+	try {
+		query.findOneAndDelete(search, function (err) {
+			if (err) {
+				return err;
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
@@ -60,16 +65,22 @@ const deleteUser = async (id: number): Promise<void> => {
  * =====================
  * Update user from DB
  *
- * @param {number } id - user id to update
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @param {TelegramUserInterface} user - user info to update
  */
-const updateUser = async (id: number, user: TelegramUserInterface): Promise<void> => {
-	query.findOneAndUpdate({ id }, user, function (err, user) {
-		if (err) {
-			return err;
-		}
-		console.log(`User updated`);
-	});
+const update = async (
+	search: Record<string, number | string | boolean>,
+	user: TelegramUserInterface,
+): Promise<void> => {
+	try {
+		query.findOneAndUpdate(search, user, function (err) {
+			if (err) {
+				return err;
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
@@ -77,16 +88,23 @@ const updateUser = async (id: number, user: TelegramUserInterface): Promise<void
  * =====================
  * Get user from DB
  *
- * @param {number } id - user id to retrieve
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
+ * @return {TelegramUserInterface[]} user.
+
  */
-const getUser = async (id: number): Promise<void> => {
-	const user = await query.findOne({ id }, function (err, user) {
-		if (err) {
-			return err;
-		}
-	});
-	console.log(user);
+const get = async (search: Record<string, number | string | boolean>): Promise<void> => {
+	try {
+		const user = await query.findOne(search, function (err) {
+			if (err) {
+				return err;
+			}
+		});
+		return user;
+	} catch (error) {
+		console.log(error);
+		return error;
+	}
 };
 
-export { getUser, updateUser, deleteUser, addUser };
-export default { getUser, updateUser, deleteUser, addUser };
+export { get, update, remove, add };
+export default { get, update, remove, add };

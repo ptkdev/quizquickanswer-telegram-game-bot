@@ -27,27 +27,32 @@ const query = model<QuestionsInterface>("Questions", schema);
  *
  * @param {QuestionsInterface} user - user with questions to add
  */
-const addQuestion = async (user: QuestionsInterface): Promise<void> => {
-	const doc = new query(user);
-	await doc.save();
-
-	console.log("User with questions created");
+const add = async (user: QuestionsInterface): Promise<void> => {
+	try {
+		const doc = new query(user);
+		await doc.save();
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
  * Questions CRUD
  * =====================
- * Delete question from DB
+ * Remove question from DB
  *
- * @param {number} username - username to remove
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  */
-const deleteQuestion = async (username: string): Promise<void> => {
-	query.findOneAndDelete({ username }, function (err, user) {
-		if (err) {
-			return err;
-		}
-		console.log("User with questions deleted");
-	});
+const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
+	try {
+		query.findOneAndDelete(search, function (err) {
+			if (err) {
+				return err;
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
@@ -55,16 +60,19 @@ const deleteQuestion = async (username: string): Promise<void> => {
  * =====================
  * Update questions from DB
  *
- * @param {number} username - username to update
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @param {QuestionsInterface} user - user info with questions to update
  */
-const updateQuestion = async (username: string, user: QuestionsInterface): Promise<void> => {
-	query.findOneAndUpdate({ username }, user, function (err, user) {
-		if (err) {
-			return err;
-		}
-		console.log(`User updated`);
-	});
+const update = async (search: Record<string, number | string | boolean>, user: QuestionsInterface): Promise<void> => {
+	try {
+		query.findOneAndUpdate(search, user, function (err) {
+			if (err) {
+				return err;
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
@@ -75,14 +83,19 @@ const updateQuestion = async (username: string, user: QuestionsInterface): Promi
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @return {TelegramUserInterface} user.
  *  */
-const getQuestion = async (search: Record<string, number | string | boolean>): Promise<QuestionsInterface> => {
-	const user = await query.findOne(search, function (err) {
-		if (err) {
-			return err;
-		}
-	});
-	return user;
+const get = async (search: Record<string, number | string | boolean>): Promise<QuestionsInterface> => {
+	try {
+		const user = await query.findOne(search, function (err) {
+			if (err) {
+				return err;
+			}
+		});
+		return user;
+	} catch (error) {
+		console.log(error);
+		return error;
+	}
 };
 
-export { getQuestion, updateQuestion, deleteQuestion, addQuestion };
-export default { getQuestion, updateQuestion, deleteQuestion, addQuestion };
+export { get, update, remove, add };
+export default { get, update, remove, add };

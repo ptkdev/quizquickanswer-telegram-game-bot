@@ -10,7 +10,9 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
+import db from "@app/functions/common/api/database";
 import telegram from "@app/functions/common/api/telegram";
+import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.type";
 
 const voteQuestion = async (): Promise<void> => {
 	bot.command(["badquestion", "goodquestion"], async (ctx) => {
@@ -34,53 +36,45 @@ const voteQuestion = async (): Promise<void> => {
 			}
 
 			if (username !== "") {
-				const group_id = telegram.api.message.getCurrentGroupID(ctx);
-				const is_good_question = (await telegram.api.message.getText(ctx).split(" ")[0]) === "/goodquestion";
+				const group_id = await telegram.api.message.getCurrentGroupID(ctx);
+				const text = await telegram.api.message.getText(ctx);
+				const is_good_question = text.split(" ")[0] === "/goodquestion";
 
-				const user_questions = store.questions
-					.get("questions")
-					.find({ group_id: await telegram.api.message.getGroupID(ctx), username });
-				const user_score =
-					store.scores
-						.get("scores")
-						.find({ group_id: await telegram.api.message.getGroupID(ctx), username })
-						.value()?.score || 0;
+				const user_questions: QuestionsInterface = await db.questions.get({
+					group_id: await telegram.api.message.getGroupID(ctx),
+					username,
+				});
 
-				if (user_questions.value()) {
+				const user_score: TelegramUserInterface = await db.scores.get({
+					group_id: await telegram.api.message.getGroupID(ctx),
+					username,
+				});
+
+				const score: number = user_score.score || 0;
+
+				if (user_questions) {
 					// if voted user is in the question DB
-					store.questions
-						.get("questions")
-						.find({ group_id, username })
-						.assign({
-							...user_questions.value(),
-							...(is_good_question
-								? {
-										good_questions: user_questions.value().good_questions + 1,
-								  }
-								: {
-										bad_questions: user_questions.value().bad_questions + 1,
-								  }),
-						})
-						.write();
+					if (is_good_question) {
+						user_questions.good_questions += 1;
+					} else {
+						user_questions.bad_questions += 1;
+					}
+					await db.questions.update({ group_id, username }, user_questions);
 				} else {
 					const json = {
 						username: username,
-						good_questions: 0,
-						bad_questions: 0,
+						good_questions: is_good_question ? 1 : 0,
+						bad_questions: is_good_question ? 0 : 1,
 						group_id: group_id,
 					};
-
-					store.questions
-						.get("questions")
-						.push({
-							...json,
-							...(is_good_question ? { good_questions: 1 } : { bad_questions: 1 }),
-						})
-						.write();
+					await db.questions.add(json);
 				}
 
-				const combinedPoints =
-					user_score + user_questions.value().good_questions - user_questions.value().bad_questions;
+				const combinedPoints = // NOTE Da fixare
+					score +
+					(user_questions?.good_questions || is_good_question ? 1 : 0) -
+					(user_questions?.bad_questions || is_good_question ? 0 : 1);
+
 				const message = is_good_question
 					? `*Votazione andata a buon fine*\\! 🗳 \n\n*Complimenti @${username}* hai ricevuto un voto *positivo*, ottima domanda\\! 🔥\n\nIl tuo punteggio è di *${combinedPoints}* punt${
 							combinedPoints === 1 ? "o" : "i"

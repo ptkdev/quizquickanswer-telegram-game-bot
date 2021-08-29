@@ -32,27 +32,33 @@ const query = model<TelegramUserInterface>("Scores", schema);
  *
  * @param {TelegramUserInterface} user - user with score to add
  */
-const addScore = async (user: TelegramUserInterface): Promise<void> => {
-	const doc = new query(user);
-	await doc.save();
-
-	console.log("User with score created");
+const add = async (user: TelegramUserInterface): Promise<void> => {
+	try {
+		const doc = new query(user);
+		await doc.save();
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
  * Scores CRUD
  * =====================
- * Delete score from DB
+ * Remove score from DB
  *
- * @param {number } id - user id with score to remove
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  */
-const deleteScore = async (id: number): Promise<void> => {
-	query.findOneAndDelete({ id }, function (err, user) {
-		if (err) {
-			return err;
-		}
-		console.log("User with score deleted");
-	});
+const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
+	try {
+		query.findOneAndDelete(search, function (err) {
+			if (err) {
+				return err;
+			}
+			console.log("User with score deleted");
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
@@ -63,16 +69,19 @@ const deleteScore = async (id: number): Promise<void> => {
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  * @param {TelegramUserInterface} user - user info with score to update
  */
-const updateScore = async (
+const update = async (
 	search: Record<string, number | string | boolean>,
 	user: TelegramUserInterface,
 ): Promise<void> => {
-	query.findOneAndUpdate(search, user, function (err, user) {
-		if (err) {
-			return err;
-		}
-		console.log(`User updated`);
-	});
+	try {
+		query.findOneAndUpdate(search, user, function (err) {
+			if (err) {
+				return err;
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 /**
@@ -84,7 +93,7 @@ const updateScore = async (
  * @return {TelegramUserInterface} user.
 
  */
-const getScore = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
+const get = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
 	try {
 		const user = await query.findOne(search, function (err) {
 			if (err) {
@@ -106,9 +115,7 @@ const getScore = async (search: Record<string, number | string | boolean>): Prom
  * @return {TelegramUserInterface[]} user.
 
  */
-const getMultipleScores = async (
-	search: Record<string, number | string | boolean>,
-): Promise<TelegramUserInterface[]> => {
+const getMultiple = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface[]> => {
 	try {
 		const user = await query.find(search, function (err) {
 			if (err) {
@@ -121,5 +128,5 @@ const getMultipleScores = async (
 	}
 };
 
-export { getMultipleScores, getScore, updateScore, deleteScore, addScore };
-export default { getMultipleScores, getScore, updateScore, deleteScore, addScore };
+export { getMultiple, get, update, remove, add };
+export default { getMultiple, get, update, remove, add };

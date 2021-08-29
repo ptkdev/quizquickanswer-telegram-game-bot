@@ -1,4 +1,4 @@
-import { connectDB, disconnectDB } from "@app/functions/common/api/database/connect";
+import db from "@app/functions/common/api/database";
 import commands from "@app/routes/commands";
 
 /**
@@ -12,7 +12,7 @@ import commands from "@app/routes/commands";
  *
  */
 (async () => {
-	await connectDB();
+	await db.connection.connectDB();
 
 	await commands.quit();
 	await commands.start();
@@ -27,10 +27,10 @@ import commands from "@app/routes/commands";
 
 process.on("SIGINT", async function (params) {
 	// on Cntr-C
-	await disconnectDB();
+	await db.connection.disconnectDB();
 });
 
 process.once("SIGUSR2", async function () {
 	// On nodemon refresh
-	await disconnectDB();
+	await db.connection.disconnectDB();
 });
