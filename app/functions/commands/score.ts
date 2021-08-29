@@ -28,7 +28,7 @@ const score = async (): Promise<void> => {
 			// is group chat
 			if (
 				telegram.api.message.getText(ctx).trim() === "/score" ||
-				telegram.api.message.getText(ctx).trim() === "/score@QuizQuickAnswerBot"
+				telegram.api.message.getText(ctx).trim() === `/score@${telegram.api.bot.getUsername(ctx)}`
 			) {
 				const score: TelegramUserInterface = await db.scores.get({
 					group_id: telegram.api.message.getGroupID(ctx),
@@ -56,7 +56,7 @@ const score = async (): Promise<void> => {
 				const username = telegram.api.message
 					.getText(ctx)
 					.replace("/score ", "")
-					.replace("/score@QuizQuickAnswerBot", "")
+					.replace(`/score@${telegram.api.bot.getUsername(ctx)}`, "")
 					.replace("@", "")
 					.trim();
 
