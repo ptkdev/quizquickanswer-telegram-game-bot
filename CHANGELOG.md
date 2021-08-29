@@ -2,6 +2,7 @@
 
 -   Multilanguage support
 -   Scores board
+-   Porting from lowdb to mongodb
 
 <!-- all-shields/sponsors-badges:START -->
 
