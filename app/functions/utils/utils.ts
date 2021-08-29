@@ -8,7 +8,7 @@ import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.
  * @param {number} index - index refered to the top 10 position
  * @return {string} medal_emoji - emoji
  */
-export const getTopScoreEmoji = (index: number): string => {
+const getTopScoreEmoji = (index: number): string => {
 	let medal_emoji = "";
 	switch (index) {
 		case 0:
@@ -53,7 +53,7 @@ export const getTopScoreEmoji = (index: number): string => {
  * @param {any} error - error message
  * @return {TelegramUserInterface} user - empty telegram user
  */
-export const getEmptyTelegramUserInterface = (error: any): TelegramUserInterface => {
+const getEmptyTelegramUserInterface = (error: any): TelegramUserInterface => {
 	return {
 		id: 0,
 		is_bot: false,
@@ -75,7 +75,7 @@ export const getEmptyTelegramUserInterface = (error: any): TelegramUserInterface
  * @param {any} error - error message
  * @return {QuestionsInterface} question - empty telegram user
  */
-export const getEmptyQuestionsInterface = (error: any): QuestionsInterface => {
+const getEmptyQuestionsInterface = (error: any): QuestionsInterface => {
 	return {
 		username: "",
 		group_id: 0,
@@ -84,3 +84,6 @@ export const getEmptyQuestionsInterface = (error: any): QuestionsInterface => {
 		error,
 	};
 };
+
+export { getEmptyQuestionsInterface, getEmptyTelegramUserInterface, getTopScoreEmoji };
+export default { getEmptyQuestionsInterface, getEmptyTelegramUserInterface, getTopScoreEmoji };
