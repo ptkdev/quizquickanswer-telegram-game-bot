@@ -20,7 +20,7 @@ import telegram from "@routes/api/telegram";
  */
 const quit = async (): Promise<void> => {
 	bot.command("quit", async (ctx) => {
-		ctx.telegram.leaveChat(await telegram.api.message.getGroupID(ctx));
+		ctx.telegram.leaveChat(telegram.api.message.getGroupID(ctx));
 		ctx.leaveChat();
 	});
 };

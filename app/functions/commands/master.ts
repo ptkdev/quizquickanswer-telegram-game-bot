@@ -24,18 +24,15 @@ import { TelegramUserInterface } from "@app/types/databases.type";
  */
 const master = async (): Promise<void> => {
 	bot.command("master", async (ctx) => {
-		if ((await telegram.api.message.getGroupID(ctx)) < 0) {
+		if (telegram.api.message.getGroupID(ctx) < 0) {
 			// is group chat
 			if (
-				(await telegram.api.message.getText(ctx)).trim() === "/master" ||
-				(await telegram.api.message.getText(ctx)).trim() === "/master@QuizQuickAnswerBot"
+				telegram.api.message.getText(ctx).trim() === "/master" ||
+				telegram.api.message.getText(ctx).trim() === `/master@${telegram.api.bot.getUsername(ctx)}`
 			) {
-				ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), translate("master_command_empty"));
+				telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("master_command_empty"));
 			} else {
-				const username = (await telegram.api.message.getText(ctx))
-					.replace("/master ", "")
-					.replace("@", "")
-					.trim();
+				const username = telegram.api.message.getText(ctx).replace("/master ", "").replace("@", "").trim();
 
 				const json = {
 					id: 0,
@@ -45,27 +42,28 @@ const master = async (): Promise<void> => {
 					language_code: "",
 					question: "",
 					description: "",
-					group_id: await telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getGroupID(ctx),
 				};
 
 				const master: TelegramUserInterface = await db.master.get({
-					group_id: await telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getGroupID(ctx),
 				});
 				if (master) {
 					await db.master.update({}, json);
 				} else {
 					await db.master.add(json);
 				}
-				ctx.telegram.sendMessage(
-					await telegram.api.message.getGroupID(ctx),
+				telegram.api.message.send(
+					ctx,
+					telegram.api.message.getGroupID(ctx),
 					translate("master_command_success", {
 						username: username,
-						bot_username: ctx.botInfo.username,
+						bot_username: telegram.api.bot.getUsername(ctx),
 					}),
 				);
 			}
 		} else {
-			ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), translate("command_only_group"));
+			telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
 		}
 	});
 };

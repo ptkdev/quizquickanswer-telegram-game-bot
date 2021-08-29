@@ -16,17 +16,19 @@ import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.
 
 const voteQuestion = async (): Promise<void> => {
 	bot.command(["badquestion", "goodquestion"], async (ctx) => {
-		if ((await telegram.api.message.getGroupID(ctx)) < 0) {
+		if (telegram.api.message.getGroupID(ctx) < 0) {
 			// is group chat
 
-			const username = (await telegram.api.message.getText(ctx))
+			const username = telegram.api.message
+				.getText(ctx)
 				.replace("/goodquestion", "")
 				.replace("/badquestion", "")
 				.replace("@", "")
 				.trim();
-			if (username === (await telegram.api.message.getUsername(ctx))) {
-				ctx.telegram.sendMessage(
-					await telegram.api.message.getGroupID(ctx),
+			if (username === telegram.api.message.getUsername(ctx)) {
+				telegram.api.message.send(
+					ctx,
+					telegram.api.message.getGroupID(ctx),
 					translate("goodquestion_not_autovote"),
 					{
 						parse_mode: "MarkdownV2",
@@ -36,17 +38,17 @@ const voteQuestion = async (): Promise<void> => {
 			}
 
 			if (username !== "") {
-				const group_id = await telegram.api.message.getCurrentGroupID(ctx);
-				const text = await telegram.api.message.getText(ctx);
+				const group_id = telegram.api.message.getGroupID(ctx);
+				const text = telegram.api.message.getText(ctx);
 				const is_good_question = text.split(" ")[0] === "/goodquestion";
 
 				const user_questions: QuestionsInterface = await db.questions.get({
-					group_id: await telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getGroupID(ctx),
 					username,
 				});
 
 				const user_score: TelegramUserInterface = await db.scores.get({
-					group_id: await telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getGroupID(ctx),
 					username,
 				});
 
@@ -82,12 +84,12 @@ const voteQuestion = async (): Promise<void> => {
 					: `*Votazione andata a buon fine*\\! 🗳 \n\n@*${username}* hai ricevuto un voto *negativo*, puoi fare di meglio la prossima volta\\. 💩 \n\nIl tuo punteggio è di *${combinedPoints}* punt${
 							combinedPoints === 1 ? "o" : "i"
 					  }\\! ⚽️`;
-				ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), message, {
+				telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), message, {
 					parse_mode: "MarkdownV2",
 				});
 			}
 		} else {
-			ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), translate("command_only_group"));
+			telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
 		}
 	});
 };

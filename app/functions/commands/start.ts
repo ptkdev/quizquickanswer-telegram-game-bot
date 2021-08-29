@@ -21,18 +21,19 @@ import telegram from "@routes/api/telegram";
  */
 const start = async (): Promise<void> => {
 	bot.start(async (ctx) => {
-		db.users.add(ctx.update.message.from);
+		db.users.add(telegram.api.message.getFullUser(ctx));
 
-		if ((await telegram.api.message.getGroupID(ctx)) < 0) {
+		if (telegram.api.message.getGroupID(ctx) < 0) {
 			// is group chat
-			ctx.telegram.sendMessage(
-				await telegram.api.message.getGroupID(ctx),
+			telegram.api.message.send(
+				ctx,
+				telegram.api.message.getGroupID(ctx),
 				translate("start_command_group", {
-					username: await telegram.api.message.getUsername(ctx),
+					username: telegram.api.message.getUsername(ctx),
 				}),
 			);
 		} else {
-			ctx.telegram.sendMessage(await telegram.api.message.getGroupID(ctx), translate("start_command_private"));
+			telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("start_command_private"));
 		}
 	});
 };

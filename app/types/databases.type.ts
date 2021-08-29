@@ -15,7 +15,7 @@
  * Telegram User Interface
  * =====================
  *
- * @Context: ctx.update.message.from
+ * @Context: telegram.api.message.getFullUser(ctx)
  *
  * @interface [TelegramUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
  *
