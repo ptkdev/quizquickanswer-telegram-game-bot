@@ -25,6 +25,7 @@ const voteQuestion = async (): Promise<void> => {
 				.replace("/badquestion", "")
 				.replace("@", "")
 				.trim();
+
 			if (username === telegram.api.message.getUsername(ctx)) {
 				telegram.api.message.send(
 					ctx,
