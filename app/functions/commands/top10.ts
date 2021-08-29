@@ -10,8 +10,7 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
-import { getMultipleScores } from "@app/functions/common/api/database/scores";
-import { getQuestion } from "@app/functions/common/api/database/questions";
+
 import telegram from "@app/functions/common/api/telegram";
 import db from "@app/functions/common/api/database";
 import { getTopScoreEmoji } from "@app/functions/common/utils/utils";
@@ -21,13 +20,13 @@ const top10 = async (): Promise<void> => {
 	bot.command("top10", async (ctx) => {
 		if ((await telegram.api.message.getGroupID(ctx)) < 0) {
 			// is group chat
-			const top_scores: TelegramUserInterface[] = await db.scores.getMultipleScores({
+			const top_scores: TelegramUserInterface[] = await db.scores.getMultiple({
 				group_id: ctx.message.chat.id,
 			});
 
 			let mapped_scores: TelegramUserInterface[] = await Promise.all(
 				top_scores.map(async (s: TelegramUserInterface) => {
-					const user_questions: QuestionsInterface = await db.questions.getQuestion({
+					const user_questions: QuestionsInterface = await db.questions.get({
 						group_id: ctx.message.chat.id,
 						username: s.username,
 					});

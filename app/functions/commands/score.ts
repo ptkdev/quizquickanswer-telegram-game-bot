@@ -30,11 +30,11 @@ const score = async (): Promise<void> => {
 				(await telegram.api.message.getText(ctx)).trim() === "/score" ||
 				(await telegram.api.message.getText(ctx)).trim() === "/score@QuizQuickAnswerBot"
 			) {
-				const score: TelegramUserInterface = await db.scores.getScore({
+				const score: TelegramUserInterface = await db.scores.get({
 					group_id: await telegram.api.message.getGroupID(ctx),
 					id: ctx.update.message.from.id,
 				});
-				const user_questions: QuestionsInterface = await db.questions.getQuestion({
+				const user_questions: QuestionsInterface = await db.questions.get({
 					group_id: await telegram.api.message.getGroupID(ctx),
 					username: await telegram.api.message.getUsername(ctx),
 				});
@@ -58,11 +58,11 @@ const score = async (): Promise<void> => {
 					.replace("@", "")
 					.trim();
 
-				const score: TelegramUserInterface = await db.scores.getScore({
+				const score: TelegramUserInterface = await db.scores.get({
 					group_id: await telegram.api.message.getGroupID(ctx),
 					username,
 				});
-				const user_questions: QuestionsInterface = await db.questions.getQuestion({
+				const user_questions: QuestionsInterface = await db.questions.get({
 					group_id: await telegram.api.message.getGroupID(ctx),
 					username,
 				});

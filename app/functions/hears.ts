@@ -10,9 +10,7 @@
  */
 import bot from "@app/functions/telegraf";
 import translate from "@app/functions/translate";
-import { getQuestion } from "@app/functions/common/api/database/questions";
-import { getScore, addScore, updateScore } from "@app/functions/common/api/database/scores";
-import { getMaster, updateMaster } from "@app/functions/common/api/database/master";
+import db from "@app/functions/common/api/database";
 import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
 
 /**
@@ -25,7 +23,7 @@ const hears = async (): Promise<void> => {
 	bot.on("text", async (ctx) => {
 		if (ctx.message.chat.id > 0) {
 			// is chat with bot
-			const master: TelegramUserInterface = await getMaster({ username: ctx.update.message.from.username });
+			const master: TelegramUserInterface = await db.master.get({ username: ctx.update.message.from.username });
 
 			if (master?.username === ctx.update.message.from.username) {
 				const text = ctx.update.message.text.split("-");
@@ -40,7 +38,7 @@ const hears = async (): Promise<void> => {
 				} else if (json.description === undefined || json.description === "") {
 					ctx.telegram.sendMessage(ctx.message.chat.id, translate("hears_missing_tip"));
 				} else {
-					await updateMaster({}, json);
+					await db.master.update({}, json);
 
 					const quiz = await ctx.telegram.sendMessage(master.group_id, `⏱ ${json.description || ""}`);
 					ctx.telegram.pinChatMessage(master.group_id, quiz.message_id, { disable_notification: true });
@@ -52,16 +50,16 @@ const hears = async (): Promise<void> => {
 
 		if (ctx.message.chat.id < 0) {
 			// is group
-			const master: TelegramUserInterface = await getMaster({ group_id: ctx.message.chat.id });
+			const master: TelegramUserInterface = await db.master.get({ group_id: ctx.message.chat.id });
 
 			if (ctx.update.message.text.trim().toLowerCase() == master.question.trim().toLowerCase()) {
 				if (ctx.update.message.from.username) {
-					const user_score: TelegramUserInterface = await getScore({
+					const user_score: TelegramUserInterface = await db.scores.get({
 						group_id: master.group_id,
 						id: ctx.update.message.from.id,
 					});
 
-					const user_questions: QuestionsInterface = await getQuestion({
+					const user_questions: QuestionsInterface = await db.questions.get({
 						group_id: ctx.message.chat.id,
 						username: ctx.update.message.from.username,
 					});
@@ -86,11 +84,11 @@ const hears = async (): Promise<void> => {
 					json.question = "";
 					json.description = "";
 					json.group_id = ctx.message.chat.id;
-					await updateMaster({ group_id: ctx.message.chat.id }, json);
+					await db.master.update({ group_id: ctx.message.chat.id }, json);
 
 					if (user_score) {
 						user_score.score += 10;
-						await updateScore(
+						await db.scores.update(
 							{
 								group_id: master.group_id,
 								id: ctx.update.message.from.id,
@@ -100,7 +98,7 @@ const hears = async (): Promise<void> => {
 					} else {
 						const json_score: TelegramUserInterface = ctx.update.message.from;
 						json_score.score = 10;
-						await addScore(json_score);
+						await db.scores.add(json_score);
 					}
 				} else {
 					ctx.telegram.sendMessage(
