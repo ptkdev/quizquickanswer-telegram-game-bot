@@ -1,3 +1,13 @@
+/**
+ * Users database
+ * =====================
+ *
+ * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ *
+ * @license: MIT License
+ *
+ */
 import { Schema, model } from "mongoose";
 import type { TelegramUserInterface } from "@app/types/databases.type";
 import type { GameInterface } from "@app/types/game.type.js";

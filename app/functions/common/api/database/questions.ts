@@ -1,4 +1,13 @@
-/* eslint-disable indent */
+/**
+ * Question database
+ * =====================
+ *
+ * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ *
+ * @license: MIT License
+ *
+ */
 import { Schema, model } from "mongoose";
 import type { QuestionsInterface } from "../../../../types/databases.type";
 

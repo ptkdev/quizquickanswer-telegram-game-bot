@@ -1,3 +1,14 @@
+/**
+ * Wrapper telegram api (message)
+ * =====================
+ *
+ * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ *
+ * @license: MIT License
+ *
+ */
+
 const getUsername = async (ctx: any): Promise<string> => {
 	const username = ctx.update.message.from?.username;
 
