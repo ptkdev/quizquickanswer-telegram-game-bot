@@ -53,7 +53,7 @@ const voteQuestion = async (): Promise<void> => {
 					username,
 				});
 
-				const score: number = user_score.score || 0;
+				const score: number = user_score?.score || 0;
 
 				if (user_questions) {
 					// if voted user is in the question DB
@@ -73,10 +73,13 @@ const voteQuestion = async (): Promise<void> => {
 					await db.questions.add(json);
 				}
 
-				const combinedPoints = // NOTE Da fixare
-					score +
-					(user_questions?.good_questions || is_good_question ? 1 : 0) -
-					(user_questions?.bad_questions || is_good_question ? 0 : 1);
+				let combinedPoints: number = score;
+
+				if (user_questions) {
+					combinedPoints += user_questions.good_questions - user_questions.bad_questions;
+				} else {
+					combinedPoints += (is_good_question ? 1 : 0) - (is_good_question ? 0 : 1);
+				}
 
 				const message = is_good_question
 					? `*Votazione andata a buon fine*\\! 🗳 \n\n*Complimenti @${username}* hai ricevuto un voto *positivo*, ottima domanda\\! 🔥\n\nIl tuo punteggio è di *${combinedPoints}* punt${
