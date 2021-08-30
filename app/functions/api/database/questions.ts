@@ -33,8 +33,8 @@ const add = async (user: QuestionsInterface): Promise<void> => {
 	try {
 		const doc = new query(user);
 		await doc.save();
-	} catch (error) {
-		logger.error(error);
+	} catch (error: any) {
+		logger.error(error || "");
 	}
 };
 
@@ -52,8 +52,8 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 				return err;
 			}
 		});
-	} catch (error) {
-		logger.error(error);
+	} catch (error: any) {
+		logger.error(error || "");
 	}
 };
 
@@ -72,8 +72,8 @@ const update = async (search: Record<string, number | string | boolean>, user: Q
 				return err;
 			}
 		});
-	} catch (error) {
-		logger.error(error);
+	} catch (error: any) {
+		logger.error(error || "");
 	}
 };
 
@@ -88,14 +88,14 @@ const update = async (search: Record<string, number | string | boolean>, user: Q
  */
 const get = async (search: Record<string, number | string | boolean>): Promise<QuestionsInterface> => {
 	try {
-		const user = await query.findOne(search, function (error) {
+		const user = await query.findOne(search, function (error: string) {
 			if (error) {
 				return getEmptyQuestionsInterface(error);
 			}
 		});
 		return user;
-	} catch (error) {
-		logger.error(error);
+	} catch (error: any) {
+		logger.error(error || "");
 
 		return getEmptyQuestionsInterface(error);
 	}

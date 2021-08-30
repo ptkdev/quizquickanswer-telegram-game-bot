@@ -38,8 +38,8 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
 	try {
 		const doc = new query(user);
 		await doc.save();
-	} catch (error) {
-		logger.error(error);
+	} catch (error: any) {
+		logger.error(error || "");
 	}
 };
 
@@ -58,8 +58,8 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 			}
 			logger.info("User with score deleted");
 		});
-	} catch (error) {
-		logger.error(error);
+	} catch (error: any) {
+		logger.error(error || "");
 	}
 };
 
@@ -81,8 +81,8 @@ const update = async (
 				return err;
 			}
 		});
-	} catch (error) {
-		logger.error(error);
+	} catch (error: any) {
+		logger.error(error || "");
 	}
 };
 
@@ -97,14 +97,14 @@ const update = async (
  */
 const get = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
 	try {
-		const user = await query.findOne(search, function (error) {
+		const user = await query.findOne(search, function (error: string) {
 			if (error) {
 				return getEmptyTelegramUserInterface(error);
 			}
 		});
 		return user;
-	} catch (error) {
-		logger.error(error);
+	} catch (error: any) {
+		logger.error(error || "");
 		return getEmptyTelegramUserInterface(error);
 	}
 };
@@ -120,13 +120,13 @@ const get = async (search: Record<string, number | string | boolean>): Promise<T
  */
 const getMultiple = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface[]> => {
 	try {
-		const user = await query.find(search, function (error) {
+		const user = await query.find(search, function (error: string) {
 			if (error) {
 				return getEmptyTelegramUserInterface(error);
 			}
 		});
 		return user || [];
-	} catch (error) {
+	} catch (error: any) {
 		return [];
 	}
 };

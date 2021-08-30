@@ -35,7 +35,7 @@ const connectDB = async (): Promise<void> => {
 		database = Mongoose.connection;
 		logger.info("Connected to database");
 	} catch (err) {
-		logger.error("Failed to connect to MongoDB - ", err);
+		logger.error(`Failed to connect to MongoDB - ${err}`);
 	}
 };
 
@@ -56,7 +56,7 @@ const disconnectDB = async (): Promise<void> => {
 			process.exit(0);
 		});
 	} catch (err) {
-		logger.error("Failed to disconnect from MongoDB - ", err);
+		logger.error(`Failed to disconnect from MongoDB - ${err}`);
 	}
 };
 
