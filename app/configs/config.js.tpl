@@ -23,7 +23,7 @@ module.exports = {
 	debug: true,
 
 	// LOGS
-	log: {
+	logger: {
 		path: {
 			debug_log: "./logs/debug.log",
 			error_log: "./logs/errors.log",
