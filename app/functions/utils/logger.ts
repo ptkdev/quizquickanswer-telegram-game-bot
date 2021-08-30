@@ -12,7 +12,7 @@
 import Logger, { LoggerOptions } from "@ptkdev/logger";
 import config from "@configs/config";
 
-const options: LoggerOptions = JSON.parse(JSON.stringify(config.logger)); // typescript fuck you https://github.com/microsoft/TypeScript/issues/26552#issuecomment-484124880
+const options: LoggerOptions = config.logger as unknown as LoggerOptions; // typescript fuck you https://github.com/microsoft/TypeScript/issues/26552#issuecomment-484124880
 const logger = new Logger(options);
 
 export { logger };
