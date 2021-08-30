@@ -10,6 +10,7 @@
  */
 import configs from "@configs/config";
 import Mongoose from "mongoose";
+import { logger } from "@app/functions/utils/logger";
 
 let database: Mongoose.Connection;
 
@@ -21,7 +22,7 @@ let database: Mongoose.Connection;
  */
 const connectDB = async (): Promise<void> => {
 	if (database) {
-		console.log("trying to connect but have already a connection");
+		logger.info("trying to connect but have already a connection");
 		return;
 	}
 	try {
@@ -32,9 +33,9 @@ const connectDB = async (): Promise<void> => {
 			useCreateIndex: true,
 		});
 		database = Mongoose.connection;
-		console.log("Connected to database");
+		logger.info("Connected to database");
 	} catch (err) {
-		console.log("Failed to connect to MongoDB - ", err);
+		logger.error("Failed to connect to MongoDB - ", err);
 	}
 };
 
@@ -46,16 +47,16 @@ const connectDB = async (): Promise<void> => {
  */
 const disconnectDB = async (): Promise<void> => {
 	if (!database) {
-		console.log("tried to disconnect but dont have connections");
+		logger.info("tried to disconnect but dont have connections");
 		return;
 	}
 	try {
 		await Mongoose.disconnect(() => {
-			console.log("Disconnected from database");
+			logger.info("Disconnected from database");
 			process.exit(0);
 		});
 	} catch (err) {
-		console.log("Failed to disconnect from MongoDB - ", err);
+		logger.error("Failed to disconnect from MongoDB - ", err);
 	}
 };
 

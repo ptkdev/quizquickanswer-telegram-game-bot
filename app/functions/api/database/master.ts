@@ -11,6 +11,7 @@
 import { Schema, model } from "mongoose";
 import type { TelegramUserInterface } from "@app/types/databases.type";
 import { getEmptyTelegramUserInterface } from "@app/functions/utils/utils";
+import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<TelegramUserInterface>({
 	id: { type: Number, required: true },
@@ -37,7 +38,7 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
 		const doc = new query(user);
 		await doc.save();
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 };
 
@@ -52,11 +53,11 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 	try {
 		query.findOneAndDelete(search, function (error) {
 			if (error) {
-				console.log(error);
+				logger.error(error);
 			}
 		});
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 };
 
@@ -75,11 +76,11 @@ const update = async (
 	try {
 		query.findOneAndUpdate(search, user, function (error) {
 			if (error) {
-				console.log(error);
+				logger.error(error);
 			}
 		});
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 };
 
@@ -100,7 +101,7 @@ const get = async (search: Record<string, number | string | boolean>): Promise<T
 		});
 		return user;
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 		return getEmptyTelegramUserInterface(error);
 	}
 };

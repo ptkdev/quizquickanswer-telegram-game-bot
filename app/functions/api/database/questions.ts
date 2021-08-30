@@ -11,6 +11,7 @@
 import { Schema, model } from "mongoose";
 import type { QuestionsInterface } from "../../../types/databases.type";
 import { getEmptyQuestionsInterface } from "@app/functions/utils/utils";
+import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<QuestionsInterface>({
 	username: { type: String, required: true },
@@ -33,7 +34,7 @@ const add = async (user: QuestionsInterface): Promise<void> => {
 		const doc = new query(user);
 		await doc.save();
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 };
 
@@ -52,7 +53,7 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 			}
 		});
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 };
 
@@ -72,7 +73,7 @@ const update = async (search: Record<string, number | string | boolean>, user: Q
 			}
 		});
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 };
 
@@ -94,7 +95,8 @@ const get = async (search: Record<string, number | string | boolean>): Promise<Q
 		});
 		return user;
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
+
 		return getEmptyQuestionsInterface(error);
 	}
 };

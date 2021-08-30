@@ -12,6 +12,7 @@ import { Schema, model } from "mongoose";
 import type { TelegramUserInterface } from "@app/types/databases.type";
 import type { GameInterface } from "@app/types/game.type.js";
 import { getEmptyTelegramUserInterface } from "@app/functions/utils/utils";
+import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<GameInterface>({
 	id: { type: String, required: true },
@@ -38,7 +39,7 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
 		const doc = new query(user);
 		await doc.save();
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 };
 
@@ -51,13 +52,13 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
-		query.findOneAndDelete(search, function (err) {
-			if (err) {
-				return err;
+		query.findOneAndDelete(search, function (error) {
+			if (error) {
+				logger.error(error);
 			}
 		});
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 };
 
@@ -74,13 +75,13 @@ const update = async (
 	user: TelegramUserInterface,
 ): Promise<void> => {
 	try {
-		query.findOneAndUpdate(search, user, function (err) {
-			if (err) {
-				return err;
+		query.findOneAndUpdate(search, user, function (error) {
+			if (error) {
+				logger.error(error);
 			}
 		});
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 };
 
