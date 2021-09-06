@@ -56,7 +56,6 @@ const hears = async (): Promise<void> => {
 					await db.master.update({}, json);
 
 					const quiz = await telegram.api.message.send(ctx, master.group_id, `⏱ ${json.description || ""}`);
-					console.log(quiz);
 					await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
 						disable_notification: true,
 					});
