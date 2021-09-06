@@ -16,8 +16,12 @@ import db from "@routes/api/database";
 import { getTopScoreEmoji } from "@app/functions/utils/utils";
 import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
 
+import logger from "@app/functions/utils/logger";
+
 const top10 = async (): Promise<void> => {
 	bot.command("top10", async (ctx) => {
+		logger.info("command: /top10", "top10.ts:top10()");
+
 		if (telegram.api.message.getGroupID(ctx) < 0) {
 			// is group chat
 			const top_scores: TelegramUserInterface[] = await db.scores.getMultiple({
@@ -28,7 +32,7 @@ const top10 = async (): Promise<void> => {
 				top_scores.map(async (s: TelegramUserInterface) => {
 					const user_questions: QuestionsInterface = await db.questions.get({
 						group_id: telegram.api.message.getGroupID(ctx),
-						username: s.username,
+						username: s?.username || "",
 					});
 
 					if (user_questions) {
@@ -52,18 +56,16 @@ const top10 = async (): Promise<void> => {
 				.join("");
 
 			if (scores_message) {
-				telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), scores_message, {
-					parse_mode: "MarkdownV2",
-				});
+				await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), scores_message);
 			} else {
-				telegram.api.message.send(
+				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getGroupID(ctx),
 					translate("top10_command_not_available"),
 				);
 			}
 		} else {
-			telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
 		}
 	});
 };

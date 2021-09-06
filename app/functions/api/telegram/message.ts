@@ -8,6 +8,7 @@
  * @license: MIT License
  *
  */
+import logger from "@app/functions/utils/logger";
 
 const getUsername = (ctx: any): string => {
 	const username = ctx?.update?.message?.from?.username;
@@ -46,15 +47,36 @@ const getText = (ctx: any): string => {
 	return ctx?.update?.message?.text || ctx?.message?.text || "";
 };
 
-const send = (ctx: any, group_id: number, text: string, options: any = { parse_mode: "HTML" }): any => {
+const send = async (ctx: any, group_id: number, text: string, options: any = { parse_mode: "HTML" }): Promise<any> => {
 	if (group_id && text) {
-		const message = ctx.telegram.sendMessage(group_id, text, options);
+		let message;
 
-		return message;
+		try {
+			message = await ctx.telegram.sendMessage(group_id, text, options);
+			return message;
+		} catch (err: any) {
+			logger.error(JSON.stringify(err), "message.ts:send()");
+		}
 	}
-
-	return 0;
 };
 
-export { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send };
-export default { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send };
+const pin = async (
+	ctx: any,
+	group_id: number,
+	message_id: number,
+	options: any = { disable_notification: true },
+): Promise<void> => {
+	logger.debug(`group_id: ${group_id}`, "message.ts:pin()");
+	logger.debug(`message_id: ${message_id}`, "message.ts:pin()");
+
+	if (group_id && message_id) {
+		try {
+			await ctx.telegram.pinChatMessage(group_id, message_id, options);
+		} catch (err: any) {
+			logger.error(JSON.stringify(err), "message.ts:pin()");
+		}
+	}
+};
+
+export { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send, pin };
+export default { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send, pin };

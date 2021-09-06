@@ -13,6 +13,8 @@ import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 
+import logger from "@app/functions/utils/logger";
+
 /**
  * command: /start
  * =====================
@@ -21,11 +23,13 @@ import telegram from "@routes/api/telegram";
  */
 const start = async (): Promise<void> => {
 	bot.start(async (ctx) => {
+		logger.info("command: /start", "start.ts:start()");
+
 		db.users.add(telegram.api.message.getFullUser(ctx));
 
 		if (telegram.api.message.getGroupID(ctx) < 0) {
 			// is group chat
-			telegram.api.message.send(
+			await telegram.api.message.send(
 				ctx,
 				telegram.api.message.getGroupID(ctx),
 				translate("start_command_group", {
@@ -33,7 +37,11 @@ const start = async (): Promise<void> => {
 				}),
 			);
 		} else {
-			telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("start_command_private"));
+			await telegram.api.message.send(
+				ctx,
+				telegram.api.message.getGroupID(ctx),
+				translate("start_command_private"),
+			);
 		}
 	});
 };

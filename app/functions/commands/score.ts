@@ -16,6 +16,8 @@ import telegram from "@routes/api/telegram";
 
 import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.type";
 
+import logger from "@app/functions/utils/logger";
+
 /**
  * command: /score
  * =====================
@@ -24,6 +26,8 @@ import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.
  */
 const score = async (): Promise<void> => {
 	bot.command("score", async (ctx) => {
+		logger.info("command: /score", "score.ts:score()");
+
 		if (telegram.api.message.getGroupID(ctx) < 0) {
 			// is group chat
 			if (
@@ -42,7 +46,7 @@ const score = async (): Promise<void> => {
 				if (user_questions) {
 					score.score += user_questions.good_questions - user_questions.bad_questions;
 				}
-				telegram.api.message.send(
+				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getGroupID(ctx),
 					translate("score_command_show", {
@@ -72,7 +76,7 @@ const score = async (): Promise<void> => {
 					score.score += user_questions.good_questions - user_questions.bad_questions;
 				}
 
-				telegram.api.message.send(
+				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getGroupID(ctx),
 					translate("score_command_show_with_username", {
@@ -82,7 +86,7 @@ const score = async (): Promise<void> => {
 				);
 			}
 		} else {
-			telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
 		}
 	});
 };

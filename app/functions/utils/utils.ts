@@ -63,6 +63,7 @@ const getEmptyTelegramUserInterface = (error: any): TelegramUserInterface => {
 		group_id: 0,
 		question: "",
 		description: "",
+		score: 0,
 		error,
 	};
 };

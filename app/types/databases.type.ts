@@ -111,7 +111,7 @@ export interface TelegramUserInterface {
 	 * @param { number } score - user current score
 	 *
 	 */
-	score?: number;
+	score: number;
 	/**
 	 * User Interface
 	 * =====================
@@ -121,7 +121,7 @@ export interface TelegramUserInterface {
 	 * @param { number } group_id - users group id
 	 *
 	 */
-	group_id?: number;
+	group_id: number;
 	/**
 	 * User Interface
 	 * =====================
@@ -181,7 +181,7 @@ export interface QuestionsInterface {
 	 * @param { string } username - user username from telegram
 	 *
 	 */
-	username?: string;
+	username: string;
 	/**
 	 * Questions Interface
 	 * =====================
@@ -191,7 +191,7 @@ export interface QuestionsInterface {
 	 * @param { string } good_questions - user good questions count
 	 *
 	 */
-	good_questions?: number;
+	good_questions: number;
 	/**
 	 * Questions Interface
 	 * =====================
@@ -201,7 +201,7 @@ export interface QuestionsInterface {
 	 * @param { number } bad_questions - user bad questions count
 	 *
 	 */
-	bad_questions?: number;
+	bad_questions: number;
 	/**
 	 * Questions Interface
 	 * =====================
@@ -211,7 +211,7 @@ export interface QuestionsInterface {
 	 * @param { string } group_id - user group id
 	 *
 	 */
-	group_id?: number;
+	group_id: number;
 	/**
 	 * Questions Interface
 	 * =====================

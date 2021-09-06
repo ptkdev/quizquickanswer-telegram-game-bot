@@ -12,6 +12,8 @@ import bot from "@app/core/telegraf";
 
 import telegram from "@routes/api/telegram";
 
+import logger from "@app/functions/utils/logger";
+
 /**
  * command: /quit
  * =====================
@@ -20,6 +22,8 @@ import telegram from "@routes/api/telegram";
  */
 const quit = async (): Promise<void> => {
 	bot.command("quit", async (ctx) => {
+		logger.info("command: /quit", "quit.ts:quit()");
+
 		ctx.telegram.leaveChat(telegram.api.message.getGroupID(ctx));
 		ctx.leaveChat();
 	});

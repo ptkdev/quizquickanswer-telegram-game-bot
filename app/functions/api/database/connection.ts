@@ -33,9 +33,9 @@ const connectDB = async (): Promise<void> => {
 			useCreateIndex: true,
 		});
 		database = Mongoose.connection;
-		logger.info("Connected to database");
-	} catch (err) {
-		logger.error(`Failed to connect to MongoDB - ${err}`);
+		logger.info("Connected to database", "connections.ts:connectDB()");
+	} catch (error: any) {
+		logger.error(JSON.stringify(error || ""), "connections.ts:connectDB()");
 	}
 };
 
@@ -52,11 +52,11 @@ const disconnectDB = async (): Promise<void> => {
 	}
 	try {
 		await Mongoose.disconnect(() => {
-			logger.info("Disconnected from database");
+			logger.info("Disconnected from database", "connections.ts:disconnectDB()");
 			process.exit(0);
 		});
-	} catch (err) {
-		logger.error(`Failed to disconnect from MongoDB - ${err}`);
+	} catch (error: any) {
+		logger.error(JSON.stringify(error || ""), "connections.ts:disconnectDB()");
 	}
 };
 

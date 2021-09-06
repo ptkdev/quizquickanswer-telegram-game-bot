@@ -10,6 +10,8 @@
  */
 import bot from "@app/core/telegraf";
 
+import logger from "@app/functions/utils/logger";
+
 /**
  * Run bot
  * =====================
@@ -17,6 +19,8 @@ import bot from "@app/core/telegraf";
  *
  */
 const launch = async (): Promise<void> => {
+	logger.info("command: /launch", "launch.ts:launch()");
+
 	bot.launch();
 };
 

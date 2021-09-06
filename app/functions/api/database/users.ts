@@ -39,7 +39,7 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
 		const doc = new query(user);
 		await doc.save();
 	} catch (error: any) {
-		logger.error(error || "");
+		logger.error(JSON.stringify(error || ""), "users.ts:add()");
 	}
 };
 
@@ -58,7 +58,7 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 			}
 		});
 	} catch (error: any) {
-		logger.error(error || "");
+		logger.error(JSON.stringify(error || ""), "users.ts:remove()");
 	}
 };
 
@@ -81,7 +81,7 @@ const update = async (
 			}
 		});
 	} catch (error: any) {
-		logger.error(error || "");
+		logger.error(JSON.stringify(error || ""), "users.ts:update()");
 	}
 };
 
@@ -101,10 +101,12 @@ const get = async (search: Record<string, number | string | boolean>): Promise<T
 				return getEmptyTelegramUserInterface(error);
 			}
 		});
+
 		return user;
 	} catch (error: any) {
-		return getEmptyTelegramUserInterface(error);
+		logger.error(JSON.stringify(error || ""), "users.ts:get()");
 	}
+	return getEmptyTelegramUserInterface("");
 };
 
 export { get, update, remove, add };

@@ -11,7 +11,11 @@ import commands from "@app/routes/commands";
  * @license: MIT License
  *
  */
+import logger from "@app/functions/utils/logger";
+
 (async () => {
+	logger.info("Bot is starting...", "bot.ts:main()");
+
 	await db.connection.connectDB();
 
 	await commands.quit();

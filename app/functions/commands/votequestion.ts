@@ -14,8 +14,12 @@ import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.type";
 
+import logger from "@app/functions/utils/logger";
+
 const voteQuestion = async (): Promise<void> => {
 	bot.command(["badquestion", "goodquestion"], async (ctx) => {
+		logger.info("command: /badquestion/goodquestion", "votequestion.ts:voteQuestion()");
+
 		if (telegram.api.message.getGroupID(ctx) < 0) {
 			// is group chat
 
@@ -27,13 +31,10 @@ const voteQuestion = async (): Promise<void> => {
 				.trim();
 
 			if (username === telegram.api.message.getUsername(ctx)) {
-				telegram.api.message.send(
+				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getGroupID(ctx),
 					translate("goodquestion_not_autovote"),
-					{
-						parse_mode: "MarkdownV2",
-					},
 				);
 				return;
 			}
@@ -88,12 +89,10 @@ const voteQuestion = async (): Promise<void> => {
 					: `*Votazione andata a buon fine*\\! 🗳 \n\n@*${username}* hai ricevuto un voto *negativo*, puoi fare di meglio la prossima volta\\. 💩 \n\nIl tuo punteggio è di *${combinedPoints}* punt${
 							combinedPoints === 1 ? "o" : "i"
 					  }\\! ⚽️`;
-				telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), message, {
-					parse_mode: "MarkdownV2",
-				});
+				await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), message);
 			}
 		} else {
-			telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
 		}
 	});
 };

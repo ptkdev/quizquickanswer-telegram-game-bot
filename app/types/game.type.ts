@@ -45,5 +45,5 @@ export interface GameInterface extends TelegramUserInterface {
 	 * @param { number } group_id - group id fron user playing
 	 *
 	 */
-	group_id?: number;
+	group_id: number;
 }

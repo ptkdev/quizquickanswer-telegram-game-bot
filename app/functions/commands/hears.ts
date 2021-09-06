@@ -14,6 +14,8 @@ import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
 
+import logger from "@app/functions/utils/logger";
+
 /**
  * hears: any taxt from bot chat
  * =====================
@@ -22,6 +24,8 @@ import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.
  */
 const hears = async (): Promise<void> => {
 	bot.on("text", async (ctx) => {
+		logger.info("hears: text", "hears.ts:on(text)");
+
 		if (telegram.api.message.getGroupID(ctx) > 0) {
 			// is chat with bot
 			const master: TelegramUserInterface = await db.master.get({
@@ -37,13 +41,13 @@ const hears = async (): Promise<void> => {
 				json.group_id = master.group_id || 0;
 
 				if (json.question === undefined || json.question === "") {
-					telegram.api.message.send(
+					await telegram.api.message.send(
 						ctx,
 						telegram.api.message.getGroupID(ctx),
 						translate("hears_missing_question"),
 					);
 				} else if (json.description === undefined || json.description === "") {
-					telegram.api.message.send(
+					await telegram.api.message.send(
 						ctx,
 						telegram.api.message.getGroupID(ctx),
 						translate("hears_missing_tip"),
@@ -51,11 +55,18 @@ const hears = async (): Promise<void> => {
 				} else {
 					await db.master.update({}, json);
 
-					const quiz = telegram.api.message.send(ctx, master.group_id, `⏱ ${json.description || ""}`);
-					ctx.telegram.pinChatMessage(master.group_id, quiz.message_id, { disable_notification: true });
+					const quiz = await telegram.api.message.send(ctx, master.group_id, `⏱ ${json.description || ""}`);
+					console.log(quiz);
+					await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
+						disable_notification: true,
+					});
 				}
 			} else {
-				telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("hears_not_you_master"));
+				await telegram.api.message.send(
+					ctx,
+					telegram.api.message.getGroupID(ctx),
+					translate("hears_not_you_master"),
+				);
 			}
 		}
 
@@ -65,7 +76,7 @@ const hears = async (): Promise<void> => {
 				group_id: telegram.api.message.getGroupID(ctx),
 			});
 
-			if (ctx.update.message.text.trim().toLowerCase() == master.question.trim().toLowerCase()) {
+			if (ctx.update.message.text.trim().toLowerCase() == master.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
 					const user_score: TelegramUserInterface = await db.scores.get({
 						group_id: master.group_id,
@@ -77,7 +88,7 @@ const hears = async (): Promise<void> => {
 						username: telegram.api.message.getUsername(ctx),
 					});
 
-					telegram.api.message.send(
+					await telegram.api.message.send(
 						ctx,
 						master.group_id,
 						translate("hears_win", {
@@ -115,7 +126,7 @@ const hears = async (): Promise<void> => {
 						await db.scores.add(json_score);
 					}
 				} else {
-					telegram.api.message.send(
+					await telegram.api.message.send(
 						ctx,
 						master.group_id,
 						translate("hears_win_but_not_master", {

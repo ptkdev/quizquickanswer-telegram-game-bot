@@ -39,7 +39,7 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
 		const doc = new query(user);
 		await doc.save();
 	} catch (error: any) {
-		logger.error(error || "");
+		logger.error(JSON.stringify(error || ""), "scores.ts:add()");
 	}
 };
 
@@ -59,7 +59,7 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 			logger.info("User with score deleted");
 		});
 	} catch (error: any) {
-		logger.error(error || "");
+		logger.error(JSON.stringify(error || ""), "scores.ts:remove()");
 	}
 };
 
@@ -82,7 +82,7 @@ const update = async (
 			}
 		});
 	} catch (error: any) {
-		logger.error(error || "");
+		logger.error(JSON.stringify(error || ""), "scores.ts:update()");
 	}
 };
 
@@ -102,11 +102,12 @@ const get = async (search: Record<string, number | string | boolean>): Promise<T
 				return getEmptyTelegramUserInterface(error);
 			}
 		});
+
 		return user;
 	} catch (error: any) {
-		logger.error(error || "");
-		return getEmptyTelegramUserInterface(error);
+		logger.error(JSON.stringify(error || ""), "scores.ts:get()");
 	}
+	return getEmptyTelegramUserInterface("");
 };
 
 /**
@@ -127,8 +128,10 @@ const getMultiple = async (search: Record<string, number | string | boolean>): P
 		});
 		return user || [];
 	} catch (error: any) {
-		return [];
+		logger.error(JSON.stringify(error || ""), "scores.ts:getMultiple()");
 	}
+
+	return [];
 };
 
 export { getMultiple, get, update, remove, add };

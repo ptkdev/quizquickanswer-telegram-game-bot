@@ -34,7 +34,7 @@ const add = async (user: QuestionsInterface): Promise<void> => {
 		const doc = new query(user);
 		await doc.save();
 	} catch (error: any) {
-		logger.error(error || "");
+		logger.error(JSON.stringify(error || ""), "question.ts:add()");
 	}
 };
 
@@ -53,7 +53,7 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 			}
 		});
 	} catch (error: any) {
-		logger.error(error || "");
+		logger.error(JSON.stringify(error || ""), "question.ts:remove()");
 	}
 };
 
@@ -73,7 +73,7 @@ const update = async (search: Record<string, number | string | boolean>, user: Q
 			}
 		});
 	} catch (error: any) {
-		logger.error(error || "");
+		logger.error(JSON.stringify(error || ""), "question.ts:update()");
 	}
 };
 
@@ -93,12 +93,13 @@ const get = async (search: Record<string, number | string | boolean>): Promise<Q
 				return getEmptyQuestionsInterface(error);
 			}
 		});
+
 		return user;
 	} catch (error: any) {
-		logger.error(error || "");
-
-		return getEmptyQuestionsInterface(error);
+		logger.error(JSON.stringify(error || ""), "question.ts:get()");
 	}
+
+	return getEmptyQuestionsInterface("");
 };
 
 export { get, update, remove, add };
