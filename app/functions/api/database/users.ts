@@ -19,10 +19,7 @@ const schema = new Schema<GameInterface>({
 	is_bot: { type: Boolean, required: true },
 	first_name: { type: String, required: true },
 	username: { type: String, required: true },
-	launguage_code: String,
-	question: String,
-	description: String,
-	group_id: Number,
+	launguage_code: String
 });
 
 const query = model<TelegramUserInterface>("User", schema, "users");

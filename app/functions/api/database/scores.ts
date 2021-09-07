@@ -19,8 +19,6 @@ const schema = new Schema<TelegramUserInterface>({
 	first_name: { type: String, required: true },
 	username: { type: String, required: true },
 	launguage_code: String,
-	question: String,
-	description: String,
 	group_id: { type: Number, required: true },
 	score: { type: Number, required: true },
 });
