@@ -25,7 +25,7 @@ const schema = new Schema<GameInterface>({
 	group_id: Number,
 });
 
-const query = model<TelegramUserInterface>("User", schema);
+const query = model<TelegramUserInterface>("User", schema, "users");
 
 /**
  * Users CRUD

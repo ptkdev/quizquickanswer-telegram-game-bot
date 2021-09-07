@@ -25,7 +25,7 @@ const schema = new Schema<TelegramUserInterface>({
 	score: { type: Number, required: true },
 });
 
-const query = model<TelegramUserInterface>("Scores", schema);
+const query = model<TelegramUserInterface>("Scores", schema, "scores");
 
 /**
  * Scores CRUD

@@ -20,7 +20,7 @@ const schema = new Schema<QuestionsInterface>({
 	bad_questions: { type: Number, required: true },
 });
 
-const query = model<QuestionsInterface>("Questions", schema);
+const query = model<QuestionsInterface>("Questions", schema, "questions");
 
 /**
  * Questions CRUD

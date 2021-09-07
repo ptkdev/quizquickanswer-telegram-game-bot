@@ -24,7 +24,7 @@ const schema = new Schema<TelegramUserInterface>({
 	description: String,
 });
 
-const query = model<TelegramUserInterface>("Master", schema);
+const query = model<TelegramUserInterface>("Master", schema, "master");
 
 /**
  * Master CRUD
