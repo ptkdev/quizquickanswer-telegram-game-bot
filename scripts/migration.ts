@@ -13,48 +13,45 @@ import { Schema, model, connect, disconnect } from "mongoose";
 import type { TelegramUserInterface, GameInterface, QuestionsInterface } from "../app/types/databases.type";
 
 const user_schema = new Schema<TelegramUserInterface>({
-	id: { type: String, required: true },
-	is_bot: { type: Boolean, required: true },
-	first_name: { type: String, required: true },
-	username: { type: String, required: true },
+	id: { type: String },
+	is_bot: { type: Boolean },
+	first_name: { type: String },
+	username: { type: String },
 	launguage_code: String,
 });
 
 const master_schema = new Schema<TelegramUserInterface>({
-	id: { type: String, required: true },
-	is_bot: { type: Boolean, required: true },
-	first_name: { type: String, required: true },
-	username: { type: String, required: true },
+	id: { type: String },
+	is_bot: { type: Boolean },
+	first_name: { type: String },
+	username: { type: String },
 	launguage_code: String,
 	question: String,
 	description: String,
 	group_id: Number,
-	score: Number,
 });
 
 const scores_schema = new Schema<TelegramUserInterface>({
-	id: { type: String, required: true },
-	is_bot: { type: Boolean, required: true },
-	first_name: { type: String, required: true },
-	username: { type: String, required: true },
+	id: { type: String },
+	is_bot: { type: Boolean },
+	first_name: { type: String },
+	username: { type: String },
 	launguage_code: String,
-	question: String,
-	description: String,
 	group_id: Number,
 	score: Number,
 });
 
 const questions_schema = new Schema<QuestionsInterface>({
-	username: { type: String, required: true },
-	good_questions: { type: Number, required: true },
-	bad_questions: { type: Number, required: true },
-	group_id: { type: Number, required: true },
+	username: { type: String },
+	good_questions: { type: Number },
+	bad_questions: { type: Number },
+	group_id: { type: Number },
 });
 
-const user_model = model<TelegramUserInterface>("User", user_schema);
-const master_model = model<GameInterface>("Master", master_schema);
-const score_model = model<TelegramUserInterface>("Score", scores_schema);
-const questions_model = model<QuestionsInterface>("Questions", questions_schema);
+const user_model = model<TelegramUserInterface>("Users", user_schema, "users");
+const master_model = model<GameInterface>("Master", master_schema, "master");
+const score_model = model<TelegramUserInterface>("Scores", scores_schema, "scores");
+const questions_model = model<QuestionsInterface>("Questions", questions_schema, "questions");
 
 (async function (): Promise<void> {
 	// 4. Connect to MongoDB
@@ -85,77 +82,47 @@ const getModel: any = (key) => {
 	return model;
 };
 
-(async function insertJSON(
-	json = {
-		// Inserire il JSON contenente gli user,master,score e questions
-		users: [
-			{
-				id: 523350454,
-				is_bot: false,
-				first_name: "Ali",
-				username: "ashd95",
-				language_code: "it",
-			},
-		],
-		master: [
-			{
-				id: 523350454,
-				is_bot: false,
-				first_name: "Ali",
-				username: "ashd95",
-				language_code: "it",
-				question: "",
-				description: "",
-				group_id: -537763308,
-			},
-		],
-		scores: [
-			{
-				id: 769630570,
-				is_bot: false,
-				first_name: "Vero",
-				username: "DrVero",
-				language_code: "it",
-				question: "",
-				description: "",
-				group_id: -537763308,
-				score: 10,
-			},
-			{
-				id: 523350454,
-				is_bot: false,
-				first_name: "Ali",
-				username: "ashd95",
-				language_code: "it",
-				question: "",
-				description: "",
-				group_id: -537763308,
-				score: 50,
-			},
-		],
-		questions: [
-			{
-				username: "DrVero",
-				good_questions: 2,
-				bad_questions: 3,
-				group_id: -537763308,
-			},
-			{
-				username: "ashd95",
-				good_questions: 2,
-				bad_questions: 0,
-				group_id: -537763308,
-			},
-		],
-	},
-): Promise<void> {
-	Object.keys(json).forEach((key) =>
-		getModel(key).insertMany(json[key], function (err, users) {
+(async function insertJSON(): Promise<void> {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const json1 = require("../databases/game.json");
+	Object.keys(json1).forEach((key) =>
+		getModel("master").insertMany(json1[key], function (err) {
 			if (err) {
-				return err;
+				console.log(err);
 			}
 		}),
 	);
+
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const json2 = require("../databases/users.json");
+	Object.keys(json2).forEach((key) =>
+		getModel("users").insertMany(json2[key], function (err) {
+			if (err) {
+				console.log(err);
+			}
+		}),
+	);
+
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const json3 = require("../databases/questions.json");
+	Object.keys(json3).forEach((key) =>
+		getModel("questions").insertMany(json3[key], function (err) {
+			if (err) {
+				console.log(err);
+			}
+		}),
+	);
+
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const json4 = require("../databases/scores.json");
+	Object.keys(json4).forEach((key) =>
+		getModel("scores").insertMany(json4[key], function (err) {
+			if (err) {
+				console.log(err);
+			}
+		}),
+	);
+
 	console.log(`Migration completed`);
 })();
 
