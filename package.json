@@ -34,6 +34,9 @@
 		"build": "ttsc",
 		"release": "ts-node scripts/configs.ts && ts-node scripts/debug.ts --disable && npm run build && ttsc --declaration --emitDeclarationOnly",
 		"test": "jest app",
+		"migrate": "ts-node scripts/migration.ts",
+		"mongodump": "mongodump -d quizquickanswerdb -o .",
+		"mongorestore": "mongorestore -d quizquickanswerdb quizquickanswerdb",
 		"docs": "git submodule update --recursive && markserv ./README.md",
 		"lint": "npm run lint-prettify && eslint . --cache --ext .ts,.js",
 		"lint-fix": "npm run lint-prettify && eslint . --cache --ext .ts,.js --fix",
@@ -51,9 +54,7 @@
 		"pkg-clean": "rm -rf node_modules package-lock.json && npm install && husky install",
 		"pkg-update": "npm update",
 		"pkg-upgrade": "npx npm-check-updates -u && npm install && husky install",
-		"postinstall": "rm ./node_modules/mongoose/index.d.ts",
-		"snippet": "ts-node snippets/mongodb.ts",
-		"migrate": "ts-node scripts/migration.ts"
+		"postinstall": "rm ./node_modules/mongoose/index.d.ts"
 	},
 	"dependencies": {
 		"@ptkdev/logger": "^1.8.0",
