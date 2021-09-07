@@ -10,14 +10,7 @@ module.exports = {
 		token: "BOT_TOKEN",
 	},
 
-	databases: {
-		users: "databases/users.json",
-		game: "databases/game.json",
-		scores: "databases/scores.json",
-		settings: "databases/settings.json",
-		questions: "databases/questions.json",
-	},
-	database: { URL: "MONGO_DB_CONNECTION_STRING" }, // mongodb://localhost:27017/quizquickanswerdb
+	database: { URL: "MONGO_DB_CONNECTION_STRING" }, // example: mongodb://localhost:27017/quizquickanswerdb
 
 	// Debug
 	debug: true,
