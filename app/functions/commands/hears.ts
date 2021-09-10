@@ -12,9 +12,10 @@ import bot from "@app/core/telegraf";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
-import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
+import { TelegramUserInterface, QuestionsInterface, MasterInterface } from "@app/types/databases.type";
 
 import logger from "@app/functions/utils/logger";
+import { similarity } from "../utils/utils";
 
 /**
  * hears: any taxt from bot chat
@@ -71,7 +72,7 @@ const hears = async (): Promise<void> => {
 
 		if (telegram.api.message.getGroupID(ctx) < 0) {
 			// is group
-			const master: TelegramUserInterface = await db.master.get({
+			const master: MasterInterface = await db.master.get({
 				group_id: telegram.api.message.getGroupID(ctx),
 			});
 
@@ -104,7 +105,7 @@ const hears = async (): Promise<void> => {
 						}),
 					);
 
-					const json: TelegramUserInterface = telegram.api.message.getFullUser(ctx);
+					const json: MasterInterface = telegram.api.message.getFullUser(ctx);
 					json.question = "";
 					json.description = "";
 					json.group_id = telegram.api.message.getGroupID(ctx);
@@ -135,6 +136,23 @@ const hears = async (): Promise<void> => {
 						}),
 					);
 				}
+				return;
+			}
+
+			const similarityPercentage: number = similarity(
+				ctx.update.message.text.trim().toLowerCase(),
+				master.question?.trim()?.toLowerCase(),
+			);
+
+			if (similarityPercentage >= 0.8) {
+				await telegram.api.message.send(
+					ctx,
+					master.group_id,
+					translate("hot_answer", {
+						first_name: telegram.api.message.getUserFirstName(ctx),
+						username: telegram.api.message.getUsername(ctx),
+					}),
+				);
 			}
 		}
 	});
