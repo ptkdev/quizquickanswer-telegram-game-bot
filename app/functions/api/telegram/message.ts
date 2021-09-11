@@ -60,6 +60,24 @@ const send = async (ctx: any, group_id: number, text: string, options: any = { p
 	}
 };
 
+const sendPhoto = async (
+	ctx: any,
+	group_id: number,
+	photo: string,
+	options: any = { parse_mode: "HTML" },
+): Promise<any> => {
+	if (group_id && photo) {
+		let message;
+
+		try {
+			message = await ctx.telegram.sendPhoto(group_id, photo, options);
+			return message;
+		} catch (err: any) {
+			logger.error(JSON.stringify(err), "message.ts:send()");
+		}
+	}
+};
+
 const pin = async (
 	ctx: any,
 	group_id: number,
@@ -78,5 +96,5 @@ const pin = async (
 	}
 };
 
-export { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send, pin };
-export default { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send, pin };
+export { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send, pin, sendPhoto };
+export default { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send, pin, sendPhoto };

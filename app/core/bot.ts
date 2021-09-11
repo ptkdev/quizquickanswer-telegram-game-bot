@@ -25,6 +25,7 @@ import logger from "@app/functions/utils/logger";
 	await commands.score();
 	await commands.voteQuestion();
 	await commands.hears();
+	await commands.hearsPhoto();
 
 	await commands.launch();
 })();
