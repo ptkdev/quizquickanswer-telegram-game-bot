@@ -18,7 +18,7 @@ const schema = new Schema<TelegramUserInterface>({
 	is_bot: { type: Boolean, default: false },
 	first_name: { type: String, default: "" },
 	username: { type: String, default: "" },
-	language_code: { type: String, default: "" },
+	language_code: { type: String, default: "en" },
 	group_id: { type: Number, default: 0 },
 	score: { type: Number, default: 0 },
 });

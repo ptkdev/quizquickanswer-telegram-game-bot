@@ -18,7 +18,7 @@ const schema = new Schema<MasterInterface>({
 	is_bot: { type: Boolean, default: false },
 	first_name: { type: String, default: "" },
 	username: { type: String, default: "" },
-	language_code: { type: String, default: "" },
+	language_code: { type: String, default: "en" },
 	group_id: { type: Number, default: 0 },
 	question: { type: String, default: "" },
 	description: { type: String, default: "" },
