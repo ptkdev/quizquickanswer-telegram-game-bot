@@ -67,7 +67,7 @@ const hearsPhoto = async (): Promise<void> => {
 					await telegram.api.message.send(
 						ctx,
 						telegram.api.message.getGroupID(ctx),
-						translate("hears_missing_caption"),
+						translate("hears_missing_photo_caption"),
 					);
 				}
 			} else {

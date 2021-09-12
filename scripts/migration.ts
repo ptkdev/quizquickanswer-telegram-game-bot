@@ -104,16 +104,6 @@ const getModel: any = (key) => {
 	);
 
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	const json3 = require("../databases/questions.json");
-	Object.keys(json3).forEach((key) =>
-		getModel("questions").insertMany(json3[key], function (err) {
-			if (err) {
-				console.log(err);
-			}
-		}),
-	);
-
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const json4 = require("../databases/scores.json");
 	Object.keys(json4).forEach((key) =>
 		getModel("scores").insertMany(json4[key], function (err) {
