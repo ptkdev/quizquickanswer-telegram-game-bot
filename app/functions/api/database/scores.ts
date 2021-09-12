@@ -14,13 +14,13 @@ import { getEmptyTelegramUserInterface } from "@app/functions/utils/utils";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<TelegramUserInterface>({
-	id: { type: String },
-	is_bot: { type: Boolean },
-	first_name: { type: String },
-	username: { type: String },
-	launguage_code: String,
-	group_id: { type: Number },
-	score: { type: Number },
+	id: { type: Number, default: 0 },
+	is_bot: { type: Boolean, default: false },
+	first_name: { type: String, default: "" },
+	username: { type: String, default: "" },
+	language_code: { type: String, default: "" },
+	group_id: { type: Number, default: 0 },
+	score: { type: Number, default: 0 },
 });
 
 const query = model<TelegramUserInterface>("Scores", schema, "scores");

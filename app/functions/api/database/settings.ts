@@ -15,9 +15,9 @@ import { getEmptyTelegramUserInterface } from "@app/functions/utils/utils";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<GameInterface>({
-	group_id: { type: Number },
-	language: { type: String },
-	pin_message: { type: Boolean },
+	group_id: { type: Number, default: 0 },
+	language: { type: String, default: "en" },
+	pin_message: { type: Boolean, default: true },
 });
 
 const query = model<TelegramUserInterface>("Settings", schema, "settings");

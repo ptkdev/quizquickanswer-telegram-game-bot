@@ -14,14 +14,14 @@ import { getEmptyMasterInterface } from "@app/functions/utils/utils";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<MasterInterface>({
-	id: { type: Number },
-	is_bot: { type: Boolean },
-	first_name: { type: String, required: false },
-	username: { type: String },
-	language_code: String,
-	group_id: { type: Number },
-	question: String,
-	description: String,
+	id: { type: Number, default: 0 },
+	is_bot: { type: Boolean, default: false },
+	first_name: { type: String, default: "" },
+	username: { type: String, default: "" },
+	language_code: { type: String, default: "" },
+	group_id: { type: Number, default: 0 },
+	question: { type: String, default: "" },
+	description: { type: String, default: "" },
 });
 
 const query = model<MasterInterface>("Master", schema, "master");

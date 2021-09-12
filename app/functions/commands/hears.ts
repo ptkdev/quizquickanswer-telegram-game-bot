@@ -128,7 +128,7 @@ const hears = async (): Promise<void> => {
 				} else {
 					await telegram.api.message.send(
 						ctx,
-						master.group_id,
+						master?.group_id || 0,
 						translate("hears_win_but_not_master", {
 							first_name: telegram.api.message.getUserFirstName(ctx),
 							master_first_name: master.first_name,
