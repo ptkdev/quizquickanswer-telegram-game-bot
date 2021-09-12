@@ -43,6 +43,14 @@ const getGroupID = (ctx: any): number => {
 	return ctx?.update.message?.chat?.id || ctx?.message?.chat?.id || 0;
 };
 
+const getPhotoFileID = (ctx: any, position = 0): string => {
+	return ctx?.update?.message?.photo[position]?.file_id || "";
+};
+
+const getPhotoCaption = (ctx: any): string => {
+	return ctx?.update?.message?.caption || "";
+};
+
 const getText = (ctx: any): string => {
 	return ctx?.update?.message?.text || ctx?.message?.text || "";
 };
@@ -96,5 +104,29 @@ const pin = async (
 	}
 };
 
-export { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send, pin, sendPhoto };
-export default { getFullUser, getUsername, getGroupID, getText, getUserID, getUserFirstName, send, pin, sendPhoto };
+export {
+	getFullUser,
+	getUsername,
+	getGroupID,
+	getText,
+	getUserID,
+	getUserFirstName,
+	send,
+	pin,
+	sendPhoto,
+	getPhotoFileID,
+	getPhotoCaption,
+};
+export default {
+	getFullUser,
+	getUsername,
+	getGroupID,
+	getText,
+	getUserID,
+	getUserFirstName,
+	send,
+	pin,
+	sendPhoto,
+	getPhotoFileID,
+	getPhotoCaption,
+};

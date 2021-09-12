@@ -24,17 +24,17 @@ import logger from "@app/functions/utils/logger";
  */
 const hearsPhoto = async (): Promise<void> => {
 	bot.on("photo", async (ctx) => {
-		logger.info("hears: text", "hears.ts:on(text)");
+		logger.info("hears: photo", "hears.ts:on(photo)");
 		if (telegram.api.message.getGroupID(ctx) > 0) {
 			// is chat with bot
 			const master: TelegramUserInterface = await db.master.get({
 				username: telegram.api.message.getUsername(ctx),
 			});
 
-			const photo_id = ctx.update.message.photo[ctx.update.message.photo.length - 1].file_id;
+			const photo_id = telegram.api.message.getPhotoFileID(ctx);
 
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
-				const text = ctx.update.message.caption?.split("-");
+				const text = telegram.api.message.getPhotoCaption(ctx).split("-");
 				if (text !== undefined) {
 					const json = telegram.api.message.getFullUser(ctx);
 					json.question = text[0]?.trim()?.toLowerCase() || "";
