@@ -15,10 +15,10 @@ import { getEmptyTelegramUserInterface } from "@app/functions/utils/utils";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<GameInterface>({
-	id: { type: String, required: true },
-	is_bot: { type: Boolean, required: true },
-	first_name: { type: String, required: true },
-	username: { type: String, required: true },
+	id: { type: String },
+	is_bot: { type: Boolean },
+	first_name: { type: String },
+	username: { type: String },
 	launguage_code: String,
 });
 

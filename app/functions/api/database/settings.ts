@@ -1,5 +1,5 @@
 /**
- * Master database
+ * Settings database
  * =====================
  *
  * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
@@ -9,43 +9,39 @@
  *
  */
 import { Schema, model } from "mongoose";
-import type { MasterInterface } from "@app/types/databases.type";
-import { getEmptyMasterInterface } from "@app/functions/utils/utils";
+import type { TelegramUserInterface } from "@app/types/databases.type";
+import type { GameInterface } from "@app/types/game.type.js";
+import { getEmptyTelegramUserInterface } from "@app/functions/utils/utils";
 import { logger } from "@app/functions/utils/logger";
 
-const schema = new Schema<MasterInterface>({
-	id: { type: Number },
-	is_bot: { type: Boolean },
-	first_name: { type: String, required: false },
-	username: { type: String },
-	language_code: String,
+const schema = new Schema<GameInterface>({
 	group_id: { type: Number },
-	question: String,
-	description: String,
+	language: { type: String },
+	pin_message: { type: Boolean },
 });
 
-const query = model<MasterInterface>("Master", schema, "master");
+const query = model<TelegramUserInterface>("Settings", schema, "settings");
 
 /**
- * Master CRUD
+ * Settings CRUD
  * =====================
- * Add master to DB
+ * Add user to DB
  *
- * @param {MasterInterface} user - user master to add
+ * @param {TelegramUserInterface} user - user to add
  */
-const add = async (user: MasterInterface): Promise<void> => {
+const add = async (user: TelegramUserInterface): Promise<void> => {
 	try {
 		const doc = new query(user);
 		await doc.save();
 	} catch (error: any) {
-		logger.error(JSON.stringify(error || ""), "master.ts:add()");
+		logger.error(JSON.stringify(error || ""), "settings.ts:add()");
 	}
 };
 
 /**
- * Master CRUD
+ * Settings CRUD
  * =====================
- * Remove master from DB
+ * Remove user from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  */
@@ -57,19 +53,22 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 			}
 		});
 	} catch (error: any) {
-		logger.error(JSON.stringify(error || ""), "master.ts:remove()");
+		logger.error(JSON.stringify(error || ""), "settings.ts:remove()");
 	}
 };
 
 /**
- * Master CRUD
+ * Settings CRUD
  * =====================
- * Update master from DB
+ * Update user from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
- * @param {MasterInterface} user - data to update
+ * @param {TelegramUserInterface} user - user info to update
  */
-const update = async (search: Record<string, number | string | boolean>, user: MasterInterface): Promise<void> => {
+const update = async (
+	search: Record<string, number | string | boolean>,
+	user: TelegramUserInterface,
+): Promise<void> => {
 	try {
 		query.findOneAndUpdate(search, user, function (error: string) {
 			if (error) {
@@ -77,32 +76,32 @@ const update = async (search: Record<string, number | string | boolean>, user: M
 			}
 		});
 	} catch (error: any) {
-		logger.error(JSON.stringify(error || ""), "master.ts:update()");
+		logger.error(JSON.stringify(error || ""), "settings.ts:update()");
 	}
 };
 
 /**
- * Master CRUD
+ * Settings CRUD
  * =====================
- * Get master from DB
+ * Get user from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
- * @return {MasterInterface} user.
+ * @return {TelegramUserInterface[]} user.
+
  */
-const get = async (search: Record<string, number | string | boolean>): Promise<MasterInterface> => {
+const get = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
 	try {
 		const user = await query.findOne(search, function (error: string) {
 			if (error) {
-				return getEmptyMasterInterface(error);
+				return getEmptyTelegramUserInterface(error);
 			}
 		});
 
 		return user;
 	} catch (error: any) {
-		logger.error(JSON.stringify(error || ""), "master.ts:get()");
+		logger.error(JSON.stringify(error || ""), "settings.ts:get()");
 	}
-
-	return getEmptyMasterInterface("");
+	return getEmptyTelegramUserInterface("");
 };
 
 export { get, update, remove, add };

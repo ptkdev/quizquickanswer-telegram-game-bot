@@ -39,7 +39,7 @@ const hears = async (): Promise<void> => {
 				const json = telegram.api.message.getFullUser(ctx);
 				json.question = text[0]?.trim()?.toLowerCase() || "";
 				json.description = text[1]?.trim() || "";
-				json.group_id = master.group_id || 0;
+				json.group_id = master?.group_id || 0;
 
 				if (json.question === undefined || json.question === "") {
 					await telegram.api.message.send(
@@ -76,10 +76,10 @@ const hears = async (): Promise<void> => {
 				group_id: telegram.api.message.getGroupID(ctx),
 			});
 
-			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master.question?.trim()?.toLowerCase()) {
+			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master?.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
 					const user_score: TelegramUserInterface = await db.scores.get({
-						group_id: master.group_id,
+						group_id: master?.group_id || 0,
 						id: telegram.api.message.getUserID(ctx),
 					});
 
@@ -90,7 +90,7 @@ const hears = async (): Promise<void> => {
 
 					await telegram.api.message.send(
 						ctx,
-						master.group_id,
+						master?.group_id,
 						translate("hears_win", {
 							first_name: telegram.api.message.getUserFirstName(ctx),
 							username: telegram.api.message.getUsername(ctx),
@@ -115,7 +115,7 @@ const hears = async (): Promise<void> => {
 						user_score.score += 10;
 						await db.scores.update(
 							{
-								group_id: master.group_id,
+								group_id: master?.group_id || 0,
 								id: telegram.api.message.getUserID(ctx),
 							},
 							user_score,
@@ -141,7 +141,7 @@ const hears = async (): Promise<void> => {
 
 			const similarityPercentage: number = similarity(
 				telegram.api.message.getText(ctx).trim().toLowerCase(),
-				master.question?.trim()?.toLowerCase(),
+				master?.question?.trim()?.toLowerCase() || "",
 			);
 
 			if (similarityPercentage >= 0.8) {

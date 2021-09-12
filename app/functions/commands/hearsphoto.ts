@@ -39,7 +39,7 @@ const hearsPhoto = async (): Promise<void> => {
 					const json = telegram.api.message.getFullUser(ctx);
 					json.question = text[0]?.trim()?.toLowerCase() || "";
 					json.description = text[1]?.trim() || "";
-					json.group_id = master.group_id || 0;
+					json.group_id = master?.group_id || 0;
 
 					if (json.question === undefined || json.question === "") {
 						await telegram.api.message.send(

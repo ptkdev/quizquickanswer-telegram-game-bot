@@ -14,10 +14,10 @@ import { getEmptyQuestionsInterface } from "@app/functions/utils/utils";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<QuestionsInterface>({
-	username: { type: String, required: true },
-	group_id: { type: Number, required: true },
-	good_questions: { type: Number, required: true },
-	bad_questions: { type: Number, required: true },
+	username: { type: String },
+	group_id: { type: Number },
+	good_questions: { type: Number },
+	bad_questions: { type: Number },
 });
 
 const query = model<QuestionsInterface>("Questions", schema, "questions");
