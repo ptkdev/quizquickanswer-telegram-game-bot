@@ -22,5 +22,5 @@
 	"start_command_private": "Scrivi la parola o frase che devono indovinare, un trattino, e poi il suggerimento. Puoi anche inviare una foto e come didascalia usare la stessa regola. Tutto in un unico messaggio, esempio:\n\nformichiere - animale bello con naso lungo\n\nformichiere è la parola o frase che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale bello con naso lungo).",
 	"top10_command_not_available": "Classifica non disponibile per questo gruppo!",
 	"top10_command_list": "##emoji## <b>##first_name##</b> (##username##) - <b>##score##</b> punti\n\n",
-	"hot_answer": "🔥 <b>##first_name##</b> (@##username##) - HOT! Hai quasi indovinato!\n\n"
+	"hot_answer": "🔥 <b>##first_name##</b> (@##username##) - FUOCO! Hai quasi indovinato!\n\n"
 }

@@ -1,4 +1,14 @@
-import { QuestionsInterface, TelegramUserInterface, MasterInterface } from "@app/types/databases.type";
+/**
+ * Utils
+ * =====================
+ * Utility
+ *
+ * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ *
+ * @license: MIT License
+ *
+ */
 
 /**
  * Get emoji helper
@@ -43,70 +53,6 @@ const getTopScoreEmoji = (index: number): string => {
 			break;
 	}
 	return medal_emoji;
-};
-
-/**
- * Get empty telegram user with error
- * =====================
- * Get an object of telegram user with all the field empty and relative error
- *
- * @param {any} error - error message
- * @return {TelegramUserInterface} user - empty telegram user
- */
-const getEmptyTelegramUserInterface = (error: any): TelegramUserInterface => {
-	return {
-		id: 0,
-		is_bot: false,
-		first_name: "",
-		username: "",
-		language_code: "",
-		group_id: 0,
-		question: "",
-		description: "",
-		score: 0,
-		error,
-	};
-};
-
-/**
- * Get empty master user with error
- * =====================
- * Get an object of master user with all the field empty and relative error
- *
- * @param {any} error - error message
- * @return {MasterInterface} user - empty master user
- */
-const getEmptyMasterInterface = (error: any): MasterInterface => {
-	return {
-		id: 0,
-		is_bot: false,
-		first_name: "",
-		username: "",
-		language_code: "",
-		group_id: 0,
-		question: "",
-		description: "",
-		score: 0,
-		error,
-	};
-};
-
-/**
- * Get empty Question interface with error
- * =====================
- * Get an object of questions interface with all the field empty and relative error
- *
- * @param {any} error - error message
- * @return {QuestionsInterface} question - empty telegram user
- */
-const getEmptyQuestionsInterface = (error: any): QuestionsInterface => {
-	return {
-		username: "",
-		group_id: 0,
-		good_questions: 0,
-		bad_questions: 0,
-		error,
-	};
 };
 
 /**
@@ -160,17 +106,8 @@ function editDistance(s1: string, s2: string) {
 	return costs[s2.length];
 }
 
-export {
-	getEmptyQuestionsInterface,
-	getEmptyTelegramUserInterface,
-	getEmptyMasterInterface,
-	getTopScoreEmoji,
-	similarity,
-};
+export { getTopScoreEmoji, similarity };
 export default {
-	getEmptyQuestionsInterface,
-	getEmptyTelegramUserInterface,
-	getEmptyMasterInterface,
 	getTopScoreEmoji,
 	similarity,
 };

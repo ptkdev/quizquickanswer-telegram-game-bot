@@ -32,7 +32,8 @@ const hears = async (): Promise<void> => {
 			const master: TelegramUserInterface = await db.master.get({
 				username: telegram.api.message.getUsername(ctx),
 			});
-
+			logger.debug(`master: ${JSON.stringify(master)}`);
+			logger.debug(`${master?.username} === ${telegram.api.message.getUsername(ctx)}`);
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
 				const text = telegram.api.message.getText(ctx).split("-");
 
@@ -65,7 +66,7 @@ const hears = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getGroupID(ctx),
-					translate("hears_not_you_master"),
+					translate("haers_not_you_master"),
 				);
 			}
 		}
@@ -111,7 +112,7 @@ const hears = async (): Promise<void> => {
 					json.group_id = telegram.api.message.getGroupID(ctx);
 					await db.master.update({ group_id: telegram.api.message.getGroupID(ctx) }, json);
 
-					if (user_score) {
+					if (user_score.group_id < 0) {
 						user_score.score += 10;
 						await db.scores.update(
 							{

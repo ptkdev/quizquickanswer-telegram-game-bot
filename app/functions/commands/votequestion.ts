@@ -56,7 +56,7 @@ const voteQuestion = async (): Promise<void> => {
 
 				const score: number = user_score?.score || 0;
 
-				if (user_questions) {
+				if (user_questions.group_id < 0) {
 					// if voted user is in the question DB
 					if (is_good_question) {
 						user_questions.good_questions += 1;

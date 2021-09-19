@@ -10,7 +10,6 @@
  */
 import { Schema, model } from "mongoose";
 import type { QuestionsInterface } from "../../../types/databases.type";
-import { getEmptyQuestionsInterface } from "@app/functions/utils/utils";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<QuestionsInterface>({
@@ -90,16 +89,16 @@ const get = async (search: Record<string, number | string | boolean>): Promise<Q
 	try {
 		const user = await query.findOne(search, function (error: string) {
 			if (error) {
-				return getEmptyQuestionsInterface(error);
+				logger.error(JSON.stringify(error || ""), "question.ts:get()");
 			}
 		});
 
-		return user;
+		return user || new query().toJSON();
 	} catch (error: any) {
 		logger.error(JSON.stringify(error || ""), "question.ts:get()");
 	}
 
-	return getEmptyQuestionsInterface("");
+	return new query().toJSON();
 };
 
 export { get, update, remove, add };

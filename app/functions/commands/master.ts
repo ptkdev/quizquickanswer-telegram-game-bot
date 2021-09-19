@@ -57,7 +57,8 @@ const master = async (): Promise<void> => {
 				const master: TelegramUserInterface = await db.master.get({
 					group_id: telegram.api.message.getGroupID(ctx),
 				});
-				if (master) {
+				logger.debug(`master:${JSON.stringify(master)}`);
+				if (master.group_id < 0) {
 					await db.master.update({}, json);
 				} else {
 					await db.master.add(json);

@@ -10,7 +10,6 @@
  */
 import { Schema, model } from "mongoose";
 import type { TelegramUserInterface } from "../../../types/databases.type";
-import { getEmptyTelegramUserInterface } from "@app/functions/utils/utils";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<TelegramUserInterface>({
@@ -97,15 +96,16 @@ const get = async (search: Record<string, number | string | boolean>): Promise<T
 	try {
 		const user = await query.findOne(search, function (error: string) {
 			if (error) {
-				return getEmptyTelegramUserInterface(error);
+				logger.error(JSON.stringify(error || ""), "scores.ts:get()");
 			}
 		});
 
-		return user;
+		return user || new query().toJSON();
 	} catch (error: any) {
 		logger.error(JSON.stringify(error || ""), "scores.ts:get()");
 	}
-	return getEmptyTelegramUserInterface("");
+
+	return new query().toJSON();
 };
 
 /**
@@ -121,7 +121,7 @@ const getMultiple = async (search: Record<string, number | string | boolean>): P
 	try {
 		const user = await query.find(search, function (error: string) {
 			if (error) {
-				return getEmptyTelegramUserInterface(error);
+				logger.error(JSON.stringify(error || ""), "scores.ts:getMultiple()");
 			}
 		});
 		return user || [];

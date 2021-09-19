@@ -10,7 +10,6 @@
  */
 import { Schema, model } from "mongoose";
 import type { MasterInterface } from "@app/types/databases.type";
-import { getEmptyMasterInterface } from "@app/functions/utils/utils";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<MasterInterface>({
@@ -93,16 +92,16 @@ const get = async (search: Record<string, number | string | boolean>): Promise<M
 	try {
 		const user = await query.findOne(search, function (error: string) {
 			if (error) {
-				return getEmptyMasterInterface(error);
+				logger.error(JSON.stringify(error || ""), "master.ts:get()");
 			}
 		});
 
-		return user;
+		return user || new query().toJSON();
 	} catch (error: any) {
 		logger.error(JSON.stringify(error || ""), "master.ts:get()");
 	}
 
-	return getEmptyMasterInterface("");
+	return new query().toJSON();
 };
 
 export { get, update, remove, add };
