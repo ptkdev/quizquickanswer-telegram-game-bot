@@ -80,13 +80,15 @@ const hears = async (): Promise<void> => {
 			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master?.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
 					const user_score: TelegramUserInterface = await db.scores.get({
-						group_id: master?.group_id || 0,
+						group_id: telegram.api.message.getGroupID(ctx),
 						id: telegram.api.message.getUserID(ctx),
 					});
 
+					logger.debug(`user_score: ${JSON.stringify(user_score)}`);
+
 					const user_questions: QuestionsInterface = await db.questions.get({
 						group_id: telegram.api.message.getGroupID(ctx),
-						username: telegram.api.message.getUsername(ctx),
+						id: telegram.api.message.getUserID(ctx),
 					});
 
 					await telegram.api.message.send(
@@ -116,7 +118,7 @@ const hears = async (): Promise<void> => {
 						user_score.score += 10;
 						await db.scores.update(
 							{
-								group_id: master?.group_id || 0,
+								group_id: telegram.api.message.getGroupID(ctx),
 								id: telegram.api.message.getUserID(ctx),
 							},
 							user_score,

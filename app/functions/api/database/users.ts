@@ -14,7 +14,7 @@ import type { GameInterface } from "@app/types/game.type.js";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<GameInterface>({
-	id: { type: Number, default: 0 },
+	id: { type: String, default: "0" },
 	is_bot: { type: Boolean, default: false },
 	first_name: { type: String, default: "" },
 	username: { type: String, default: "" },

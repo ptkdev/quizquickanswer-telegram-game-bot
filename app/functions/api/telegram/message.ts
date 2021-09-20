@@ -13,19 +13,19 @@ import logger from "@app/functions/utils/logger";
 const getUsername = (ctx: any): string => {
 	const username = ctx?.update?.message?.from?.username;
 
-	return username?.trim()?.toLowerCase() || "";
+	return username?.trim() || "";
 };
 
 const getUserID = (ctx: any): string => {
-	const username = ctx?.update?.message?.from?.id;
+	const id = ctx?.update?.message?.from?.id;
 
-	return username || 0;
+	return `${id}` || "0";
 };
 
 const getUserFirstName = (ctx: any): string => {
-	const username = ctx?.update?.message?.from?.first_name;
+	const first_name = ctx?.update?.message?.from?.first_name;
 
-	return username?.trim() || "";
+	return first_name?.trim() || "";
 };
 
 const getFullUser = (ctx: any): any => {
