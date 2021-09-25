@@ -46,7 +46,7 @@ const add = async (user: MasterInterface): Promise<void> => {
  * =====================
  * Remove master from DB
  *
- * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id: "123"}
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
@@ -65,7 +65,7 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
  * =====================
  * Update master from DB
  *
- * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id: "123"}
  * @param {MasterInterface} user - data to update
  */
 const update = async (search: Record<string, number | string | boolean>, user: MasterInterface): Promise<void> => {
@@ -104,5 +104,29 @@ const get = async (search: Record<string, number | string | boolean>): Promise<M
 	return new query().toJSON();
 };
 
-export { get, update, remove, add };
-export default { get, update, remove, add };
+/**
+ * Master CRUD
+ * =====================
+ * Get multiple masters DB
+ *
+ * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
+ * @return {MasterInterface[]} user.
+
+ */
+const getMultiple = async (search: Record<string, number | string | boolean>): Promise<MasterInterface[]> => {
+	try {
+		const master = await query.find(search, function (error: string) {
+			if (error) {
+				logger.error(JSON.stringify(error || ""), "master.ts:getMultiple()");
+			}
+		});
+		return master || [];
+	} catch (error: any) {
+		logger.error(JSON.stringify(error || ""), "master.ts:getMultiple()");
+	}
+
+	return [];
+};
+
+export { get, update, remove, add, getMultiple };
+export default { get, update, remove, add, getMultiple };

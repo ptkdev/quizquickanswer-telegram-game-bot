@@ -20,6 +20,8 @@ import logger from "@app/functions/utils/logger";
 
 	await commands.quit();
 	await commands.start();
+	await commands.admin();
+	await commands.actions();
 	await commands.master();
 	await commands.top10();
 	await commands.score();

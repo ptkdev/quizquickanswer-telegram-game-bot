@@ -22,5 +22,9 @@
 	"start_command_private": "Scrivi la parola o frase che devono indovinare, un trattino, e poi il suggerimento. Puoi anche inviare una foto e come didascalia usare la stessa regola. Tutto in un unico messaggio, esempio:\n\nformichiere - animale bello con naso lungo\n\nformichiere è la parola o frase che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale bello con naso lungo).",
 	"top10_command_not_available": "Classifica non disponibile per questo gruppo!",
 	"top10_command_list": "##emoji## <b>##first_name##</b> (##username##) - <b>##score##</b> punti\n\n",
-	"hot_answer": "🔥 <b>##first_name##</b> (@##username##) - FUOCO! Hai quasi indovinato!\n\n"
+	"hot_answer": "🔥 <b>##first_name##</b> (@##username##) - FUOCO! Hai quasi indovinato!\n\n",
+	"admin_welcome": "Benvenuto nel pannello di amministrazione. Scegli una delle seguenti opzioni:\n\n",
+	"action_send_messagge_all_groups": "Inviare messaggio a tutti i gruppi",
+	"action_set_user_score": "Assegnare lo score di un utente",
+	"admin_set_user_score_info_request": "Inserisci l'username, lo score e l'id del gruppo di un utente in un singolo messaggio separato da un trattino, Esempio:\n\nptkdev - 100 - 5032010\n\n"
 }

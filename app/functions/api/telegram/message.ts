@@ -40,7 +40,13 @@ const getFullUser = (ctx: any): any => {
 };
 
 const getGroupID = (ctx: any): number => {
-	return ctx?.update.message?.chat?.id || ctx?.message?.chat?.id || 0;
+	return (
+		ctx?.update.message?.chat?.id || ctx?.message?.chat?.id || ctx?.update.callback_query?.message?.chat?.id || 0
+	);
+};
+
+const getActionType = (ctx: any): string => {
+	return ctx?.update.callback_query?.data || "";
 };
 
 const getPhotoFileID = (ctx: any, position = 0): string => {
@@ -116,6 +122,7 @@ export {
 	sendPhoto,
 	getPhotoFileID,
 	getPhotoCaption,
+	getActionType,
 };
 export default {
 	getFullUser,
@@ -129,4 +136,5 @@ export default {
 	sendPhoto,
 	getPhotoFileID,
 	getPhotoCaption,
+	getActionType,
 };

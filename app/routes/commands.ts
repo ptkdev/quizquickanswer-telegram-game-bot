@@ -7,8 +7,10 @@ import voteQuestion from "@app/functions/commands/votequestion";
 import launch from "@app/functions/commands/launch";
 import hears from "@app/functions/commands/hears";
 import hearsPhoto from "@app/functions/commands/hearsphoto";
+import admin from "@app/functions/commands/admin";
+import actions from "@app/functions/commands/actions";
 
-const commands = { quit, start, master, score, top10, voteQuestion, launch, hears, hearsPhoto };
+const commands = { quit, start, master, score, top10, voteQuestion, launch, hears, hearsPhoto, admin, actions };
 
-export { quit, start, master, score, top10, voteQuestion, launch, hears, hearsPhoto };
+export { quit, start, master, score, top10, voteQuestion, launch, hears, hearsPhoto, admin, actions };
 export default commands;
