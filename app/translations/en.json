@@ -2,8 +2,32 @@
 	"contributions": {
 		"language": "English",
 		"license": "CC BY 4.0",
-		"contributors": ["Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)"]
+		"contributors": [
+			"Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)",
+			"Denise Scazzari [@DeniseKarina] (https://instagram.com/den_karina)"
+		]
 	},
-	"app_name": "quizquickanswer-telegram-game-bot",
-	"hello": "Hello World!"
+	"app_name": "Quiz Quick Answer Bot",
+	"command_only_group": "Puoi usare questo comando solo in un gruppo telegram!",
+	"goodquestion_not_autovote": "⛔️ Mi dispiace, non puoi <b>votarti da solo</b>!",
+	"haers_not_you_master": "📵 Non sei tu il master al momento, se è un errore puoi usare: /master @TUO_NICKNAME",
+	"hears_missing_question": "🤬 Aooo! Ma che cazzo stai a scrive? Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Se stai mandando una foto inseriscila nella didascalia. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!",
+	"hears_missing_tip": "🤬 Aooo! Hai dimenticato il cazzo di trattino. Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Se stai mandando una foto inseriscila nella didascalia. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!",
+	"hears_missing_caption": "🤬 Aooo! Hai dimenticato la caption. Ma sai leggere? Devi mettere prima la parola che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!",
+	"hears_missing_photo_caption": "🤬 Aooo! Hai dimenticato la didascalia quando hai inviato la foto. Ma sai leggere? Devi mettere come didascalia prima la parola che devono indovinare, un trattino, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\nformica - animale piccolissimo\n\nformica è la parola che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale piccolissimo). Riprova e datti una svegliata!",
+	"hears_win": "🏆 <b>HAI VINTO</b> ##first_name## (@##username##)!!!\n\n✍️ La risposta giusta era: <b>##answer##</b>\n👑 Ora sei il nuovo <b>master</b>! ⚽️ Il tuo punteggio é <b>##score##</b> 🔥\n\nContatta in privato @##bot_username## (clicca sul nickname) e segui le istruzioni.",
+	"hears_win_but_not_master": "🏆 HAI VINTO ##first_name##!! Ma non puoi diventare master perchè non hai impostato un username su telegram. Vai nelle impostazioni di telegram, entra su modifica in alto e imposta un @nickname! Il master è rimasto ##master_first_name## (@##master_username##).",
+	"master_command_empty": "Inserisci un nickname, ad esempio: /master @ptkdev",
+	"master_command_success": "Ora sei diventato master @##username##! Contatta in privato @##bot_username## (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi un trattino per dare un suggerimento, esempio: \n\nformichiere - animale bello con naso lungo",
+	"score_command_show": "<b>##first_name##</b> (@##username##) il tuo punteggio in questo gruppo è di <b>##score##</b> punti!",
+	"score_command_show_with_username": "Il punteggio di <b>@##username##</b> in questo gruppo è di <b>##score##</b> punti!",
+	"start_command_group": "Prima di iniziare a giocare rendi questo bot amministratore. Successivamente diventa master lanciando il comando: /master ##username##",
+	"start_command_private": "Scrivi la parola o frase che devono indovinare, un trattino, e poi il suggerimento. Puoi anche inviare una foto e come didascalia usare la stessa regola. Tutto in un unico messaggio, esempio:\n\nformichiere - animale bello con naso lungo\n\nformichiere è la parola o frase che devono indovinare, dopo il trattino è il suggerimento che gli dai tu (animale bello con naso lungo).",
+	"top10_command_not_available": "Classifica non disponibile per questo gruppo!",
+	"top10_command_list": "##emoji## <b>##first_name##</b> (##username##) - <b>##score##</b> punti\n\n",
+	"hot_answer": "🔥 <b>##first_name##</b> (@##username##) - FUOCO! Hai quasi indovinato!\n\n",
+	"admin_welcome": "Benvenuto nel pannello di amministrazione. Scegli una delle seguenti opzioni:\n\n",
+	"action_send_messagge_all_groups": "Inviare messaggio a tutti i gruppi",
+	"action_set_user_score": "Assegnare lo score di un utente",
+	"admin_set_user_score_info_request": "Inserisci l'username, lo score e l'id del gruppo di un utente in un singolo messaggio separato da un trattino, Esempio:\n\nptkdev - 100 - 5032010\n\n"
 }

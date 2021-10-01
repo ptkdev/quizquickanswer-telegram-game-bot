@@ -32,6 +32,15 @@
 				"doc",
 				"bug"
 			]
+		},
+		{
+			"login": "DeniseKarina",
+			"name": "Denise Scazzari",
+			"avatar_url": "https://avatars1.githubusercontent.com/u/91738047?v=4",
+			"profile": "https://instagram.com/den_karina",
+			"contributions": [
+				"translation"
+			]
 		}
 	],
 	"contributorsPerLine": 6,

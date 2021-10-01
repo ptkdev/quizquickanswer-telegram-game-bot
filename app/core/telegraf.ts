@@ -9,7 +9,7 @@
  *
  */
 import { Telegraf } from "telegraf";
-import configs from "@configs/config";
+import configs from "@configs/config.json";
 
 const bot = new Telegraf(configs.telegram.token);
 

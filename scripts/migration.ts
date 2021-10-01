@@ -8,7 +8,7 @@
  * @license: MIT License
  *
  */
-import configs from "../app/configs/config";
+import configs from "../app/configs/config.json";
 import { Schema, model, connect, disconnect } from "mongoose";
 import type { TelegramUserInterface, GameInterface, QuestionsInterface } from "../app/types/databases.type";
 
