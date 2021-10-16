@@ -31,7 +31,7 @@
 	"settings_command_switchlanguage": "Seleziona la lingua del bot",
 	"settings_command_setlanguage": "🌎 Cambia lingua",
 	"settings_command_language_italian": "🇮🇹 Italiano",
-	"settings_command_language_english": "🇬🇧 Inglese",
+	"settings_command_language_english": "🇬🇧 English",
 	"settings_command_current_italian": "Ora il bot parlerà in: 🇮🇹 Italiano",
 	"settings_command_current_english": "Ora il bot parlerà in: 🇬🇧 Inglese"
 }
