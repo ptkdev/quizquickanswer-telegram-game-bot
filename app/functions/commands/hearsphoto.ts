@@ -25,7 +25,7 @@ import logger from "@app/functions/utils/logger";
 const hearsPhoto = async (): Promise<void> => {
 	bot.on("photo", async (ctx) => {
 		logger.info("hears: photo", "hears.ts:on(photo)");
-		if (telegram.api.message.getGroupID(ctx) > 0) {
+		if (telegram.api.message.getChatID(ctx) > 0) {
 			// is chat with bot
 			const master: TelegramUserInterface = await db.master.get({
 				username: telegram.api.message.getUsername(ctx),
@@ -44,13 +44,13 @@ const hearsPhoto = async (): Promise<void> => {
 					if (json.question === undefined || json.question === "") {
 						await telegram.api.message.send(
 							ctx,
-							telegram.api.message.getGroupID(ctx),
+							telegram.api.message.getChatID(ctx),
 							translate("hears_missing_question"),
 						);
 					} else if (json.description === undefined || json.description === "") {
 						await telegram.api.message.send(
 							ctx,
-							telegram.api.message.getGroupID(ctx),
+							telegram.api.message.getChatID(ctx),
 							translate("hears_missing_tip"),
 						);
 					} else {
@@ -66,14 +66,14 @@ const hearsPhoto = async (): Promise<void> => {
 				} else {
 					await telegram.api.message.send(
 						ctx,
-						telegram.api.message.getGroupID(ctx),
+						telegram.api.message.getChatID(ctx),
 						translate("hears_missing_photo_caption"),
 					);
 				}
 			} else {
 				await telegram.api.message.send(
 					ctx,
-					telegram.api.message.getGroupID(ctx),
+					telegram.api.message.getChatID(ctx),
 					translate("hears_not_you_master"),
 				);
 			}

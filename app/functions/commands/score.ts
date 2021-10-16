@@ -28,18 +28,18 @@ const score = async (): Promise<void> => {
 	bot.command("score", async (ctx) => {
 		logger.info("command: /score", "score.ts:score()");
 
-		if (telegram.api.message.getGroupID(ctx) < 0) {
+		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
 			if (
 				telegram.api.message.getText(ctx).trim() === "/score" ||
 				telegram.api.message.getText(ctx).trim() === `/score@${telegram.api.bot.getUsername(ctx)}`
 			) {
 				const score: TelegramUserInterface = await db.scores.get({
-					group_id: telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getChatID(ctx),
 					id: telegram.api.message.getUserID(ctx),
 				});
 				const user_questions: QuestionsInterface = await db.questions.get({
-					group_id: telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getChatID(ctx),
 					username: telegram.api.message.getUsername(ctx),
 				});
 
@@ -48,7 +48,7 @@ const score = async (): Promise<void> => {
 				}
 				await telegram.api.message.send(
 					ctx,
-					telegram.api.message.getGroupID(ctx),
+					telegram.api.message.getChatID(ctx),
 					translate("score_command_show", {
 						first_name: telegram.api.message.getUserFirstName(ctx) || "",
 						username: telegram.api.message.getUsername(ctx) || "",
@@ -64,11 +64,11 @@ const score = async (): Promise<void> => {
 					.trim();
 
 				const score: TelegramUserInterface = await db.scores.get({
-					group_id: telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getChatID(ctx),
 					username,
 				});
 				const user_questions: QuestionsInterface = await db.questions.get({
-					group_id: telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getChatID(ctx),
 					username,
 				});
 
@@ -78,7 +78,7 @@ const score = async (): Promise<void> => {
 
 				await telegram.api.message.send(
 					ctx,
-					telegram.api.message.getGroupID(ctx),
+					telegram.api.message.getChatID(ctx),
 					translate("score_command_show_with_username", {
 						username: username,
 						score: score?.score || 0,
@@ -86,7 +86,7 @@ const score = async (): Promise<void> => {
 				);
 			}
 		} else {
-			await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), translate("command_only_group"));
 		}
 	});
 };

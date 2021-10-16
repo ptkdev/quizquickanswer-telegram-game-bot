@@ -39,7 +39,7 @@ const getFullUser = (ctx: any): any => {
 	return from;
 };
 
-const getGroupID = (ctx: any): number => {
+const getChatID = (ctx: any): number => {
 	return (
 		ctx?.update.message?.chat?.id || ctx?.message?.chat?.id || ctx?.update.callback_query?.message?.chat?.id || 0
 	);
@@ -113,7 +113,7 @@ const pin = async (
 export {
 	getFullUser,
 	getUsername,
-	getGroupID,
+	getChatID,
 	getText,
 	getUserID,
 	getUserFirstName,
@@ -127,7 +127,7 @@ export {
 export default {
 	getFullUser,
 	getUsername,
-	getGroupID,
+	getChatID,
 	getText,
 	getUserID,
 	getUserFirstName,

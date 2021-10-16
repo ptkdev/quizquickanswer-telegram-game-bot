@@ -24,10 +24,10 @@ const actions = async (): Promise<void> => {
 				await sendMessageToAllGroups(ctx);
 				break;
 			case "set_user_score":
-				console.log(telegram.api.message.getGroupID(ctx), ctx.update.callback_query);
+				console.log(telegram.api.message.getChatID(ctx), ctx.update.callback_query);
 				await telegram.api.message.send(
 					ctx,
-					telegram.api.message.getGroupID(ctx),
+					telegram.api.message.getChatID(ctx),
 					translate("admin_set_user_score_info_request"),
 				);
 				break;

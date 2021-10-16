@@ -20,7 +20,7 @@ const voteQuestion = async (): Promise<void> => {
 	bot.command(["badquestion", "goodquestion"], async (ctx) => {
 		logger.info("command: /badquestion/goodquestion", "votequestion.ts:voteQuestion()");
 
-		if (telegram.api.message.getGroupID(ctx) < 0) {
+		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
 
 			const username = telegram.api.message
@@ -33,24 +33,24 @@ const voteQuestion = async (): Promise<void> => {
 			if (username === telegram.api.message.getUsername(ctx)) {
 				await telegram.api.message.send(
 					ctx,
-					telegram.api.message.getGroupID(ctx),
+					telegram.api.message.getChatID(ctx),
 					translate("goodquestion_not_autovote"),
 				);
 				return;
 			}
 
 			if (username !== "") {
-				const group_id = telegram.api.message.getGroupID(ctx);
+				const group_id = telegram.api.message.getChatID(ctx);
 				const text = telegram.api.message.getText(ctx);
 				const is_good_question = text.split(" ")[0] === "/goodquestion";
 
 				const user_questions: QuestionsInterface = await db.questions.get({
-					group_id: telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getChatID(ctx),
 					username,
 				});
 
 				const user_score: TelegramUserInterface = await db.scores.get({
-					group_id: telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getChatID(ctx),
 					username,
 				});
 
@@ -89,10 +89,10 @@ const voteQuestion = async (): Promise<void> => {
 					: `*Votazione andata a buon fine*\\! 🗳 \n\n@*${username}* hai ricevuto un voto *negativo*, puoi fare di meglio la prossima volta\\. 💩 \n\nIl tuo punteggio è di *${combinedPoints}* punt${
 							combinedPoints === 1 ? "o" : "i"
 					  }\\! ⚽️`;
-				await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), message);
+				await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), message);
 			}
 		} else {
-			await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), translate("command_only_group"));
 		}
 	});
 };

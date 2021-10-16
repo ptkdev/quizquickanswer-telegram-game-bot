@@ -22,16 +22,16 @@ const top10 = async (): Promise<void> => {
 	bot.command("top10", async (ctx) => {
 		logger.info("command: /top10", "top10.ts:top10()");
 
-		if (telegram.api.message.getGroupID(ctx) < 0) {
+		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
 			const top_scores: TelegramUserInterface[] = await db.scores.getMultiple({
-				group_id: telegram.api.message.getGroupID(ctx),
+				group_id: telegram.api.message.getChatID(ctx),
 			});
 
 			let mapped_scores: TelegramUserInterface[] = await Promise.all(
 				top_scores.map(async (s: TelegramUserInterface) => {
 					const user_questions: QuestionsInterface = await db.questions.get({
-						group_id: telegram.api.message.getGroupID(ctx),
+						group_id: telegram.api.message.getChatID(ctx),
 						username: s?.username || "",
 					});
 
@@ -56,16 +56,16 @@ const top10 = async (): Promise<void> => {
 				.join("");
 
 			if (scores_message) {
-				await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), scores_message);
+				await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), scores_message);
 			} else {
 				await telegram.api.message.send(
 					ctx,
-					telegram.api.message.getGroupID(ctx),
+					telegram.api.message.getChatID(ctx),
 					translate("top10_command_not_available"),
 				);
 			}
 		} else {
-			await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), translate("command_only_group"));
 		}
 	});
 };

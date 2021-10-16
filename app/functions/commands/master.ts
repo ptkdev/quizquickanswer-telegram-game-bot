@@ -28,7 +28,7 @@ const master = async (): Promise<void> => {
 	bot.command("master", async (ctx) => {
 		logger.info("command: /master", "master.ts:master()");
 
-		if (telegram.api.message.getGroupID(ctx) < 0) {
+		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
 			if (
 				telegram.api.message.getText(ctx).trim() === "/master" ||
@@ -36,7 +36,7 @@ const master = async (): Promise<void> => {
 			) {
 				await telegram.api.message.send(
 					ctx,
-					telegram.api.message.getGroupID(ctx),
+					telegram.api.message.getChatID(ctx),
 					translate("master_command_empty"),
 				);
 			} else {
@@ -51,11 +51,11 @@ const master = async (): Promise<void> => {
 					question: "",
 					description: "",
 					score: 0,
-					group_id: telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getChatID(ctx),
 				};
 
 				const master: TelegramUserInterface = await db.master.get({
-					group_id: telegram.api.message.getGroupID(ctx),
+					group_id: telegram.api.message.getChatID(ctx),
 				});
 				logger.debug(`master:${JSON.stringify(master)}`);
 				if (master.group_id < 0) {
@@ -65,7 +65,7 @@ const master = async (): Promise<void> => {
 				}
 				await telegram.api.message.send(
 					ctx,
-					telegram.api.message.getGroupID(ctx),
+					telegram.api.message.getChatID(ctx),
 					translate("master_command_success", {
 						username: username,
 						bot_username: telegram.api.bot.getUsername(ctx),
@@ -73,7 +73,7 @@ const master = async (): Promise<void> => {
 				);
 			}
 		} else {
-			await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), translate("command_only_group"));
 		}
 	});
 };

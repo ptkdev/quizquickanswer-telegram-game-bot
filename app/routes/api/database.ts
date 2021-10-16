@@ -13,6 +13,7 @@ import master from "@app/functions/api/database/master";
 import questions from "@app/functions/api/database/questions";
 import scores from "@app/functions/api/database/scores";
 import users from "@app/functions/api/database/users";
+import settings from "@app/functions/api/database/settings";
 
 const db = {
 	connection: connection,
@@ -20,6 +21,7 @@ const db = {
 	questions: questions,
 	scores: scores,
 	users: users,
+	settings: settings,
 };
 
 export { db };

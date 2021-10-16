@@ -25,6 +25,7 @@ import logger from "@app/functions/utils/logger";
 	await commands.master();
 	await commands.top10();
 	await commands.score();
+	await commands.settings();
 	await commands.voteQuestion();
 	await commands.hears();
 	await commands.hearsPhoto();
@@ -33,7 +34,7 @@ import logger from "@app/functions/utils/logger";
 })();
 
 process.on("SIGINT", async function () {
-	// on Cntr-C
+	// on CTRL-C
 	await db.connection.disconnectDB();
 });
 

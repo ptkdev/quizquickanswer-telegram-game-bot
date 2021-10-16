@@ -9,28 +9,27 @@
  *
  */
 import { Schema, model } from "mongoose";
-import type { TelegramUserInterface } from "@app/types/databases.type";
-import type { GameInterface } from "@app/types/game.type.js";
+import type { SettingsInterface } from "@app/types/databases.type.js";
 import { logger } from "@app/functions/utils/logger";
 
-const schema = new Schema<GameInterface>({
+const schema = new Schema<SettingsInterface>({
 	group_id: { type: Number, default: 0 },
 	language: { type: String, default: "en" },
 	pin_message: { type: Boolean, default: true },
 });
 
-const query = model<TelegramUserInterface>("Settings", schema, "settings");
+const query = model<SettingsInterface>("Settings", schema, "settings");
 
 /**
  * Settings CRUD
  * =====================
- * Add user to DB
+ * Add settings to DB
  *
- * @param {TelegramUserInterface} user - user to add
+ * @param {SettingsInterface} settings - settings to add
  */
-const add = async (user: TelegramUserInterface): Promise<void> => {
+const add = async (settings: SettingsInterface): Promise<void> => {
 	try {
-		const doc = new query(user);
+		const doc = new query(settings);
 		await doc.save();
 	} catch (error: any) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:add()");
@@ -40,7 +39,7 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
 /**
  * Settings CRUD
  * =====================
- * Remove user from DB
+ * Remove settings from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
  */
@@ -59,17 +58,17 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 /**
  * Settings CRUD
  * =====================
- * Update user from DB
+ * Update settings from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
- * @param {TelegramUserInterface} user - user info to update
+ * @param {SettingsInterface} settings - settings info to update
  */
 const update = async (
 	search: Record<string, number | string | boolean>,
-	user: TelegramUserInterface,
+	settings: SettingsInterface,
 ): Promise<void> => {
 	try {
-		query.findOneAndUpdate(search, user, function (error: string) {
+		query.findOneAndUpdate(search, settings, function (error: string) {
 			if (error) {
 				logger.error(error || "");
 			}
@@ -82,21 +81,21 @@ const update = async (
 /**
  * Settings CRUD
  * =====================
- * Get user from DB
+ * Get settings from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
- * @return {TelegramUserInterface[]} user.
+ * @return {SettingsInterface[]} settings.
 
  */
-const get = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
+const get = async (search: Record<string, number | string | boolean>): Promise<SettingsInterface> => {
 	try {
-		const user = await query.findOne(search, function (error: string) {
+		const settings = await query.findOne(search, function (error: string) {
 			if (error) {
 				logger.error(JSON.stringify(error || ""), "settings.ts:get()");
 			}
 		});
 
-		return user || new query().toJSON();
+		return settings || new query().toJSON();
 	} catch (error: any) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:get()");
 	}

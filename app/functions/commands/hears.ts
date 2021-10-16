@@ -27,7 +27,7 @@ const hears = async (): Promise<void> => {
 	bot.on("text", async (ctx) => {
 		logger.info("hears: text", "hears.ts:on(text)");
 
-		if (telegram.api.message.getGroupID(ctx) > 0) {
+		if (telegram.api.message.getChatID(ctx) > 0) {
 			// is chat with bot
 			const master: TelegramUserInterface = await db.master.get({
 				username: telegram.api.message.getUsername(ctx),
@@ -45,13 +45,13 @@ const hears = async (): Promise<void> => {
 				if (json.question === undefined || json.question === "") {
 					await telegram.api.message.send(
 						ctx,
-						telegram.api.message.getGroupID(ctx),
+						telegram.api.message.getChatID(ctx),
 						translate("hears_missing_question"),
 					);
 				} else if (json.description === undefined || json.description === "") {
 					await telegram.api.message.send(
 						ctx,
-						telegram.api.message.getGroupID(ctx),
+						telegram.api.message.getChatID(ctx),
 						translate("hears_missing_tip"),
 					);
 				} else {
@@ -65,29 +65,29 @@ const hears = async (): Promise<void> => {
 			} else {
 				await telegram.api.message.send(
 					ctx,
-					telegram.api.message.getGroupID(ctx),
+					telegram.api.message.getChatID(ctx),
 					translate("haers_not_you_master"),
 				);
 			}
 		}
 
-		if (telegram.api.message.getGroupID(ctx) < 0) {
+		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group
 			const master: MasterInterface = await db.master.get({
-				group_id: telegram.api.message.getGroupID(ctx),
+				group_id: telegram.api.message.getChatID(ctx),
 			});
 
 			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master?.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
 					const user_score: TelegramUserInterface = await db.scores.get({
-						group_id: telegram.api.message.getGroupID(ctx),
+						group_id: telegram.api.message.getChatID(ctx),
 						id: telegram.api.message.getUserID(ctx),
 					});
 
 					logger.debug(`user_score: ${JSON.stringify(user_score)}`);
 
 					const user_questions: QuestionsInterface = await db.questions.get({
-						group_id: telegram.api.message.getGroupID(ctx),
+						group_id: telegram.api.message.getChatID(ctx),
 						id: telegram.api.message.getUserID(ctx),
 					});
 
@@ -111,14 +111,14 @@ const hears = async (): Promise<void> => {
 					const json: MasterInterface = telegram.api.message.getFullUser(ctx);
 					json.question = "";
 					json.description = "";
-					json.group_id = telegram.api.message.getGroupID(ctx);
-					await db.master.update({ group_id: telegram.api.message.getGroupID(ctx) }, json);
+					json.group_id = telegram.api.message.getChatID(ctx);
+					await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
 
 					if (user_score.group_id < 0) {
 						user_score.score += 10;
 						await db.scores.update(
 							{
-								group_id: telegram.api.message.getGroupID(ctx),
+								group_id: telegram.api.message.getChatID(ctx),
 								id: telegram.api.message.getUserID(ctx),
 							},
 							user_score,

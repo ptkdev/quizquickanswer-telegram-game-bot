@@ -22,9 +22,9 @@ const admin = async (): Promise<void> => {
 	bot.command("admin", async (ctx) => {
 		logger.info("command: /admin", "admin.ts:admin()");
 
-		if (telegram.api.message.getGroupID(ctx) > 0) {
+		if (telegram.api.message.getChatID(ctx) > 0) {
 			// is bot chat
-			await telegram.api.message.send(ctx, telegram.api.message.getGroupID(ctx), translate("admin_welcome"), {
+			await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), translate("admin_welcome"), {
 				reply_markup: {
 					inline_keyboard: [
 						[
