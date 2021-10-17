@@ -28,10 +28,15 @@
 	"action_set_user_score": "Assegnare lo score di un utente",
 	"admin_set_user_score_info_request": "Inserisci l'username, lo score e l'id del gruppo di un utente in un singolo messaggio separato da un trattino, Esempio:\n\nptkdev - 100 - 5032010\n\n",
 	"settings_command_options": "⚙️ Le opzioni disponibili sono:",
-	"settings_command_switchlanguage": "Seleziona la lingua del bot",
+	"settings_command_switchlanguage": "🌎 Seleziona la lingua del bot",
 	"settings_command_setlanguage": "🌎 Cambia lingua",
 	"settings_command_language_italian": "🇮🇹 Italiano",
 	"settings_command_language_english": "🇬🇧 English",
 	"settings_command_current_italian": "Ora il bot parlerà in: 🇮🇹 Italiano",
-	"settings_command_current_english": "Ora il bot parlerà in: 🇬🇧 Inglese"
+	"settings_command_current_english": "Ora il bot parlerà in: 🇬🇧 Inglese",
+	"settings_command_opensource": "👨‍💻 OpenSource",
+	"settings_command_email": "📨 Aiuto",
+	"settings_command_credits": "🌟 Riconoscimenti",
+	"settings_command_ptkdev": "👨‍💻 Patryk Rzucidlo (@PTKDev)",
+	"settings_command_ali": "👨‍💻 Alì Shadman"
 }

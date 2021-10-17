@@ -24,26 +24,43 @@ import logger from "@app/functions/utils/logger";
 const settings = async (): Promise<void> => {
 	bot.command("settings", async (ctx) => {
 		logger.info("command: /settings", "settings.ts:settings()");
-		return await ctx.reply(
+		await ctx.reply(
 			translate("settings_command_options"),
-			Markup.keyboard([[translate("settings_command_setlanguage")]])
-				.oneTime()
-				.resize(),
+			Markup.inlineKeyboard([
+				[Markup.button.callback(translate("settings_command_setlanguage"), "settings_languages")],
+				[
+					Markup.button.url(
+						translate("settings_command_opensource"),
+						"https://github.com/ptkdev/quizquickanswer-telegram-game-bot",
+					),
+				],
+				[Markup.button.callback(translate("settings_command_credits"), "settings_credits")],
+				[Markup.button.url(translate("settings_command_email"), "https://t.me/QuizQuickAnswerGroup")],
+			]),
 		);
 	});
 
-	bot.hears(translate("settings_command_setlanguage"), async (ctx) => {
-		return await ctx.reply(
+	bot.action("settings_languages", async (ctx) => {
+		await ctx.reply(
 			translate("settings_command_switchlanguage"),
-			Markup.keyboard([
-				[translate("settings_command_language_english"), translate("settings_command_language_italian")],
-			])
-				.oneTime()
-				.resize(),
+			Markup.inlineKeyboard([
+				Markup.button.callback(translate("settings_command_language_english"), "settings_set_english"),
+				Markup.button.callback(translate("settings_command_language_italian"), "settings_set_italian"),
+			]),
 		);
 	});
 
-	bot.hears(translate("settings_command_language_english"), async (ctx) => {
+	bot.action("settings_credits", async (ctx) => {
+		await ctx.reply(
+			"",
+			Markup.inlineKeyboard([
+				[Markup.button.url(translate("settings_command_ptkdev"), "https://ptk.dev")],
+				[Markup.button.url(translate("settings_command_ali"), "https://github.com/alishadman95/")],
+			]),
+		);
+	});
+
+	bot.action("settings_set_english", async (ctx) => {
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
 		});
@@ -64,7 +81,7 @@ const settings = async (): Promise<void> => {
 		);
 	});
 
-	bot.hears(translate("settings_command_language_italian"), async (ctx) => {
+	bot.action("settings_set_italian", async (ctx) => {
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
 		});

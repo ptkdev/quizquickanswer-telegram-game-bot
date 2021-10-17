@@ -31,10 +31,15 @@
 	"action_set_user_score": "Set a user's score",
 	"admin_set_user_score_info_request": "Insert the username, the score and the id of the user in a single message separated by a minus sign, for exemple:\n\nptkdev - 100 - 5032010\n\n",
 	"settings_command_options": "⚙️ The available options are:",
-	"settings_command_switchlanguage": "Choose the language of the bot",
+	"settings_command_switchlanguage": "🌎 Choose the language of the bot",
 	"settings_command_setlanguage": "🌎 Set language",
 	"settings_command_language_italian": "🇮🇹 Italiano",
 	"settings_command_language_english": "🇬🇧 English",
 	"settings_command_current_italian": "Now the bot speaks in: 🇮🇹 Italian",
-	"settings_command_current_english": "Now the bot speaks in: 🇬🇧 English"
+	"settings_command_current_english": "Now the bot speaks in: 🇬🇧 English",
+	"settings_command_opensource": "👨‍💻 OpenSource",
+	"settings_command_email": "📨 Help",
+	"settings_command_credits": "🌟 Credits",
+	"settings_command_ptkdev": "👨‍💻 Patryk Rzucidlo (@PTKDev)",
+	"settings_command_ali": "👨‍💻 Alì Shadman"
 }
