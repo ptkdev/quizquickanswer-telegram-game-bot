@@ -53,7 +53,7 @@ const replaceParams = (text: string, language_params: TranslateParamsInterface):
  *
  */
 const check = (language_id: string): string => {
-	return translations["it"][language_id]; // TODO: Get from "settings" database
+	return translations["en"][language_id]; // TODO: Get from "settings" database
 };
 
 /**
