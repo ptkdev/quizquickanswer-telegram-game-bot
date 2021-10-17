@@ -24,38 +24,71 @@ import logger from "@app/functions/utils/logger";
 const settings = async (): Promise<void> => {
 	bot.command("settings", async (ctx) => {
 		logger.info("command: /settings", "settings.ts:settings()");
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
+
 		await ctx.reply(
-			translate("settings_command_options"),
+			translate(lang.language, "settings_command_options"),
 			Markup.inlineKeyboard([
-				[Markup.button.callback(translate("settings_command_setlanguage"), "settings_languages")],
+				[
+					Markup.button.callback(
+						translate(lang.language, "settings_command_setlanguage"),
+						"settings_languages",
+					),
+				],
 				[
 					Markup.button.url(
-						translate("settings_command_opensource"),
+						translate(lang.language, "settings_command_opensource"),
 						"https://github.com/ptkdev/quizquickanswer-telegram-game-bot",
 					),
 				],
-				[Markup.button.callback(translate("settings_command_credits"), "settings_credits")],
-				[Markup.button.url(translate("settings_command_email"), "https://t.me/QuizQuickAnswerGroup")],
+				[Markup.button.callback(translate(lang.language, "settings_command_credits"), "settings_credits")],
+				[
+					Markup.button.url(
+						translate(lang.language, "settings_command_email"),
+						"https://t.me/QuizQuickAnswerGroup",
+					),
+				],
 			]),
 		);
 	});
 
 	bot.action("settings_languages", async (ctx) => {
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
+
 		await ctx.reply(
-			translate("settings_command_switchlanguage"),
+			translate(lang.language, "settings_command_switchlanguage"),
 			Markup.inlineKeyboard([
-				Markup.button.callback(translate("settings_command_language_english"), "settings_set_english"),
-				Markup.button.callback(translate("settings_command_language_italian"), "settings_set_italian"),
+				Markup.button.callback(
+					translate(lang.language, "settings_command_language_english"),
+					"settings_set_english",
+				),
+				Markup.button.callback(
+					translate(lang.language, "settings_command_language_italian"),
+					"settings_set_italian",
+				),
 			]),
 		);
 	});
 
 	bot.action("settings_credits", async (ctx) => {
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
+
 		await ctx.reply(
-			translate("settings_command_credits"),
+			translate(lang.language, "settings_command_credits"),
 			Markup.inlineKeyboard([
-				[Markup.button.url(translate("settings_command_ptkdev"), "https://ptk.dev")],
-				[Markup.button.url(translate("settings_command_ali"), "https://github.com/alishadman95/")],
+				[Markup.button.url(translate(lang.language, "settings_command_ptkdev"), "https://ptk.dev")],
+				[
+					Markup.button.url(
+						translate(lang.language, "settings_command_ali"),
+						"https://github.com/alishadman95/",
+					),
+				],
 			]),
 		);
 	});
@@ -68,16 +101,20 @@ const settings = async (): Promise<void> => {
 		if (lang.group_id !== 0) {
 			await db.settings.update(
 				{ group_id: telegram.api.message.getChatID(ctx) },
-				{ group_id: telegram.api.message.getChatID(ctx), language: "en" },
+				{ group_id: telegram.api.message.getChatID(ctx), language: "en", pin_message: lang.pin_message },
 			);
 		} else {
-			await db.settings.add({ group_id: telegram.api.message.getChatID(ctx), language: "en" });
+			await db.settings.add({
+				group_id: telegram.api.message.getChatID(ctx),
+				language: "en",
+				pin_message: lang.pin_message,
+			});
 		}
 
 		await telegram.api.message.send(
 			ctx,
 			telegram.api.message.getChatID(ctx),
-			translate("settings_command_current_english"),
+			translate(lang.language, "settings_command_current_english"),
 		);
 	});
 
@@ -89,16 +126,20 @@ const settings = async (): Promise<void> => {
 		if (lang.group_id !== 0) {
 			await db.settings.update(
 				{ group_id: telegram.api.message.getChatID(ctx) },
-				{ group_id: telegram.api.message.getChatID(ctx), language: "it" },
+				{ group_id: telegram.api.message.getChatID(ctx), language: "it", pin_message: lang.pin_message },
 			);
 		} else {
-			await db.settings.add({ group_id: telegram.api.message.getChatID(ctx), language: "it" });
+			await db.settings.add({
+				group_id: telegram.api.message.getChatID(ctx),
+				language: "it",
+				pin_message: lang.pin_message,
+			});
 		}
 
 		await telegram.api.message.send(
 			ctx,
 			telegram.api.message.getChatID(ctx),
-			translate("settings_command_current_italian"),
+			translate(lang.language, "settings_command_current_italian"),
 		);
 	});
 };

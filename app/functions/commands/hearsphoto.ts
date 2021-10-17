@@ -25,6 +25,10 @@ import logger from "@app/functions/utils/logger";
 const hearsPhoto = async (): Promise<void> => {
 	bot.on("photo", async (ctx) => {
 		logger.info("hears: photo", "hears.ts:on(photo)");
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
+
 		if (telegram.api.message.getChatID(ctx) > 0) {
 			// is chat with bot
 			const master: TelegramUserInterface = await db.master.get({
@@ -45,13 +49,13 @@ const hearsPhoto = async (): Promise<void> => {
 						await telegram.api.message.send(
 							ctx,
 							telegram.api.message.getChatID(ctx),
-							translate("hears_missing_question"),
+							translate(lang.language, "hears_missing_question"),
 						);
 					} else if (json.description === undefined || json.description === "") {
 						await telegram.api.message.send(
 							ctx,
 							telegram.api.message.getChatID(ctx),
-							translate("hears_missing_tip"),
+							translate(lang.language, "hears_missing_tip"),
 						);
 					} else {
 						await db.master.update({}, json);
@@ -67,14 +71,14 @@ const hearsPhoto = async (): Promise<void> => {
 					await telegram.api.message.send(
 						ctx,
 						telegram.api.message.getChatID(ctx),
-						translate("hears_missing_photo_caption"),
+						translate(lang.language, "hears_missing_photo_caption"),
 					);
 				}
 			} else {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
-					translate("hears_not_you_master"),
+					translate(lang.language, "hears_not_you_master"),
 				);
 			}
 		}

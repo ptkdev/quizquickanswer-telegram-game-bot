@@ -27,6 +27,9 @@ import logger from "@app/functions/utils/logger";
 const score = async (): Promise<void> => {
 	bot.command("score", async (ctx) => {
 		logger.info("command: /score", "score.ts:score()");
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
 
 		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
@@ -49,7 +52,7 @@ const score = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
-					translate("score_command_show", {
+					translate(lang.language, "score_command_show", {
 						first_name: telegram.api.message.getUserFirstName(ctx) || "",
 						username: telegram.api.message.getUsername(ctx) || "",
 						score: score?.score || 0,
@@ -79,14 +82,18 @@ const score = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
-					translate("score_command_show_with_username", {
+					translate(lang.language, "score_command_show_with_username", {
 						username: username,
 						score: score?.score || 0,
 					}),
 				);
 			}
 		} else {
-			await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(
+				ctx,
+				telegram.api.message.getChatID(ctx),
+				translate(lang.language, "command_only_group"),
+			);
 		}
 	});
 };

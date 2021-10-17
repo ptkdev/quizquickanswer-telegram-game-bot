@@ -1,4 +1,4 @@
-# v0.3.0 (TBD)
+# v0.3.0 (October 18, 2021)
 
 -   Multilanguage support
 -   Scores board

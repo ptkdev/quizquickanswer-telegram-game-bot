@@ -12,12 +12,15 @@ import bot from "@app/core/telegraf";
 import telegram from "@routes/api/telegram";
 import { sendMessageToAllGroups } from "@app/functions/utils/admin";
 import translate from "@translations/translate";
-
+import db from "@routes/api/database";
 import logger from "@app/functions/utils/logger";
 
 const actions = async (): Promise<void> => {
 	bot.action(["message_all_groups", "set_user_score"], async (ctx) => {
 		logger.info(`action: ${telegram.api.message.getActionType(ctx)}`, "actions.ts:actions()");
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
 
 		switch (telegram.api.message.getActionType(ctx)) {
 			case "message_all_groups":
@@ -28,7 +31,7 @@ const actions = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
-					translate("admin_set_user_score_info_request"),
+					translate(lang.language, "admin_set_user_score_info_request"),
 				);
 				break;
 			default:

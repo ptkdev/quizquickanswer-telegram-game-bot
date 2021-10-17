@@ -365,7 +365,7 @@ export interface SettingsInterface {
 	 * @param { string } language - language
 	 *
 	 */
-	language?: string;
+	language: string;
 	/**
 	 * SettingsInterface
 	 * =====================
@@ -373,7 +373,7 @@ export interface SettingsInterface {
 	 * @param { string } pin_message - pin message to the chat
 	 *
 	 */
-	pin_message?: boolean;
+	pin_message: boolean;
 	/**
 	 * SettingsInterface
 	 * =====================

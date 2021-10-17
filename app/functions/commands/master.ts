@@ -27,6 +27,9 @@ import logger from "@app/functions/utils/logger";
 const master = async (): Promise<void> => {
 	bot.command("master", async (ctx) => {
 		logger.info("command: /master", "master.ts:master()");
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
 
 		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
@@ -37,7 +40,7 @@ const master = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
-					translate("master_command_empty"),
+					translate(lang.language, "master_command_empty"),
 				);
 			} else {
 				const username = telegram.api.message.getText(ctx).replace("/master ", "").replace("@", "").trim();
@@ -66,14 +69,18 @@ const master = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
-					translate("master_command_success", {
+					translate(lang.language, "master_command_success", {
 						username: username,
 						bot_username: telegram.api.bot.getUsername(ctx),
 					}),
 				);
 			}
 		} else {
-			await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(
+				ctx,
+				telegram.api.message.getChatID(ctx),
+				translate(lang.language, "command_only_group"),
+			);
 		}
 	});
 };

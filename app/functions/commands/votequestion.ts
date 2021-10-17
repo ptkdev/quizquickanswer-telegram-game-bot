@@ -19,6 +19,9 @@ import logger from "@app/functions/utils/logger";
 const voteQuestion = async (): Promise<void> => {
 	bot.command(["badquestion", "goodquestion"], async (ctx) => {
 		logger.info("command: /badquestion/goodquestion", "votequestion.ts:voteQuestion()");
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
 
 		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
@@ -34,7 +37,7 @@ const voteQuestion = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
-					translate("goodquestion_not_autovote"),
+					translate(lang.language, "goodquestion_not_autovote"),
 				);
 				return;
 			}
@@ -92,7 +95,11 @@ const voteQuestion = async (): Promise<void> => {
 				await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), message);
 			}
 		} else {
-			await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(
+				ctx,
+				telegram.api.message.getChatID(ctx),
+				translate(lang.language, "command_only_group"),
+			);
 		}
 	});
 };

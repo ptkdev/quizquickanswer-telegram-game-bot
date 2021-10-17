@@ -24,6 +24,9 @@ import logger from "@app/functions/utils/logger";
 const start = async (): Promise<void> => {
 	bot.start(async (ctx) => {
 		logger.info("command: /start", "start.ts:start()");
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
 
 		const users: TelegramUserInterface = await db.users.get({
 			id: telegram.api.message.getUserID(ctx),
@@ -40,7 +43,7 @@ const start = async (): Promise<void> => {
 			await telegram.api.message.send(
 				ctx,
 				telegram.api.message.getChatID(ctx),
-				translate("start_command_group", {
+				translate(lang.language, "start_command_group", {
 					username: telegram.api.message.getUsername(ctx),
 				}),
 			);
@@ -48,7 +51,7 @@ const start = async (): Promise<void> => {
 			await telegram.api.message.send(
 				ctx,
 				telegram.api.message.getChatID(ctx),
-				translate("start_command_private"),
+				translate(lang.language, "start_command_private"),
 			);
 		}
 	});

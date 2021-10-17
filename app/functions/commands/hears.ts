@@ -26,6 +26,9 @@ import { similarity } from "../utils/utils";
 const hears = async (): Promise<void> => {
 	bot.on("text", async (ctx) => {
 		logger.info("hears: text", "hears.ts:on(text)");
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
 
 		if (telegram.api.message.getChatID(ctx) > 0) {
 			// is chat with bot
@@ -46,13 +49,13 @@ const hears = async (): Promise<void> => {
 					await telegram.api.message.send(
 						ctx,
 						telegram.api.message.getChatID(ctx),
-						translate("hears_missing_question"),
+						translate(lang.language, "hears_missing_question"),
 					);
 				} else if (json.description === undefined || json.description === "") {
 					await telegram.api.message.send(
 						ctx,
 						telegram.api.message.getChatID(ctx),
-						translate("hears_missing_tip"),
+						translate(lang.language, "hears_missing_tip"),
 					);
 				} else {
 					await db.master.update({}, json);
@@ -66,7 +69,7 @@ const hears = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
-					translate("haers_not_you_master"),
+					translate(lang.language, "haers_not_you_master"),
 				);
 			}
 		}
@@ -94,7 +97,7 @@ const hears = async (): Promise<void> => {
 					await telegram.api.message.send(
 						ctx,
 						master?.group_id,
-						translate("hears_win", {
+						translate(lang.language, "hears_win", {
 							first_name: telegram.api.message.getUserFirstName(ctx),
 							username: telegram.api.message.getUsername(ctx),
 							bot_username: telegram.api.bot.getUsername(ctx),
@@ -132,7 +135,7 @@ const hears = async (): Promise<void> => {
 					await telegram.api.message.send(
 						ctx,
 						master?.group_id || 0,
-						translate("hears_win_but_not_master", {
+						translate(lang.language, "hears_win_but_not_master", {
 							first_name: telegram.api.message.getUserFirstName(ctx),
 							master_first_name: master.first_name,
 							master_username: master.username,
@@ -151,7 +154,7 @@ const hears = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					master.group_id,
-					translate("hot_answer", {
+					translate(lang.language, "hot_answer", {
 						first_name: telegram.api.message.getUserFirstName(ctx),
 						username: telegram.api.message.getUsername(ctx),
 					}),

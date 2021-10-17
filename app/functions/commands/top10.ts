@@ -21,6 +21,9 @@ import logger from "@app/functions/utils/logger";
 const top10 = async (): Promise<void> => {
 	bot.command("top10", async (ctx) => {
 		logger.info("command: /top10", "top10.ts:top10()");
+		const lang = await db.settings.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
 
 		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
@@ -46,7 +49,7 @@ const top10 = async (): Promise<void> => {
 
 			const scores_message = mapped_scores
 				.map((s: TelegramUserInterface, index: number) => {
-					return translate("top10_command_list", {
+					return translate(lang.language, "top10_command_list", {
 						emoji: getTopScoreEmoji(index),
 						first_name: s.first_name,
 						username: s.username,
@@ -61,11 +64,15 @@ const top10 = async (): Promise<void> => {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
-					translate("top10_command_not_available"),
+					translate(lang.language, "top10_command_not_available"),
 				);
 			}
 		} else {
-			await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), translate("command_only_group"));
+			await telegram.api.message.send(
+				ctx,
+				telegram.api.message.getChatID(ctx),
+				translate(lang.language, "command_only_group"),
+			);
 		}
 	});
 };
