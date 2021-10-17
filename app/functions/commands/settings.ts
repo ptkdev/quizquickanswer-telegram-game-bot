@@ -52,7 +52,7 @@ const settings = async (): Promise<void> => {
 
 	bot.action("settings_credits", async (ctx) => {
 		await ctx.reply(
-			"",
+			translate("settings_command_credits"),
 			Markup.inlineKeyboard([
 				[Markup.button.url(translate("settings_command_ptkdev"), "https://ptk.dev")],
 				[Markup.button.url(translate("settings_command_ali"), "https://github.com/alishadman95/")],
