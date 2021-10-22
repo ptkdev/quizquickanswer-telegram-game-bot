@@ -62,14 +62,22 @@ const settings = async (): Promise<void> => {
 		await ctx.reply(
 			translate(lang.language, "settings_command_switchlanguage"),
 			Markup.inlineKeyboard([
-				Markup.button.callback(
-					translate(lang.language, "settings_command_language_english"),
-					"settings_set_english",
-				),
-				Markup.button.callback(
-					translate(lang.language, "settings_command_language_italian"),
-					"settings_set_italian",
-				),
+				[
+					Markup.button.callback(
+						translate(lang.language, "settings_command_language_english"),
+						"settings_set_english",
+					),
+					Markup.button.callback(
+						translate(lang.language, "settings_command_language_italian"),
+						"settings_set_italian",
+					),
+				],
+				[
+					Markup.button.url(
+						translate(lang.language, "settings_command_language_new"),
+						"https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/translations/translate.ts",
+					),
+				],
 			]),
 		);
 	});

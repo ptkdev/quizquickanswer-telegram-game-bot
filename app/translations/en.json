@@ -35,6 +35,7 @@
 	"settings_command_setlanguage": "🌎 Set language",
 	"settings_command_language_italian": "🇮🇹 Italiano",
 	"settings_command_language_english": "🇬🇧 English",
+	"settings_command_language_new": "🏁 Helps translate",
 	"settings_command_current_italian": "Now the bot speaks in: 🇮🇹 Italian",
 	"settings_command_current_english": "Now the bot speaks in: 🇬🇧 English",
 	"settings_command_opensource": "👨‍💻 OpenSource",
