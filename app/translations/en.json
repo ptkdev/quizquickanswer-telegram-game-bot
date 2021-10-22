@@ -22,7 +22,7 @@
 	"score_command_show": "<b>##first_name##</b> (@##username##) your score in this group is <b>##score##</b>!",
 	"score_command_show_with_username": "<b>@##username##</b> 's score in this group is <b>##score##</b>!",
 	"start_command_group": "Before starting to play set this bot as an admin of this group. Then make yourself the master by running the command: /master ##username##",
-	"start_command_private": "Write down the world or the sentence to guess followed by a minus sign and the hint. You can also send a picture and use the same scheme in the caption. All in a single message, for exemple: \n\nanteater - cute animal with a very long nose\n\nanteater is the word to guess, then there is the MINUS sign and finally the HINT (cute animal with a very long nose).",
+	"start_command_private": "Write down the world or the sentence to guess followed by a minus sign and the hint. You can also send a picture and use the same scheme in the caption. All in a single message, for exemple: \n\nanteater - cute animal with a very long nose\n\nanteater is the word to guess, then there is the MINUS sign and finally the HINT (cute animal with a very long nose).\n\nChange language on /settings",
 	"top10_command_not_available": "Leaderboard not available for this group!",
 	"top10_command_list": "##emoji## <b>##first_name##</b> (##username##) - <b>##score##</b> punti\n\n",
 	"hot_answer": "🔥 <b>##first_name##</b> (@##username##) - PRETTY CLOSE! You quite guess the answer!\n\n",
