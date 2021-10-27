@@ -16,6 +16,12 @@ const getUsername = (ctx: any): string => {
 	return username?.trim() || "";
 };
 
+const getUsernameFromAction = (ctx: any): string => {
+	const username = ctx?.update?.callback_query?.from?.username;
+
+	return username?.trim() || "";
+};
+
 const getUserID = (ctx: any): string => {
 	const id = ctx?.update?.message?.from?.id;
 
@@ -123,6 +129,7 @@ export {
 	getPhotoFileID,
 	getPhotoCaption,
 	getActionType,
+	getUsernameFromAction,
 };
 export default {
 	getFullUser,
@@ -137,4 +144,5 @@ export default {
 	getPhotoFileID,
 	getPhotoCaption,
 	getActionType,
+	getUsernameFromAction,
 };

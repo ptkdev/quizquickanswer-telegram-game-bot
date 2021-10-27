@@ -8,6 +8,7 @@
  * @license: MIT License
  *
  */
+import { Markup } from "telegraf";
 import bot from "@app/core/telegraf";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
@@ -60,7 +61,14 @@ const hears = async (): Promise<void> => {
 				} else {
 					await db.master.update({}, json);
 
-					const quiz = await telegram.api.message.send(ctx, master.group_id, `⏱ ${json.description || ""}`);
+					const quiz = await telegram.api.message.send(
+						ctx,
+						master.group_id,
+						`⏱ ${json.description || ""}`,
+						Markup.inlineKeyboard([
+							[Markup.button.callback("👍", "goodquestion"), Markup.button.callback("👎", "badquestion")],
+						]),
+					);
 					await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
 						disable_notification: true,
 					});
@@ -162,6 +170,91 @@ const hears = async (): Promise<void> => {
 			}
 		}
 	});
+
+	bot.action("goodquestion", async (ctx) => {
+		await vote(ctx, "goodquestion");
+	});
+	bot.action("badquestion", async (ctx) => {
+		await vote(ctx, "badquestion");
+	});
+};
+
+const vote = async (ctx, type): Promise<void> => {
+	const lang = await db.settings.get({
+		group_id: telegram.api.message.getChatID(ctx),
+	});
+
+	if (telegram.api.message.getChatID(ctx) < 0) {
+		// is group chat
+
+		const username = telegram.api.message.getUsernameFromAction(ctx);
+
+		// If it's a self vote
+		/* 	if (username === telegram.api.message.getUsername(ctx)) {
+				await telegram.api.message.send(
+					ctx,
+					telegram.api.message.getChatID(ctx),
+					translate(lang.language, "goodquestion_not_autovote"),
+				);
+				return;
+			} */
+
+		if (username !== "") {
+			const group_id = telegram.api.message.getChatID(ctx);
+			const is_good_question = type === "goodquestions";
+
+			const user_questions: QuestionsInterface = await db.questions.get({
+				group_id: telegram.api.message.getChatID(ctx),
+				username,
+			});
+
+			/* const user_score: TelegramUserInterface = await db.scores.get({
+				group_id: telegram.api.message.getChatID(ctx),
+				username,
+			}); */
+
+			if (user_questions.group_id < 0) {
+				// if voted user is in the question DB
+				if (is_good_question) {
+					user_questions.good_questions += 1;
+				} else {
+					user_questions.bad_questions += 1;
+				}
+				await db.questions.update({ group_id, username }, user_questions);
+			} else {
+				const json = {
+					username: username,
+					good_questions: is_good_question ? 1 : 0,
+					bad_questions: is_good_question ? 0 : 1,
+					group_id: group_id,
+				};
+				await db.questions.add(json);
+			}
+
+			/* let combinedPoints: number = score;
+
+				if (user_questions) {
+					combinedPoints += user_questions.good_questions - user_questions.bad_questions;
+				} else {
+					combinedPoints += (is_good_question ? 1 : 0) - (is_good_question ? 0 : 1);
+				}
+
+				const message = is_good_question
+					? `*Votazione andata a buon fine*\\! 🗳 \n\n*Complimenti @${username}* hai ricevuto un voto *positivo*, ottima domanda\\! 🔥\n\nIl tuo punteggio è di *${combinedPoints}* punt${
+							combinedPoints === 1 ? "o" : "i"
+					  }\\! ⚽️`
+					: `*Votazione andata a buon fine*\\! 🗳 \n\n@*${username}* hai ricevuto un voto *negativo*, puoi fare di meglio la prossima volta\\. 💩 \n\nIl tuo punteggio è di *${combinedPoints}* punt${
+							combinedPoints === 1 ? "o" : "i"
+					  }\\! ⚽️`;
+				await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), message); */
+		}
+	} else {
+		await telegram.api.message.send(
+			ctx,
+			telegram.api.message.getChatID(ctx),
+			translate(lang.language, "command_only_group"),
+		);
+	}
 };
 
 export { hears };
