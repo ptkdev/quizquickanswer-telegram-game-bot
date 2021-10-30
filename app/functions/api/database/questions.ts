@@ -17,6 +17,7 @@ const schema = new Schema<QuestionsInterface>({
 	group_id: { type: Number, default: 0 },
 	good_questions: { type: Number, default: 0 },
 	bad_questions: { type: Number, default: 0 },
+	voters: { type: Object, default: { message_id: 0, users: [""] } },
 });
 
 const query = model<QuestionsInterface>("Questions", schema, "questions");

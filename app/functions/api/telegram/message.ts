@@ -21,6 +21,11 @@ const getUsernameFromAction = (ctx: any): string => {
 
 	return username?.trim() || "";
 };
+const getUserIDFromAction = (ctx: any): string => {
+	const id = ctx?.update?.callback_query?.from?.id;
+
+	return `${id}` || "0";
+};
 
 const getUserID = (ctx: any): string => {
 	const id = ctx?.update?.message?.from?.id;
@@ -65,6 +70,13 @@ const getPhotoCaption = (ctx: any): string => {
 
 const getText = (ctx: any): string => {
 	return ctx?.update?.message?.text || ctx?.message?.text || "";
+};
+
+const getMessageID = (ctx: any): string => {
+	return ctx?.update?.message?.message_id || ctx?.message?.message_id || "";
+};
+const getMessageIDFromAction = (ctx: any): string => {
+	return ctx?.update?.callback_query?.message?.message_id || ctx?.message?.message_id || "";
 };
 
 const send = async (ctx: any, group_id: number, text: string, options: any = { parse_mode: "HTML" }): Promise<any> => {
@@ -130,6 +142,9 @@ export {
 	getPhotoCaption,
 	getActionType,
 	getUsernameFromAction,
+	getMessageID,
+	getUserIDFromAction,
+	getMessageIDFromAction,
 };
 export default {
 	getFullUser,
@@ -145,4 +160,7 @@ export default {
 	getPhotoCaption,
 	getActionType,
 	getUsernameFromAction,
+	getMessageID,
+	getUserIDFromAction,
+	getMessageIDFromAction,
 };

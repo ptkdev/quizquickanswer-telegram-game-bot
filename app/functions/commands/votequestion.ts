@@ -17,7 +17,7 @@ import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.
 import logger from "@app/functions/utils/logger";
 
 const voteQuestion = async (): Promise<void> => {
-	bot.command(["badquestion", "goodquestion"], async (ctx) => {
+	/* bot.command(["badquestion", "goodquestion"], async (ctx) => {
 		logger.info("command: /badquestion/goodquestion", "votequestion.ts:voteQuestion()");
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
@@ -101,7 +101,7 @@ const voteQuestion = async (): Promise<void> => {
 				translate(lang.language, "command_only_group"),
 			);
 		}
-	});
+	}); */
 };
 
 export { voteQuestion };

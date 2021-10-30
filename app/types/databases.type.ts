@@ -169,6 +169,7 @@ export interface GameInterface {
  * @param { number } bad_questions - user bad questions count
  * @param { string } group_id - user group id
  * @param { string } error - error message;
+ * @param { VotersInterface } message - users that have voted on the current question;
  *
  */
 export interface QuestionsInterface {
@@ -222,6 +223,16 @@ export interface QuestionsInterface {
 	 *
 	 */
 	error?: string;
+	/**
+	 * Questions Interface
+	 * =====================
+	 *
+	 * @interface [QuestionsUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 *
+	 * @param { VotersInterface } voters - users that have voted on the current question;
+	 *
+	 */
+	voters: VotersInterface;
 }
 
 /**
@@ -382,4 +393,33 @@ export interface SettingsInterface {
 	 *
 	 */
 	group_id: number;
+}
+
+/**
+ * VotersInterface
+ * =====================
+ *
+ * @interface [VotersInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/types/game.type.ts)
+ *
+ * @param { string | number } message_id - message id
+ * @param {  string[] } voters - user id of the voters
+ *
+ */
+export interface VotersInterface {
+	/**
+	 * VotersInterface
+	 * =====================
+	 *
+	 * @param { string | number } message_id - id of the message/question
+	 *
+	 */
+	message_id: string | number;
+	/**
+	 * VotersInterface
+	 * =====================
+	 *
+	 * @param { string[] } users - user id of the voters
+	 *
+	 */
+	users: string[];
 }

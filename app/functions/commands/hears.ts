@@ -61,12 +61,20 @@ const hears = async (): Promise<void> => {
 				} else {
 					await db.master.update({}, json);
 
+					/* 	const user_questions: QuestionsInterface = await db.questions.get({
+						group_id: telegram.api.message.getChatID(ctx),
+						id: telegram.api.message.getUserID(ctx),
+					}); */
+
 					const quiz = await telegram.api.message.send(
 						ctx,
 						master.group_id,
 						`⏱ ${json.description || ""}`,
 						Markup.inlineKeyboard([
-							[Markup.button.callback("👍", "goodquestion"), Markup.button.callback("👎", "badquestion")],
+							[
+								Markup.button.callback(`👍 `, "goodquestion"),
+								Markup.button.callback("👎", "badquestion"),
+							],
 						]),
 					);
 					await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
@@ -187,66 +195,60 @@ const vote = async (ctx, type): Promise<void> => {
 	if (telegram.api.message.getChatID(ctx) < 0) {
 		// is group chat
 
-		const username = telegram.api.message.getUsernameFromAction(ctx);
+		const { username }: MasterInterface = await db.master.get({
+			group_id: telegram.api.message.getChatID(ctx),
+		});
 
-		// If it's a self vote
-		/* 	if (username === telegram.api.message.getUsername(ctx)) {
-				await telegram.api.message.send(
-					ctx,
-					telegram.api.message.getChatID(ctx),
-					translate(lang.language, "goodquestion_not_autovote"),
-				);
-				return;
-			} */
+		const voter_user_id = telegram.api.message.getUserIDFromAction(ctx);
+		const message_id = telegram.api.message.getMessageIDFromAction(ctx);
 
-		if (username !== "") {
+		// If it's a self vote (Comment this part for debugging)
+		/* if (username === telegram.api.message.getUsernameFromAction(ctx)) {
+			await telegram.api.message.send(
+				ctx,
+				telegram.api.message.getChatID(ctx),
+				translate(lang.language, "goodquestion_not_autovote"),
+			);
+			return;
+		} */
+
+		if (username && username !== "") {
 			const group_id = telegram.api.message.getChatID(ctx);
-			const is_good_question = type === "goodquestions";
+			const is_good_question = type === "goodquestion";
 
 			const user_questions: QuestionsInterface = await db.questions.get({
 				group_id: telegram.api.message.getChatID(ctx),
 				username,
 			});
 
-			/* const user_score: TelegramUserInterface = await db.scores.get({
-				group_id: telegram.api.message.getChatID(ctx),
-				username,
-			}); */
-
 			if (user_questions.group_id < 0) {
 				// if voted user is in the question DB
+				const same_message: boolean = user_questions.voters.message_id === message_id;
+				// If the voter user has already voted this question/message
+				if (same_message && user_questions.voters.users.some((u) => u === voter_user_id)) {
+					return;
+				}
+
 				if (is_good_question) {
 					user_questions.good_questions += 1;
 				} else {
 					user_questions.bad_questions += 1;
 				}
+				user_questions.voters = {
+					message_id,
+					users: same_message ? [...user_questions.voters.users, voter_user_id] : [voter_user_id],
+				};
 				await db.questions.update({ group_id, username }, user_questions);
 			} else {
 				const json = {
-					username: username,
+					username,
 					good_questions: is_good_question ? 1 : 0,
 					bad_questions: is_good_question ? 0 : 1,
 					group_id: group_id,
+					voters: { message_id, users: [voter_user_id] },
 				};
 				await db.questions.add(json);
 			}
-
-			/* let combinedPoints: number = score;
-
-				if (user_questions) {
-					combinedPoints += user_questions.good_questions - user_questions.bad_questions;
-				} else {
-					combinedPoints += (is_good_question ? 1 : 0) - (is_good_question ? 0 : 1);
-				}
-
-				const message = is_good_question
-					? `*Votazione andata a buon fine*\\! 🗳 \n\n*Complimenti @${username}* hai ricevuto un voto *positivo*, ottima domanda\\! 🔥\n\nIl tuo punteggio è di *${combinedPoints}* punt${
-							combinedPoints === 1 ? "o" : "i"
-					  }\\! ⚽️`
-					: `*Votazione andata a buon fine*\\! 🗳 \n\n@*${username}* hai ricevuto un voto *negativo*, puoi fare di meglio la prossima volta\\. 💩 \n\nIl tuo punteggio è di *${combinedPoints}* punt${
-							combinedPoints === 1 ? "o" : "i"
-					  }\\! ⚽️`;
-				await telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), message); */
 		}
 	} else {
 		await telegram.api.message.send(
