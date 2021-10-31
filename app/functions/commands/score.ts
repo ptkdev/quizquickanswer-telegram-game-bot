@@ -43,12 +43,15 @@ const score = async (): Promise<void> => {
 				});
 				const user_questions: QuestionsInterface = await db.questions.get({
 					group_id: telegram.api.message.getChatID(ctx),
-					username: telegram.api.message.getUsername(ctx),
+					user_id: telegram.api.message.getUserID(ctx),
 				});
 
 				if (user_questions) {
-					score.score += user_questions.good_questions - user_questions.bad_questions;
+					score.score +=
+						(user_questions.voters?.users?.upvotes?.length || 0) -
+						(user_questions.voters?.users?.downvotes?.length || 0);
 				}
+
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
@@ -72,11 +75,13 @@ const score = async (): Promise<void> => {
 				});
 				const user_questions: QuestionsInterface = await db.questions.get({
 					group_id: telegram.api.message.getChatID(ctx),
-					username,
+					user_id: telegram.api.message.getUserID(ctx),
 				});
 
 				if (user_questions) {
-					score.score += user_questions.good_questions - user_questions.bad_questions;
+					score.score +=
+						(user_questions.voters?.users?.upvotes?.length || 0) -
+						(user_questions.voters?.users?.downvotes?.length || 0);
 				}
 
 				await telegram.api.message.send(

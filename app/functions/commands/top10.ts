@@ -35,11 +35,13 @@ const top10 = async (): Promise<void> => {
 				top_scores.map(async (s: TelegramUserInterface) => {
 					const user_questions: QuestionsInterface = await db.questions.get({
 						group_id: telegram.api.message.getChatID(ctx),
-						username: s?.username || "",
+						user_id: s?.id || "",
 					});
 
 					if (user_questions) {
-						s.score += user_questions.good_questions - user_questions.bad_questions;
+						s.score +=
+							(user_questions.voters?.users?.upvotes.length || 0) -
+							(user_questions.voters?.users?.downvotes.length || 0);
 					}
 					return s;
 				}),

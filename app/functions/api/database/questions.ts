@@ -13,11 +13,11 @@ import type { QuestionsInterface } from "../../../types/databases.type";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<QuestionsInterface>({
-	username: { type: String, default: "" },
+	user_id: { type: String, default: 0 },
 	group_id: { type: Number, default: 0 },
-	good_questions: { type: Number, default: 0 },
-	bad_questions: { type: Number, default: 0 },
-	voters: { type: Object, default: { message_id: 0, users: [""] } },
+	upvotes: { type: Number, default: 0 },
+	downvotes: { type: Number, default: 0 },
+	voters: { type: Object, default: { message_id: 0, users: { upvotes: [], downvotes: [] } } },
 });
 
 const query = model<QuestionsInterface>("Questions", schema, "questions");

@@ -14,7 +14,7 @@ import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 
-import { TelegramUserInterface } from "@app/types/databases.type";
+import { MasterInterface } from "@app/types/databases.type";
 
 import logger from "@app/functions/utils/logger";
 
@@ -46,7 +46,7 @@ const master = async (): Promise<void> => {
 				const username = telegram.api.message.getText(ctx).replace("/master ", "").replace("@", "").trim();
 
 				const json = {
-					id: 0,
+					id: "0",
 					is_bot: false,
 					first_name: "",
 					username: username,
@@ -57,7 +57,7 @@ const master = async (): Promise<void> => {
 					group_id: telegram.api.message.getChatID(ctx),
 				};
 
-				const master: TelegramUserInterface = await db.master.get({
+				const master: MasterInterface = await db.master.get({
 					group_id: telegram.api.message.getChatID(ctx),
 				});
 				logger.debug(`master:${JSON.stringify(master)}`);

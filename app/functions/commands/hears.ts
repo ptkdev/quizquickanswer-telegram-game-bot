@@ -33,7 +33,7 @@ const hears = async (): Promise<void> => {
 
 		if (telegram.api.message.getChatID(ctx) > 0) {
 			// is chat with bot
-			const master: TelegramUserInterface = await db.master.get({
+			const master: MasterInterface = await db.master.get({
 				username: telegram.api.message.getUsername(ctx),
 			});
 			logger.debug(`master: ${JSON.stringify(master)}`);
@@ -61,20 +61,12 @@ const hears = async (): Promise<void> => {
 				} else {
 					await db.master.update({}, json);
 
-					/* 	const user_questions: QuestionsInterface = await db.questions.get({
-						group_id: telegram.api.message.getChatID(ctx),
-						id: telegram.api.message.getUserID(ctx),
-					}); */
-
 					const quiz = await telegram.api.message.send(
 						ctx,
 						master.group_id,
 						`⏱ ${json.description || ""}`,
 						Markup.inlineKeyboard([
-							[
-								Markup.button.callback(`👍 `, "goodquestion"),
-								Markup.button.callback("👎", "badquestion"),
-							],
+							[Markup.button.callback(`👍 0`, "upvote"), Markup.button.callback(`👎 0`, "downvote")],
 						]),
 					);
 					await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
@@ -107,7 +99,7 @@ const hears = async (): Promise<void> => {
 
 					const user_questions: QuestionsInterface = await db.questions.get({
 						group_id: telegram.api.message.getChatID(ctx),
-						id: telegram.api.message.getUserID(ctx),
+						user_id: telegram.api.message.getUserID(ctx),
 					});
 
 					await telegram.api.message.send(
@@ -119,10 +111,7 @@ const hears = async (): Promise<void> => {
 							bot_username: telegram.api.bot.getUsername(ctx),
 							answer: telegram.api.message.getText(ctx),
 							score: user_questions
-								? (user_score?.score || 0) +
-								  10 +
-								  user_questions.good_questions -
-								  user_questions.bad_questions
+								? (user_score?.score || 0) + 10 + user_questions.upvotes - user_questions.downvotes
 								: (user_score?.score || 0) + 10,
 						}),
 					);
@@ -179,11 +168,11 @@ const hears = async (): Promise<void> => {
 		}
 	});
 
-	bot.action("goodquestion", async (ctx) => {
-		await vote(ctx, "goodquestion");
+	bot.action("upvote", async (ctx) => {
+		await vote(ctx, "upvote");
 	});
-	bot.action("badquestion", async (ctx) => {
-		await vote(ctx, "badquestion");
+	bot.action("downvote", async (ctx) => {
+		await vote(ctx, "downvote");
 	});
 };
 
@@ -195,7 +184,7 @@ const vote = async (ctx, type): Promise<void> => {
 	if (telegram.api.message.getChatID(ctx) < 0) {
 		// is group chat
 
-		const { username }: MasterInterface = await db.master.get({
+		const { id: user_id }: MasterInterface = await db.master.get({
 			group_id: telegram.api.message.getChatID(ctx),
 		});
 
@@ -203,51 +192,101 @@ const vote = async (ctx, type): Promise<void> => {
 		const message_id = telegram.api.message.getMessageIDFromAction(ctx);
 
 		// If it's a self vote (Comment this part for debugging)
-		/* if (username === telegram.api.message.getUsernameFromAction(ctx)) {
+		if (user_id === voter_user_id) {
 			await telegram.api.message.send(
 				ctx,
 				telegram.api.message.getChatID(ctx),
 				translate(lang.language, "goodquestion_not_autovote"),
 			);
 			return;
-		} */
+		}
 
-		if (username && username !== "") {
+		if (user_id && user_id !== "") {
 			const group_id = telegram.api.message.getChatID(ctx);
-			const is_good_question = type === "goodquestion";
+			const is_upvote = type === "upvote";
 
 			const user_questions: QuestionsInterface = await db.questions.get({
 				group_id: telegram.api.message.getChatID(ctx),
-				username,
+				user_id,
 			});
 
 			if (user_questions.group_id < 0) {
 				// if voted user is in the question DB
+
 				const same_message: boolean = user_questions.voters.message_id === message_id;
 				// If the voter user has already voted this question/message
-				if (same_message && user_questions.voters.users.some((u) => u === voter_user_id)) {
+
+				if (
+					same_message &&
+					(is_upvote
+						? user_questions?.voters?.users?.upvotes?.some((u) => u === voter_user_id)
+						: user_questions?.voters?.users?.downvotes?.some((u) => u === voter_user_id))
+				) {
 					return;
 				}
 
-				if (is_good_question) {
-					user_questions.good_questions += 1;
+				if (is_upvote) {
+					user_questions.upvotes += 1;
 				} else {
-					user_questions.bad_questions += 1;
+					user_questions.downvotes += 1;
 				}
 				user_questions.voters = {
 					message_id,
-					users: same_message ? [...user_questions.voters.users, voter_user_id] : [voter_user_id],
+					users: same_message
+						? is_upvote
+							? {
+									...user_questions.voters.users,
+									upvotes: [...user_questions.voters.users.upvotes, voter_user_id],
+							  }
+							: {
+									...user_questions.voters.users,
+									downvotes: [...user_questions.voters.users.downvotes, voter_user_id],
+							  }
+						: {
+								upvotes: is_upvote ? [voter_user_id] : [],
+								downvotes: is_upvote ? [] : [voter_user_id],
+						  },
 				};
-				await db.questions.update({ group_id, username }, user_questions);
+				await db.questions.update({ group_id, user_id }, user_questions);
+
+				ctx.editMessageReplyMarkup({
+					inline_keyboard: [
+						[
+							Markup.button.callback(
+								`👍 ${user_questions?.voters?.users?.upvotes?.length || 0} `,
+								"upvote",
+							),
+							Markup.button.callback(
+								`👎 ${user_questions?.voters?.users?.downvotes?.length || 0} `,
+								"downvote",
+							),
+						],
+					],
+				});
 			} else {
 				const json = {
-					username,
-					good_questions: is_good_question ? 1 : 0,
-					bad_questions: is_good_question ? 0 : 1,
+					user_id,
+					upvotes: is_upvote ? 1 : 0,
+					downvotes: is_upvote ? 0 : 1,
 					group_id: group_id,
-					voters: { message_id, users: [voter_user_id] },
+					voters: {
+						message_id,
+						users: {
+							upvotes: is_upvote ? [voter_user_id] : [],
+							downvotes: is_upvote ? [] : [voter_user_id],
+						},
+					},
 				};
 				await db.questions.add(json);
+
+				ctx.editMessageReplyMarkup({
+					inline_keyboard: [
+						[
+							Markup.button.callback(`👍 ${is_upvote ? 1 : 0} `, "upvote"),
+							Markup.button.callback(`👎 ${is_upvote ? 0 : 1}`, "downvote"),
+						],
+					],
+				});
 			}
 		}
 	} else {

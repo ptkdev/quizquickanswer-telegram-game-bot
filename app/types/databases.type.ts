@@ -164,9 +164,9 @@ export interface GameInterface {
  *
  * @interface [QuestionInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
  *
- * @param { string } username - user username from telegram
- * @param { number } good_questions - user good questions count
- * @param { number } bad_questions - user bad questions count
+ * @param { string } user_id - user id from telegram
+ * @param { number } upvotes - user good questions count
+ * @param { number } downvotes - user bad questions count
  * @param { string } group_id - user group id
  * @param { string } error - error message;
  * @param { VotersInterface } message - users that have voted on the current question;
@@ -179,30 +179,30 @@ export interface QuestionsInterface {
 	 *
 	 * @interface [QuestionsInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
 	 *
-	 * @param { string } username - user username from telegram
+	 * @param { string } user_id - user id from telegram
 	 *
 	 */
-	username: string;
+	user_id: string;
 	/**
 	 * Questions Interface
 	 * =====================
 	 *
 	 * @interface [QuestionsUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
 	 *
-	 * @param { string } good_questions - user good questions count
+	 * @param { string } upvotes - user good questions count
 	 *
 	 */
-	good_questions: number;
+	upvotes: number;
 	/**
 	 * Questions Interface
 	 * =====================
 	 *
 	 * @interface [QuestionsUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
 	 *
-	 * @param { number } bad_questions - user bad questions count
+	 * @param { number } downvotes - user bad questions count
 	 *
 	 */
-	bad_questions: number;
+	downvotes: number;
 	/**
 	 * Questions Interface
 	 * =====================
@@ -261,10 +261,10 @@ export interface MasterInterface {
 	 *
 	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
 	 *
-	 * @param { number } id - telegram id
+	 * @param { string } id - telegram id
 	 *
 	 */
-	id: number;
+	id: string;
 	/**
 	 * Master Interface
 	 * =====================
@@ -418,8 +418,37 @@ export interface VotersInterface {
 	 * VotersInterface
 	 * =====================
 	 *
-	 * @param { string[] } users - user id of the voters
+	 * @param { UserVotersInterface } users - user id of the voters
 	 *
 	 */
-	users: string[];
+	users: UserVotersInterface;
+}
+
+/**
+ * UserVotersInterface
+ * =====================
+ *
+ * @interface [UserVotersInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/types/game.type.ts)
+ *
+ * @param { string[]  } upvotes - user id of the voters that had upvoted
+ * @param {  string[]  } downvotes - user id of the voters that had downvoted
+ *
+ */
+export interface UserVotersInterface {
+	/**
+	 * UserVotersInterface
+	 * =====================
+	 *
+	 * @param { string[]  } upvotes - user id of the voters that had upvoted
+	 *
+	 */
+	upvotes: string[];
+	/**
+	 * UserVotersInterface
+	 * =====================
+	 *
+	 * @param { string[]  } downvotes - user id of the voters that had downvoted
+	 *
+	 */
+	downvotes: string[];
 }

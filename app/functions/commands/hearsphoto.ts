@@ -12,7 +12,7 @@ import bot from "@app/core/telegraf";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
-import { TelegramUserInterface } from "@app/types/databases.type";
+import { MasterInterface } from "@app/types/databases.type";
 
 import logger from "@app/functions/utils/logger";
 
@@ -31,7 +31,7 @@ const hearsPhoto = async (): Promise<void> => {
 
 		if (telegram.api.message.getChatID(ctx) > 0) {
 			// is chat with bot
-			const master: TelegramUserInterface = await db.master.get({
+			const master: MasterInterface = await db.master.get({
 				username: telegram.api.message.getUsername(ctx),
 			});
 
