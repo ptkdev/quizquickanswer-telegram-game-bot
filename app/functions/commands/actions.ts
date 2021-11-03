@@ -24,7 +24,7 @@ const actions = async (): Promise<void> => {
 
 		switch (telegram.api.message.getActionType(ctx)) {
 			case "message_all_groups":
-				await sendMessageToAllGroups(ctx);
+				await sendMessageToAllGroups();
 				break;
 			case "set_user_score":
 				await telegram.api.message.send(
