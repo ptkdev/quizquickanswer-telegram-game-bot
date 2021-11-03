@@ -14,7 +14,6 @@ import * as shell from "shelljs";
 import { argv } from "yargs";
 
 declare const __dirname: string;
-console.log(argv, argv._[0]);
 const path = `${__dirname}/../app/configs/config.json`;
 
 if (fs.existsSync(path)) {

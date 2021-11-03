@@ -34,7 +34,7 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
 	try {
 		const doc = new query(user);
 		await doc.save();
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "users.ts:add()");
 	}
 };
@@ -48,12 +48,12 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
-		query.findOneAndDelete(search, function (error: string) {
+		await query.findOneAndDelete(search, function (error: string) {
 			if (error) {
 				logger.error(error || "");
 			}
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "users.ts:remove()");
 	}
 };
@@ -71,12 +71,12 @@ const update = async (
 	user: TelegramUserInterface,
 ): Promise<void> => {
 	try {
-		query.findOneAndUpdate(search, user, function (error: string) {
+		await query.findOneAndUpdate(search, user, function (error: string) {
 			if (error) {
 				logger.error(error || "");
 			}
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "users.ts:update()");
 	}
 };
@@ -99,7 +99,7 @@ const get = async (search: Record<string, number | string | boolean>): Promise<T
 		});
 
 		return user || new query().toJSON();
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "users.ts:get()");
 	}
 

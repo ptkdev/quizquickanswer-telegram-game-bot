@@ -24,8 +24,8 @@ const quit = async (): Promise<void> => {
 	bot.command("quit", async (ctx) => {
 		logger.info("command: /quit", "quit.ts:quit()");
 
-		ctx.telegram.leaveChat(telegram.api.message.getChatID(ctx));
-		ctx.leaveChat();
+		await ctx.telegram.leaveChat(telegram.api.message.getChatID(ctx));
+		await ctx.leaveChat();
 	});
 };
 

@@ -31,7 +31,7 @@ const add = async (settings: SettingsInterface): Promise<void> => {
 	try {
 		const doc = new query(settings);
 		await doc.save();
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:add()");
 	}
 };
@@ -45,12 +45,12 @@ const add = async (settings: SettingsInterface): Promise<void> => {
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
-		query.findOneAndDelete(search, function (error: string) {
+		await query.findOneAndDelete(search, function (error: string) {
 			if (error) {
 				logger.error(error || "");
 			}
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:remove()");
 	}
 };
@@ -68,12 +68,12 @@ const update = async (
 	settings: SettingsInterface,
 ): Promise<void> => {
 	try {
-		query.findOneAndUpdate(search, settings, function (error: string) {
+		await query.findOneAndUpdate(search, settings, function (error: string) {
 			if (error) {
 				logger.error(error || "");
 			}
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:update()");
 	}
 };
@@ -96,7 +96,7 @@ const get = async (search: Record<string, number | string | boolean>): Promise<S
 		});
 
 		return settings || new query().toJSON();
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:get()");
 	}
 	return new query().toJSON();

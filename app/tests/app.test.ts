@@ -10,5 +10,5 @@
  */
 test("show hello world", async () => {
 	const app = () => "hello-world";
-	expect(app()).toBe("hello-world");
+	await expect(app()).toBe("hello-world");
 });

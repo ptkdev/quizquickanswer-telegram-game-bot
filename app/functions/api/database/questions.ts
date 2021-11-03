@@ -33,7 +33,7 @@ const add = async (user: QuestionsInterface): Promise<void> => {
 	try {
 		const doc = new query(user);
 		await doc.save();
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "question.ts:add()");
 	}
 };
@@ -47,12 +47,12 @@ const add = async (user: QuestionsInterface): Promise<void> => {
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
-		query.findOneAndDelete(search, function (err) {
+		await query.findOneAndDelete(search, function (err) {
 			if (err) {
 				return err;
 			}
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "question.ts:remove()");
 	}
 };
@@ -67,12 +67,12 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
  */
 const update = async (search: Record<string, number | string | boolean>, user: QuestionsInterface): Promise<void> => {
 	try {
-		query.findOneAndUpdate(search, user, function (err) {
+		await query.findOneAndUpdate(search, user, function (err) {
 			if (err) {
 				return err;
 			}
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "question.ts:update()");
 	}
 };
@@ -95,7 +95,7 @@ const get = async (search: Record<string, number | string | boolean>): Promise<Q
 		});
 
 		return user || new query().toJSON();
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "question.ts:get()");
 	}
 

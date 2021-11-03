@@ -31,10 +31,11 @@ const connectDB = async (): Promise<void> => {
 			useFindAndModify: false,
 			useUnifiedTopology: true,
 			useCreateIndex: true,
+			maxPoolSize: 100,
 		});
 		database = Mongoose.connection;
 		logger.info("Connected to database", "connections.ts:connectDB()");
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "connections.ts:connectDB()");
 	}
 };
@@ -55,7 +56,7 @@ const disconnectDB = async (): Promise<void> => {
 			logger.info("Disconnected from database", "connections.ts:disconnectDB()");
 			process.exit(0);
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "connections.ts:disconnectDB()");
 	}
 };

@@ -35,7 +35,7 @@ const add = async (user: TelegramUserInterface): Promise<void> => {
 	try {
 		const doc = new query(user);
 		await doc.save();
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "scores.ts:add()");
 	}
 };
@@ -55,7 +55,7 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
 			}
 			logger.info("User with score deleted");
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "scores.ts:remove()");
 	}
 };
@@ -73,12 +73,12 @@ const update = async (
 	user: TelegramUserInterface,
 ): Promise<void> => {
 	try {
-		query.findOneAndUpdate(search, user, function (err) {
+		await query.findOneAndUpdate(search, user, function (err) {
 			if (err) {
 				return err;
 			}
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "scores.ts:update()");
 	}
 };
@@ -101,7 +101,7 @@ const get = async (search: Record<string, number | string | boolean>): Promise<T
 		});
 
 		return user || new query().toJSON();
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "scores.ts:get()");
 	}
 
@@ -125,7 +125,7 @@ const getMultiple = async (search: Record<string, number | string | boolean>): P
 			}
 		});
 		return user || [];
-	} catch (error: any) {
+	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "scores.ts:getMultiple()");
 	}
 

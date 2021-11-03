@@ -22,8 +22,6 @@ interface TranslateParamsInterface {
 	score?: number;
 }
 
-const lang_cache = {};
-
 /**
  * Replace Params
  * =====================

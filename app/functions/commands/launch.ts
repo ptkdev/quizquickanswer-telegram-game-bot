@@ -21,7 +21,7 @@ import logger from "@app/functions/utils/logger";
 const launch = async (): Promise<void> => {
 	logger.info("command: /launch", "launch.ts:launch()");
 
-	bot.launch();
+	await bot.launch();
 };
 
 export { launch };

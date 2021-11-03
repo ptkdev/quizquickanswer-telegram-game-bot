@@ -13,8 +13,6 @@ import translate from "@translations/translate";
 
 import telegram from "@routes/api/telegram";
 import db from "@routes/api/database";
-import { getTopScoreEmoji } from "@app/functions/utils/utils";
-import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
 
 import logger from "@app/functions/utils/logger";
 
