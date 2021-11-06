@@ -58,13 +58,31 @@ const hearsPhoto = async (): Promise<void> => {
 							translate(lang.language, "hears_missing_tip"),
 						);
 					} else {
-						await db.master.update({}, json);
+						await db.master.update({ username: telegram.api.message.getUsername(ctx) }, json);
 
-						const quiz = await telegram.api.message.sendPhoto(ctx, master.group_id, photo_id, {
-							caption: `⏱ ${json.description || ""}`,
+						const master_in_multi_groups = await db.master.getMultiple({
+							username: telegram.api.message.getUsername(ctx),
 						});
-						await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
-							disable_notification: true,
+
+						master_in_multi_groups.forEach(async (master_in_group) => {
+							const quiz = await telegram.api.message.sendPhoto(
+								ctx,
+								master_in_group?.group_id,
+								photo_id,
+								{
+									caption: `⏱ ${json.description || ""}`,
+								},
+							);
+
+							if (quiz) {
+								await telegram.api.message.pin(ctx, master_in_group?.group_id, quiz?.message_id, {
+									disable_notification: true,
+								});
+							} else {
+								await db.master.remove({
+									group_id: master_in_group?.group_id,
+								});
+							}
 						});
 					}
 				} else {

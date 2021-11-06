@@ -59,6 +59,8 @@ const hears = async (): Promise<void> => {
 						translate(lang.language, "hears_missing_tip"),
 					);
 				} else {
+					await db.master.update({ username: telegram.api.message.getUsername(ctx) }, json);
+
 					const master_in_multi_groups = await db.master.getMultiple({
 						username: telegram.api.message.getUsername(ctx),
 					});
@@ -74,7 +76,7 @@ const hears = async (): Promise<void> => {
 						);
 
 						if (quiz) {
-							await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
+							await telegram.api.message.pin(ctx, master_in_group?.group_id, quiz?.message_id, {
 								disable_notification: true,
 							});
 						} else {
