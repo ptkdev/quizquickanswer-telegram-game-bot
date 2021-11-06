@@ -59,18 +59,29 @@ const hears = async (): Promise<void> => {
 						translate(lang.language, "hears_missing_tip"),
 					);
 				} else {
-					await db.master.update({}, json);
+					const master_in_multi_groups = await db.master.getMultiple({
+						username: telegram.api.message.getUsername(ctx),
+					});
 
-					const quiz = await telegram.api.message.send(
-						ctx,
-						master.group_id,
-						`⏱ ${json.description || ""}`,
-						Markup.inlineKeyboard([
-							[Markup.button.callback(`👍 0`, "upvote"), Markup.button.callback(`👎 0`, "downvote")],
-						]),
-					);
-					await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
-						disable_notification: true,
+					master_in_multi_groups.forEach(async (master_in_group) => {
+						const quiz = await telegram.api.message.send(
+							ctx,
+							master_in_group?.group_id,
+							`⏱ ${json.description || ""}`,
+							Markup.inlineKeyboard([
+								[Markup.button.callback(`👍 0`, "upvote"), Markup.button.callback(`👎 0`, "downvote")],
+							]),
+						);
+
+						if (quiz) {
+							await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
+								disable_notification: true,
+							});
+						} else {
+							await db.master.remove({
+								group_id: master_in_group?.group_id,
+							});
+						}
 					});
 				}
 			} else {
@@ -155,7 +166,7 @@ const hears = async (): Promise<void> => {
 				master?.question?.trim()?.toLowerCase() || "",
 			);
 
-			if (similarityPercentage >= 0.8) {
+			if (similarityPercentage >= 0.7) {
 				await telegram.api.message.send(
 					ctx,
 					master.group_id,

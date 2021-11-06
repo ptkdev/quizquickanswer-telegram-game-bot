@@ -90,6 +90,8 @@ const send = async (ctx: any, group_id: number, text: string, options: any = { p
 			logger.error(JSON.stringify(err), "message.ts:send()");
 		}
 	}
+
+	return null;
 };
 
 const sendPhoto = async (
