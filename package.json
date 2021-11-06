@@ -2,7 +2,7 @@
 	"name": "@ptkdev/quizquickanswer-telegram-game-bot",
 	"displayName": "Quiz Quick Answer Bot",
 	"description": "Funny quiz game for telegram groups",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"main": "dist/core/bot.js",
 	"publishConfig": {
 		"access": "public"
@@ -30,9 +30,9 @@
 		"start": "node dist/core/bot.js",
 		"start-pm2": "pm2 start .pm2-process.json",
 		"stop-pm2": "pm2 stop .pm2-process.json",
-		"dev": "ts-node scripts/configs.ts && ts-node scripts/debug.ts --enable && ts-node scripts/rmdist.ts && nodemon --exec 'ts-node --compiler ttypescript app/core/bot.ts'",
-		"build": "ttsc",
-		"release": "ts-node scripts/configs.ts && ts-node scripts/debug.ts --disable && npm run build && ttsc --declaration --emitDeclarationOnly",
+		"dev": "ts-node scripts/configs.ts && ts-node scripts/debug.ts --enable && ts-node scripts/rmdist.ts && nodemon --exec 'ts-node app/core/bot.ts'",
+		"build": "tsc",
+		"release": "ts-node scripts/configs.ts && ts-node scripts/debug.ts --disable && npm run build && tsc --declaration --emitDeclarationOnly",
 		"test": "jest app",
 		"migrate": "ts-node scripts/migration.ts",
 		"mongodump": "mongodump -d quizquickanswerdb -o .",
@@ -54,7 +54,8 @@
 		"pkg-clean": "rm -rf node_modules package-lock.json && npm install && husky install",
 		"pkg-update": "npm update",
 		"pkg-upgrade": "npx npm-check-updates -u && npm install && husky install",
-		"postinstall": "rm ./node_modules/mongoose/index.d.ts"
+		"postinstall": "rm ./node_modules/mongoose/index.d.ts",
+		"prepare": "ts-patch install -s"
 	},
 	"dependencies": {
 		"@ptkdev/logger": "^1.8.0",
@@ -83,7 +84,7 @@
 		"shelljs": "^0.8.4",
 		"ts-jest": "^27.0.7",
 		"ts-node": "^10.4.0",
-		"ttypescript": "^1.5.12",
+		"ts-patch": "^2.0.1",
 		"typescript": "^4.4.4",
 		"typescript-transform-paths": "^3.3.1",
 		"yargs": "^17.2.1"
