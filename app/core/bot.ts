@@ -26,7 +26,6 @@ import logger from "@app/functions/utils/logger";
 	await commands.top10();
 	await commands.score();
 	await commands.settings();
-	/* await commands.voteQuestion(); */
 	await commands.hears();
 	await commands.hearsPhoto();
 
@@ -41,4 +40,16 @@ process.on("SIGINT", async function () {
 process.once("SIGUSR2", async function () {
 	// On nodemon refresh
 	await db.connection.disconnectDB();
+});
+
+process.on("uncaughtException", function (error) {
+	console.log("An error uncaughtException has occured. error is: %s", error);
+	console.log("Process will restart now.");
+	process.exit(1);
+});
+
+process.on("unhandledRejection", function (error) {
+	console.log("An error unhandledRejection has occured. error is: %s", error);
+	console.log("Process will restart now.");
+	process.exit(1);
 });

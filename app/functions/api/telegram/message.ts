@@ -52,12 +52,12 @@ const getFullUser = (ctx: any): any => {
 
 const getChatID = (ctx: any): number => {
 	return (
-		ctx?.update.message?.chat?.id || ctx?.message?.chat?.id || ctx?.update.callback_query?.message?.chat?.id || 0
+		ctx?.update?.message?.chat?.id || ctx?.message?.chat?.id || ctx?.update?.callback_query?.message?.chat?.id || 0
 	);
 };
 
 const getActionType = (ctx: any): string => {
-	return ctx?.update.callback_query?.data || "";
+	return ctx?.update?.callback_query?.data || "";
 };
 
 const getPhotoFileID = (ctx: any, position = 0): string => {
@@ -90,6 +90,8 @@ const send = async (ctx: any, group_id: number, text: string, options: any = { p
 			logger.error(JSON.stringify(err), "message.ts:send()");
 		}
 	}
+
+	return null;
 };
 
 const sendPhoto = async (

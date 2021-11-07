@@ -62,7 +62,7 @@ const master = async (): Promise<void> => {
 				});
 				logger.debug(`master:${JSON.stringify(master)}`);
 				if (master.group_id < 0) {
-					await db.master.update({}, json);
+					await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
 				} else {
 					await db.master.add(json);
 				}

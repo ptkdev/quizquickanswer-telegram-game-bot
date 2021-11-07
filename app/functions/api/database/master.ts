@@ -96,7 +96,7 @@ const get = async (search: Record<string, number | string | boolean>): Promise<M
 			}
 		});
 
-		return user || new query().toJSON();
+		return (await user) || new query().toJSON();
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "master.ts:get()");
 	}
@@ -120,7 +120,7 @@ const getMultiple = async (search: Record<string, number | string | boolean>): P
 				logger.error(JSON.stringify(error || ""), "master.ts:getMultiple()");
 			}
 		});
-		return master || [];
+		return (await master) || [];
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "master.ts:getMultiple()");
 	}
