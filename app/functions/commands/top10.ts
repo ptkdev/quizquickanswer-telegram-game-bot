@@ -39,9 +39,7 @@ const top10 = async (): Promise<void> => {
 					});
 
 					if (user_questions) {
-						s.score +=
-							(user_questions.voters?.users?.upvotes.length || 0) -
-							(user_questions.voters?.users?.downvotes.length || 0);
+						s.score += (user_questions.upvotes || 0) - (user_questions.downvotes || 0);
 					}
 					return s;
 				}),

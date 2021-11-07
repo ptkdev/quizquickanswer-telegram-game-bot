@@ -410,10 +410,10 @@ export interface VotersInterface {
 	 * VotersInterface
 	 * =====================
 	 *
-	 * @param { string | number } message_id - id of the message/question
+	 * @param { number } message_id - id of the message/question
 	 *
 	 */
-	message_id: string | number;
+	message_id: number;
 	/**
 	 * VotersInterface
 	 * =====================

@@ -72,11 +72,11 @@ const getText = (ctx: any): string => {
 	return ctx?.update?.message?.text || ctx?.message?.text || "";
 };
 
-const getMessageID = (ctx: any): string => {
-	return ctx?.update?.message?.message_id || ctx?.message?.message_id || "";
+const getMessageID = (ctx: any): number => {
+	return ctx?.update?.message?.message_id || ctx?.message?.message_id || 0;
 };
-const getMessageIDFromAction = (ctx: any): string => {
-	return ctx?.update?.callback_query?.message?.message_id || ctx?.message?.message_id || "";
+const getMessageIDFromAction = (ctx: any): number => {
+	return ctx?.update?.callback_query?.message?.message_id || ctx?.message?.message_id || 0;
 };
 
 const send = async (ctx: any, group_id: number, text: string, options: any = { parse_mode: "HTML" }): Promise<any> => {

@@ -47,9 +47,7 @@ const score = async (): Promise<void> => {
 				});
 
 				if (user_questions) {
-					score.score +=
-						(user_questions.voters?.users?.upvotes?.length || 0) -
-						(user_questions.voters?.users?.downvotes?.length || 0);
+					score.score += (user_questions.upvotes || 0) - (user_questions.downvotes || 0);
 				}
 
 				await telegram.api.message.send(
@@ -79,9 +77,7 @@ const score = async (): Promise<void> => {
 				});
 
 				if (user_questions) {
-					score.score +=
-						(user_questions.voters?.users?.upvotes?.length || 0) -
-						(user_questions.voters?.users?.downvotes?.length || 0);
+					score.score += (user_questions.upvotes || 0) - (user_questions.downvotes || 0);
 				}
 
 				await telegram.api.message.send(

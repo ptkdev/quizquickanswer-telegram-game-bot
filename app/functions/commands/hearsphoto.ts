@@ -13,8 +13,8 @@ import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 import { MasterInterface } from "@app/types/databases.type";
-
 import logger from "@app/functions/utils/logger";
+import { vote } from "../utils/vote";
 
 /**
  * hearsPhoto: any photo from bot chat
@@ -62,6 +62,14 @@ const hearsPhoto = async (): Promise<void> => {
 
 						const quiz = await telegram.api.message.sendPhoto(ctx, master.group_id, photo_id, {
 							caption: `⏱ ${json.description || ""}`,
+							reply_markup: {
+								inline_keyboard: [
+									[
+										{ text: `👍 0`, callback_data: "upvote" },
+										{ text: `👎 0`, callback_data: "downvote" },
+									],
+								],
+							},
 						});
 						await telegram.api.message.pin(ctx, master?.group_id, quiz?.message_id, {
 							disable_notification: true,
@@ -82,6 +90,13 @@ const hearsPhoto = async (): Promise<void> => {
 				);
 			}
 		}
+	});
+
+	bot.action("upvote", async (ctx) => {
+		await vote(ctx, "upvote");
+	});
+	bot.action("downvote", async (ctx) => {
+		await vote(ctx, "downvote");
 	});
 };
 
