@@ -75,7 +75,7 @@ const settings = async (): Promise<void> => {
 				[
 					Markup.button.url(
 						translate(lang.language, "settings_command_language_new"),
-						"https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/translations/translate.ts",
+						"https://github.com/ptkdev/quizquickanswer-telegram-game-bot/tree/main/app/translations",
 					),
 				],
 			]),
