@@ -47,13 +47,13 @@ process.once("SIGUSR2", async function () {
 });
 
 process.on("uncaughtException", function (error) {
-	console.log("An error uncaughtException has occured. error is: %s and stack trace is: %s", error);
+	console.log("An error uncaughtException has occured. error is: %s", error);
 	console.log("Process will restart now.");
 	process.exit(1);
 });
 
 process.on("unhandledRejection", function (error) {
-	console.log("An error unhandledRejection has occured. error is: %s and stack trace is: %s", error);
+	console.log("An error unhandledRejection has occured. error is: %s", error);
 	console.log("Process will restart now.");
 	process.exit(1);
 });
