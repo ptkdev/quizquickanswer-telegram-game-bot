@@ -18,7 +18,6 @@ import logger from "@app/functions/utils/logger";
 
 	await db.connection.connectDB();
 
-	await commands.quit();
 	await commands.start();
 	await commands.admin();
 	await commands.actions();

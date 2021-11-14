@@ -1,4 +1,3 @@
-import quit from "@app/functions/commands/quit";
 import start from "@app/functions/commands/start";
 import master from "@app/functions/commands/master";
 import score from "@app/functions/commands/score";
@@ -11,7 +10,6 @@ import settings from "@app/functions/commands/settings";
 import actions from "@app/functions/commands/actions";
 
 const commands = {
-	quit,
 	start,
 	master,
 	score,
@@ -24,5 +22,5 @@ const commands = {
 	actions,
 };
 
-export { quit, start, master, score, top10, launch, hears, settings, hearsPhoto, admin, actions };
+export { start, master, score, top10, launch, hears, settings, hearsPhoto, admin, actions };
 export default commands;
