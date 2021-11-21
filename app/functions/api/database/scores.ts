@@ -9,7 +9,7 @@
  *
  */
 import { Schema, model } from "mongoose";
-import type { TelegramUserInterface } from "../../../types/databases.type";
+import type { TelegramUserInterface } from "@app/types/databases.type";
 import { logger } from "@app/functions/utils/logger";
 
 const schema = new Schema<TelegramUserInterface>({

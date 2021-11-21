@@ -14,7 +14,7 @@ import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 import { MasterInterface } from "@app/types/databases.type";
 import logger from "@app/functions/utils/logger";
-import { vote } from "../utils/vote";
+import { vote } from "@app/functions/utils/vote";
 
 /**
  * hearsPhoto: any photo from bot chat

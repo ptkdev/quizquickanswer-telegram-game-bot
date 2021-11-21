@@ -15,8 +15,8 @@ import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 import { TelegramUserInterface, QuestionsInterface, MasterInterface } from "@app/types/databases.type";
 import logger from "@app/functions/utils/logger";
-import { similarity } from "../utils/utils";
-import { vote } from "../utils/vote";
+import { similarity } from "@app/functions/utils/utils";
+import { vote } from "@app/functions/utils/vote";
 
 /**
  * hears: any taxt from bot chat
