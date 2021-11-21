@@ -8,6 +8,11 @@
 
 <!-- all-shields/sponsors-badges:END -->
 
+# v0.4.0 (November 07, 2021)
+
+-   Fix bug
+-   Vote the questions/quizzes
+
 # v0.3.0 (October 18, 2021)
 
 -   Multilanguage support
