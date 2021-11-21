@@ -10,11 +10,11 @@
  */
 
 const getUsername = (ctx: any): string => {
-	return ctx?.botInfo?.username || "";
+	return ctx?.me?.username || "";
 };
 
 const getInfo = (ctx: any): any => {
-	return ctx?.botInfo || {};
+	return ctx?.me || {};
 };
 
 export { getUsername, getInfo };
