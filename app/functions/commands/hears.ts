@@ -68,7 +68,6 @@ const hears = async (): Promise<void> => {
 					master_in_multi_groups.forEach(async (master_in_group) => {
 						const buttons = new InlineKeyboard();
 						buttons.text(`👍 0`, "upvote");
-						buttons.row();
 						buttons.text(`👎 0`, "downvote");
 
 						const quiz = await telegram.api.message.send(
