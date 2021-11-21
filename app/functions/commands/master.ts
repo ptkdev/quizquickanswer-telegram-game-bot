@@ -8,7 +8,7 @@
  * @license: MIT License
  *
  */
-import bot from "@app/core/telegraf";
+import bot from "@app/core/token";
 import translate from "@translations/translate";
 
 import db from "@routes/api/database";

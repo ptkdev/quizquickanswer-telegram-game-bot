@@ -1,7 +1,6 @@
-# v0.4.0 (November 07, 2021)
+# v0.5.0 (November 21, 2021)
 
--   Fix bug
--   Vote the questions/quizzes
+-   Porting: from Telegraf to Grammy Framework
 
 <!-- all-shields/sponsors-badges:START -->
 

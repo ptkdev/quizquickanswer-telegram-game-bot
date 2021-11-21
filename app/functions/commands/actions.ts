@@ -8,7 +8,7 @@
  * @license: MIT License
  *
  */
-import bot from "@app/core/telegraf";
+import bot from "@app/core/token";
 import telegram from "@routes/api/telegram";
 import { sendMessageToAllGroups } from "@app/functions/utils/admin";
 import translate from "@translations/translate";
@@ -16,7 +16,7 @@ import db from "@routes/api/database";
 import logger from "@app/functions/utils/logger";
 
 const actions = async (): Promise<void> => {
-	bot.action(["message_all_groups", "set_user_score"], async (ctx) => {
+	bot.callbackQuery(["message_all_groups", "set_user_score"], async (ctx) => {
 		logger.info(`action: ${telegram.api.message.getActionType(ctx)}`, "actions.ts:actions()");
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),

@@ -8,8 +8,8 @@
  * @license: MIT License
  *
  */
-import { Markup } from "telegraf";
-import bot from "@app/core/telegraf";
+import { InlineKeyboard } from "grammy";
+import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
@@ -28,80 +28,61 @@ const settings = async (): Promise<void> => {
 			group_id: telegram.api.message.getChatID(ctx),
 		});
 
-		await ctx.reply(
-			translate(lang.language, "settings_command_options"),
-			Markup.inlineKeyboard([
-				[
-					Markup.button.callback(
-						translate(lang.language, "settings_command_setlanguage"),
-						"settings_languages",
-					),
-				],
-				[
-					Markup.button.url(
-						translate(lang.language, "settings_command_opensource"),
-						"https://github.com/ptkdev/quizquickanswer-telegram-game-bot",
-					),
-				],
-				[Markup.button.callback(translate(lang.language, "settings_command_credits"), "settings_credits")],
-				[
-					Markup.button.url(
-						translate(lang.language, "settings_command_email"),
-						"https://t.me/QuizQuickAnswerGroup",
-					),
-				],
-			]),
+		const buttons = new InlineKeyboard();
+
+		buttons.text(translate(lang.language, "settings_command_setlanguage"), "settings_languages");
+		buttons.row();
+		buttons.url(
+			translate(lang.language, "settings_command_opensource"),
+			"https://github.com/ptkdev/quizquickanswer-telegram-game-bot",
 		);
+		buttons.row();
+		buttons.text(translate(lang.language, "settings_command_credits"), "settings_credits");
+		buttons.row();
+		buttons.url(translate(lang.language, "settings_command_email"), "https://t.me/QuizQuickAnswerGroup");
+
+		await ctx.reply(translate(lang.language, "settings_command_options"), {
+			reply_markup: buttons,
+		});
 	});
 
-	bot.action("settings_languages", async (ctx) => {
+	bot.callbackQuery("settings_languages", async (ctx) => {
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
 		});
 
-		await ctx.reply(
-			translate(lang.language, "settings_command_switchlanguage"),
-			Markup.inlineKeyboard([
-				[
-					Markup.button.callback(
-						translate(lang.language, "settings_command_language_english"),
-						"settings_set_english",
-					),
-					Markup.button.callback(
-						translate(lang.language, "settings_command_language_italian"),
-						"settings_set_italian",
-					),
-				],
-				[
-					Markup.button.url(
-						translate(lang.language, "settings_command_language_new"),
-						"https://github.com/ptkdev/quizquickanswer-telegram-game-bot/tree/main/app/translations",
-					),
-				],
-			]),
+		const buttons = new InlineKeyboard();
+
+		buttons.text(translate(lang.language, "settings_command_language_english"), "settings_set_english");
+		buttons.text(translate(lang.language, "settings_command_language_italian"), "settings_set_italian");
+		buttons.row();
+		buttons.url(
+			translate(lang.language, "settings_command_language_new"),
+			"https://github.com/ptkdev/quizquickanswer-telegram-game-bot/tree/main/app/translations",
 		);
+
+		await ctx.reply(translate(lang.language, "settings_command_switchlanguage"), {
+			reply_markup: buttons,
+		});
 	});
 
-	bot.action("settings_credits", async (ctx) => {
+	bot.callbackQuery("settings_credits", async (ctx) => {
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
 		});
 
-		await ctx.reply(
-			translate(lang.language, "settings_command_credits"),
-			Markup.inlineKeyboard([
-				[Markup.button.url(translate(lang.language, "settings_command_ptkdev"), "https://ptk.dev")],
-				[
-					Markup.button.url(
-						translate(lang.language, "settings_command_ali"),
-						"https://github.com/alishadman95/",
-					),
-				],
-			]),
-		);
+		const buttons = new InlineKeyboard();
+
+		buttons.url(translate(lang.language, "settings_command_ptkdev"), "https://ptk.dev");
+		buttons.row();
+		buttons.url(translate(lang.language, "settings_command_ali"), "https://github.com/alishadman95/");
+
+		await ctx.reply(translate(lang.language, "settings_command_credits"), {
+			reply_markup: buttons,
+		});
 	});
 
-	bot.action("settings_set_english", async (ctx) => {
+	bot.callbackQuery("settings_set_english", async (ctx) => {
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
 		});
@@ -126,7 +107,7 @@ const settings = async (): Promise<void> => {
 		);
 	});
 
-	bot.action("settings_set_italian", async (ctx) => {
+	bot.callbackQuery("settings_set_italian", async (ctx) => {
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
 		});

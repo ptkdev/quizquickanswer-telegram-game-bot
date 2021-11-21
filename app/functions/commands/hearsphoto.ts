@@ -8,7 +8,7 @@
  * @license: MIT License
  *
  */
-import bot from "@app/core/telegraf";
+import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
@@ -23,7 +23,7 @@ import { vote } from "../utils/vote";
  *
  */
 const hearsPhoto = async (): Promise<void> => {
-	bot.on("photo", async (ctx) => {
+	bot.on("message:photo", async (ctx) => {
 		logger.info("hears: photo", "hears.ts:on(photo)");
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
@@ -110,10 +110,10 @@ const hearsPhoto = async (): Promise<void> => {
 		}
 	});
 
-	bot.action("upvote", async (ctx) => {
+	bot.callbackQuery("upvote", async (ctx) => {
 		await vote(ctx, "upvote");
 	});
-	bot.action("downvote", async (ctx) => {
+	bot.callbackQuery("downvote", async (ctx) => {
 		await vote(ctx, "downvote");
 	});
 };

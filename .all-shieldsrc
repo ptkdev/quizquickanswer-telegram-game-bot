@@ -47,6 +47,16 @@
 					"platform": "shields"
 				},
 				{
+					"url": "https://grammy.dev/",
+					"color": "#009dca",
+					"label": "powered by",
+					"message": "grammy",
+					"title": "Framework: Grammy",
+					"style": "flat",
+					"logo": "telegram",
+					"platform": "shields"
+				},
+				{
 					"url": "https://github.com/tc39/ecma262",
 					"color": "#F7DF1E",
 					"label": "ES",

@@ -8,8 +8,8 @@
  * @license: MIT License
  *
  */
-import { Markup } from "telegraf";
-import bot from "@app/core/telegraf";
+import { InlineKeyboard } from "grammy";
+import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
@@ -25,7 +25,7 @@ import { vote } from "../utils/vote";
  *
  */
 const hears = async (): Promise<void> => {
-	bot.on("text", async (ctx) => {
+	bot.on("message:text", async (ctx) => {
 		logger.info("hears: text", "hears.ts:on(text)");
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),
@@ -66,13 +66,18 @@ const hears = async (): Promise<void> => {
 					});
 
 					master_in_multi_groups.forEach(async (master_in_group) => {
+						const buttons = new InlineKeyboard();
+						buttons.text(`👍 0`, "upvote");
+						buttons.row();
+						buttons.text(`👎 0`, "downvote");
+
 						const quiz = await telegram.api.message.send(
 							ctx,
 							master_in_group?.group_id,
 							`⏱ ${json.description || ""}`,
-							Markup.inlineKeyboard([
-								[Markup.button.callback(`👍 0`, "upvote"), Markup.button.callback(`👎 0`, "downvote")],
-							]),
+							{
+								reply_markup: buttons,
+							},
 						);
 
 						if (quiz) {
@@ -188,10 +193,10 @@ const hears = async (): Promise<void> => {
 		}
 	});
 
-	bot.action("upvote", async (ctx) => {
+	bot.callbackQuery("upvote", async (ctx) => {
 		await vote(ctx, "upvote");
 	});
-	bot.action("downvote", async (ctx) => {
+	bot.callbackQuery("downvote", async (ctx) => {
 		await vote(ctx, "downvote");
 	});
 };

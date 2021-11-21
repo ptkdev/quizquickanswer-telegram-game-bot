@@ -8,7 +8,7 @@
  * @license: MIT License
  *
  */
-import bot from "@app/core/telegraf";
+import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
@@ -22,7 +22,7 @@ import logger from "@app/functions/utils/logger";
  *
  */
 const start = async (): Promise<void> => {
-	bot.start(async (ctx) => {
+	bot.command("start", async (ctx) => {
 		logger.info("command: /start", "start.ts:start()");
 		const lang = await db.settings.get({
 			group_id: telegram.api.message.getChatID(ctx),

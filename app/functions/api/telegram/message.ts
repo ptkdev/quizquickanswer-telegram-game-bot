@@ -84,7 +84,7 @@ const send = async (ctx: any, group_id: number, text: string, options: any = { p
 		let message;
 
 		try {
-			message = await ctx.telegram.sendMessage(group_id, text, options);
+			message = await ctx.api.sendMessage(group_id, text, options);
 			return message;
 		} catch (err: any) {
 			logger.error(JSON.stringify(err), "message.ts:send()");
@@ -104,7 +104,7 @@ const sendPhoto = async (
 		let message;
 
 		try {
-			message = await ctx.telegram.sendPhoto(group_id, photo, options);
+			message = await ctx.api.sendPhoto(group_id, photo, options);
 			return message;
 		} catch (err: any) {
 			logger.error(JSON.stringify(err), "message.ts:send()");
@@ -123,7 +123,7 @@ const pin = async (
 
 	if (group_id && message_id) {
 		try {
-			await ctx.telegram.pinChatMessage(group_id, message_id, options);
+			await ctx.api.pinChatMessage(group_id, message_id, options);
 		} catch (err: any) {
 			logger.error(JSON.stringify(err), "message.ts:pin()");
 		}

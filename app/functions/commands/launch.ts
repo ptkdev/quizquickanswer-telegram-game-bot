@@ -8,7 +8,7 @@
  * @license: MIT License
  *
  */
-import bot from "@app/core/telegraf";
+import bot from "@app/core/token";
 
 import logger from "@app/functions/utils/logger";
 
@@ -21,7 +21,7 @@ import logger from "@app/functions/utils/logger";
 const launch = async (): Promise<void> => {
 	logger.info("command: /launch", "launch.ts:launch()");
 
-	await bot.launch();
+	await bot.start();
 };
 
 export { launch };

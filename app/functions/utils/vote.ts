@@ -2,7 +2,7 @@ import telegram from "@routes/api/telegram";
 import db from "@routes/api/database";
 import translate from "@translations/translate";
 import { QuestionsInterface, MasterInterface } from "@app/types/databases.type";
-import { Markup } from "telegraf";
+import { InlineKeyboard } from "grammy";
 
 const vote = async (ctx, type): Promise<void> => {
 	const lang = await db.settings.get({
@@ -77,19 +77,12 @@ const vote = async (ctx, type): Promise<void> => {
 				};
 				await db.questions.update({ group_id, user_id }, user_questions);
 
+				const buttons = new InlineKeyboard();
+				buttons.text(`👍 ${user_questions?.voters?.users?.upvotes?.length || 0} `, "upvote");
+				buttons.text(`👎 ${user_questions?.voters?.users?.downvotes?.length || 0} `, "downvote");
+
 				ctx.editMessageReplyMarkup({
-					inline_keyboard: [
-						[
-							Markup.button.callback(
-								`👍 ${user_questions?.voters?.users?.upvotes?.length || 0} `,
-								"upvote",
-							),
-							Markup.button.callback(
-								`👎 ${user_questions?.voters?.users?.downvotes?.length || 0} `,
-								"downvote",
-							),
-						],
-					],
+					reply_markup: buttons,
 				});
 			} else {
 				const json = {
@@ -107,13 +100,12 @@ const vote = async (ctx, type): Promise<void> => {
 				};
 				await db.questions.add(json);
 
+				const buttons = new InlineKeyboard();
+				buttons.text(`👍 ${is_upvote ? 1 : 0} `, "upvote");
+				buttons.text(`👎 ${is_upvote ? 0 : 1}`, "downvote");
+
 				ctx.editMessageReplyMarkup({
-					inline_keyboard: [
-						[
-							Markup.button.callback(`👍 ${is_upvote ? 1 : 0} `, "upvote"),
-							Markup.button.callback(`👎 ${is_upvote ? 0 : 1}`, "downvote"),
-						],
-					],
+					reply_markup: buttons,
 				});
 			}
 		}
