@@ -1,6 +1,3 @@
-import db from "@routes/api/database";
-import commands from "@app/routes/commands";
-
 /**
  * Start bot
  * =====================
@@ -11,6 +8,8 @@ import commands from "@app/routes/commands";
  * @license: MIT License
  *
  */
+import db from "@routes/api/database";
+import commands from "@app/routes/commands";
 import logger from "@app/functions/utils/logger";
 
 (async () => {
@@ -24,6 +23,8 @@ import logger from "@app/functions/utils/logger";
 	await commands.top10();
 	await commands.score();
 	await commands.groups();
+	await commands.ping();
+	await commands.show();
 	await commands.settings();
 	await commands.hears();
 	await commands.hearsPhoto();

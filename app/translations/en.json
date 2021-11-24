@@ -45,5 +45,8 @@
 	"settings_command_ali": "👨‍💻 Alì Shadman",
 	"groups_command": "If you have no telegram groups of friends you can play in the official one, you will find new friends and kind people:",
 	"groups_button_official_english": "🇬🇧 Official English group",
-	"groups_button_official_italian": "🇮🇹 Official Italian group"
+	"groups_button_official_italian": "🇮🇹 Official Italian group",
+	"ping_command": "🎮 Come and play! ⏱ The game is about to start!",
+	"show_command": "👨‍💻 The master is: ##master##\n⏱ The quiz is: <b>##answer##</b>",
+	"show_command_noquiz": "👨‍💻 The master is: ##first_name## (@##username##)\n⏱ The quiz is not avaiable! Hurry up to write it!"
 }

@@ -2,6 +2,8 @@ import start from "@app/functions/commands/start";
 import master from "@app/functions/commands/master";
 import score from "@app/functions/commands/score";
 import groups from "@app/functions/commands/groups";
+import ping from "@app/functions/commands/ping";
+import show from "@app/functions/commands/show";
 import top10 from "@app/functions/commands/top10";
 import launch from "@app/functions/commands/launch";
 import hears from "@app/functions/commands/hears";
@@ -14,6 +16,8 @@ const commands = {
 	master,
 	score,
 	groups,
+	ping,
+	show,
 	top10,
 	launch,
 	hears,
@@ -22,5 +26,5 @@ const commands = {
 	actions,
 };
 
-export { start, master, score, groups, top10, launch, hears, settings, hearsPhoto, actions };
+export { start, master, score, groups, ping, show, top10, launch, hears, settings, hearsPhoto, actions };
 export default commands;
