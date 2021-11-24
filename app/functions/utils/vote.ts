@@ -1,13 +1,23 @@
+/**
+ * Vote
+ * =====================
+ *
+ * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
+ *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ *
+ * @license: MIT License
+ *
+ */
+import { InlineKeyboard } from "grammy";
 import telegram from "@routes/api/telegram";
 import db from "@routes/api/database";
 import translate from "@translations/translate";
-import { QuestionsInterface, MasterInterface } from "@app/types/databases.type";
-import { InlineKeyboard } from "grammy";
+
+import type { MasterInterface } from "@app/types/master.interfaces";
+import type { QuestionsInterface } from "@app/types/question.interfaces";
 
 const vote = async (ctx, type): Promise<void> => {
-	const lang = await db.settings.get({
-		group_id: telegram.api.message.getChatID(ctx),
-	});
+	const lang = await telegram.api.message.getLanguage(ctx);
 
 	if (telegram.api.message.getChatID(ctx) < 0) {
 		// is group chat

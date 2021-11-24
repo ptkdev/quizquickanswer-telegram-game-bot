@@ -9,10 +9,10 @@
  * @license: MIT License
  *
  */
-
-import { MasterInterface } from "@app/types/databases.type";
 import db from "@routes/api/database";
 import logger from "./logger";
+
+import type { MasterInterface } from "@app/types/master.interfaces";
 
 /**
  * Send message to all groups

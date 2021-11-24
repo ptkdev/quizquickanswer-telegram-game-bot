@@ -8,12 +8,13 @@
  * @license: MIT License
  *
  */
+import type { Context } from "grammy";
 
-const getUsername = (ctx: any): string => {
+const getUsername = (ctx: Context): string => {
 	return ctx?.me?.username || "";
 };
 
-const getInfo = (ctx: any): any => {
+const getInfo = (ctx: Context): Context["me"] => {
 	return ctx?.me || {};
 };
 

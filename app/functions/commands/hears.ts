@@ -13,10 +13,12 @@ import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
-import { TelegramUserInterface, QuestionsInterface, MasterInterface } from "@app/types/databases.type";
 import logger from "@app/functions/utils/logger";
 import { similarity } from "@app/functions/utils/utils";
 import { vote } from "@app/functions/utils/vote";
+
+import type { MasterInterface } from "@app/types/master.interfaces";
+import type { QuestionsInterface } from "@app/types/question.interfaces";
 
 /**
  * hears: any taxt from bot chat
@@ -27,9 +29,7 @@ import { vote } from "@app/functions/utils/vote";
 const hears = async (): Promise<void> => {
 	bot.on("message:text", async (ctx) => {
 		logger.info("hears: text", "hears.ts:on(text)");
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		if (telegram.api.message.getChatID(ctx) > 0) {
 			// is chat with bot
@@ -83,6 +83,12 @@ const hears = async (): Promise<void> => {
 							await telegram.api.message.pin(ctx, master_in_group?.group_id, quiz?.message_id, {
 								disable_notification: true,
 							});
+
+							master_in_group.pin_id = quiz?.message_id || 0;
+							await db.master.update(
+								{ username: telegram.api.message.getUsername(ctx) },
+								master_in_group,
+							);
 						} else {
 							await db.master.remove({
 								group_id: master_in_group?.group_id,
@@ -107,7 +113,7 @@ const hears = async (): Promise<void> => {
 
 			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master?.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
-					const user_score: TelegramUserInterface = await db.scores.get({
+					const user_score: MasterInterface = await db.scores.get({
 						group_id: telegram.api.message.getChatID(ctx),
 						id: telegram.api.message.getUserID(ctx),
 					});
@@ -133,12 +139,7 @@ const hears = async (): Promise<void> => {
 						}),
 					);
 
-					/* 	bot.telegram.editMessageReplyMarkup(
-						user_questions ? user_questions.group_id || "" : "",
-						user_questions ? user_questions.voters?.message_id || 0 : 0,
-						undefined,
-						{ inline_keyboard: [] },
-					); */
+					await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);
 
 					const json: MasterInterface = telegram.api.message.getFullUser(ctx);
 					json.question = "";
@@ -156,7 +157,7 @@ const hears = async (): Promise<void> => {
 							user_score,
 						);
 					} else {
-						const json_score: TelegramUserInterface = telegram.api.message.getFullUser(ctx);
+						const json_score: MasterInterface = telegram.api.message.getFullUser(ctx);
 						json_score.score = 10;
 						await db.scores.add(json_score);
 					}
@@ -179,7 +180,7 @@ const hears = async (): Promise<void> => {
 				master?.question?.trim()?.toLowerCase() || "",
 			);
 
-			if (similarityPercentage >= 0.7) {
+			if (similarityPercentage >= 0.5) {
 				await telegram.api.message.send(
 					ctx,
 					master.group_id,

@@ -32,7 +32,7 @@ Funny quiz game, play with friends on your telegram group!
 -   👨‍💻 [Contributing](#-contributing)
 -   🐛 [Known Bugs](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 -   🍻 Community:
-    -   <img src="https://raw.githubusercontent.com/ptkdev/quizquickanswer-telegram-game-bot/main/.github/assets/social_telegram.png" height="18px"> Telegram ([🇬🇧 English](http://t.me/QuizQuickAnswerGroup) | [🇮🇹 Italian](http://t.me/FormichiereAffamato))
+    -   <img src="https://raw.githubusercontent.com/ptkdev/quizquickanswer-telegram-game-bot/main/.github/assets/social_telegram.png" height="18px"> Telegram ([🇬🇧 English](https://t.me/QuizQuickAnswerGroup) | [🇮🇹 Italian](https://t.me/QuizQuickAnswerGroupITA))
 
 ## 💡 Features
 
@@ -60,7 +60,12 @@ Funny quiz game, play with friends on your telegram group!
 3. Master write question with syntax: `QUESTION - TIP`, example: `gameboy - '90s' portable console`
 4. Friends try to answer quickly in the telegram group. Who reply with right answer is the new master!
 
-**OFFICIAL ENGLISH TELEGRAM GROUP OF BOT**: [@QuizQuickAnswerGroup](https://t.me/QuizQuickAnswerGroup)
+## ⏱ Official Group
+
+If you have no telegram groups of friends you can play in the official one, you will find new friends and kind people:
+
+-   [🇬🇧 English](https://t.me/QuizQuickAnswerGroup)
+-   [🇮🇹 Italian](https://t.me/QuizQuickAnswerGroupITA)
 
 ## 🔨 Developer Mode
 

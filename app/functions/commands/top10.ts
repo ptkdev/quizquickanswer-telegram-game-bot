@@ -10,29 +10,28 @@
  */
 import bot from "@app/core/token";
 import translate from "@translations/translate";
-
 import telegram from "@routes/api/telegram";
 import db from "@routes/api/database";
 import { getTopScoreEmoji } from "@app/functions/utils/utils";
-import { TelegramUserInterface, QuestionsInterface } from "@app/types/databases.type";
+
+import type { MasterInterface } from "@app/types/master.interfaces";
+import type { QuestionsInterface } from "@app/types/question.interfaces";
 
 import logger from "@app/functions/utils/logger";
 
 const top10 = async (): Promise<void> => {
 	bot.command("top10", async (ctx) => {
 		logger.info("command: /top10", "top10.ts:top10()");
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
-			const top_scores: TelegramUserInterface[] = await db.scores.getMultiple({
+			const top_scores: MasterInterface[] = await db.scores.getMultiple({
 				group_id: telegram.api.message.getChatID(ctx),
 			});
 
-			let mapped_scores: TelegramUserInterface[] = await Promise.all(
-				top_scores.map(async (s: TelegramUserInterface) => {
+			let mapped_scores: MasterInterface[] = await Promise.all(
+				top_scores.map(async (s: MasterInterface) => {
 					const user_questions: QuestionsInterface = await db.questions.get({
 						group_id: telegram.api.message.getChatID(ctx),
 						user_id: s?.id || "",
@@ -48,7 +47,7 @@ const top10 = async (): Promise<void> => {
 			mapped_scores = mapped_scores.sort((a, b) => b?.score - a?.score).slice(0, 10);
 
 			const scores_message = mapped_scores
-				.map((s: TelegramUserInterface, index: number) => {
+				.map((s: MasterInterface, index: number) => {
 					return translate(lang.language, "top10_command_list", {
 						emoji: getTopScoreEmoji(index),
 						first_name: s.first_name,

@@ -10,13 +10,11 @@
  */
 import bot from "@app/core/token";
 import translate from "@translations/translate";
-
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
-
-import { MasterInterface } from "@app/types/databases.type";
-
 import logger from "@app/functions/utils/logger";
+
+import type { MasterInterface } from "@app/types/master.interfaces";
 
 /**
  * command: /master
@@ -27,9 +25,7 @@ import logger from "@app/functions/utils/logger";
 const master = async (): Promise<void> => {
 	bot.command("master", async (ctx) => {
 		logger.info("command: /master", "master.ts:master()");
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
@@ -54,6 +50,7 @@ const master = async (): Promise<void> => {
 					question: "",
 					description: "",
 					score: 0,
+					pin_id: 0,
 					group_id: telegram.api.message.getChatID(ctx),
 				};
 

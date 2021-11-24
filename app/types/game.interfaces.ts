@@ -8,7 +8,7 @@
  * @license: MIT License
  *
  */
-import { TelegramUserInterface } from "@app/types/databases.type.js";
+import type { MasterInterface } from "@app/types/master.interfaces";
 
 /**
  * GameInterface
@@ -21,9 +21,9 @@ import { TelegramUserInterface } from "@app/types/databases.type.js";
  * @param { number } group_id - group id fron user playing
  *
  */
-export interface GameInterface extends TelegramUserInterface {
+export interface GameInterface extends MasterInterface {
 	/**
-	 * GameInterface from TelegramUserInterface
+	 * GameInterface from MasterInterface
 	 * =====================
 	 *
 	 * @param { string } question - game question
@@ -31,7 +31,7 @@ export interface GameInterface extends TelegramUserInterface {
 	 */
 	question?: string;
 	/**
-	 * GameInterface from TelegramUserInterface
+	 * GameInterface from MasterInterface
 	 * =====================
 	 *
 	 * @param { string } description - game tip
@@ -39,7 +39,7 @@ export interface GameInterface extends TelegramUserInterface {
 	 */
 	description?: string;
 	/**
-	 * GameInterface from TelegramUserInterface
+	 * GameInterface from MasterInterface
 	 * =====================
 	 *
 	 * @param { number } group_id - group id fron user playing

@@ -12,9 +12,10 @@ import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
-import { MasterInterface } from "@app/types/databases.type";
 import logger from "@app/functions/utils/logger";
 import { vote } from "@app/functions/utils/vote";
+
+import type { MasterInterface } from "@app/types/master.interfaces";
 
 /**
  * hearsPhoto: any photo from bot chat
@@ -25,9 +26,7 @@ import { vote } from "@app/functions/utils/vote";
 const hearsPhoto = async (): Promise<void> => {
 	bot.on("message:photo", async (ctx) => {
 		logger.info("hears: photo", "hears.ts:on(photo)");
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		if (telegram.api.message.getChatID(ctx) > 0) {
 			// is chat with bot
@@ -86,10 +85,22 @@ const hearsPhoto = async (): Promise<void> => {
 								await telegram.api.message.pin(ctx, master_in_group?.group_id, quiz?.message_id, {
 									disable_notification: true,
 								});
+
+								master_in_group.pin_id = quiz?.message_id || 0;
+								await db.master.update(
+									{ username: telegram.api.message.getUsername(ctx) },
+									master_in_group,
+								);
 							} else {
 								await db.master.remove({
 									group_id: master_in_group?.group_id,
 								});
+
+								await telegram.api.message.unpin(
+									ctx,
+									master_in_group?.group_id,
+									master_in_group?.pin_id,
+								);
 							}
 						});
 					}

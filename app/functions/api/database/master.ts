@@ -9,8 +9,9 @@
  *
  */
 import { Schema, model } from "mongoose";
-import type { MasterInterface } from "@app/types/databases.type";
 import { logger } from "@app/functions/utils/logger";
+
+import type { MasterInterface } from "@app/types/master.interfaces";
 
 const schema = new Schema<MasterInterface>({
 	id: { type: String, default: "0" },
@@ -21,6 +22,7 @@ const schema = new Schema<MasterInterface>({
 	group_id: { type: Number, default: 0 },
 	question: { type: String, default: "" },
 	description: { type: String, default: "" },
+	pin_id: { type: Number, default: 0 },
 });
 
 const query = model<MasterInterface>("Master", schema, "master");

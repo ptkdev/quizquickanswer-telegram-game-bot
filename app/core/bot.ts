@@ -19,11 +19,11 @@ import logger from "@app/functions/utils/logger";
 	await db.connection.connectDB();
 
 	await commands.start();
-	await commands.admin();
 	await commands.actions();
 	await commands.master();
 	await commands.top10();
 	await commands.score();
+	await commands.groups();
 	await commands.settings();
 	await commands.hears();
 	await commands.hearsPhoto();
@@ -34,21 +34,29 @@ import logger from "@app/functions/utils/logger";
 process.on("SIGINT", async function () {
 	// on CTRL-C
 	await db.connection.disconnectDB();
+	logger.info("Process will restart now.", "bot.ts:SIGINT");
 });
 
 process.once("SIGUSR2", async function () {
 	// On nodemon refresh
 	await db.connection.disconnectDB();
+	logger.info("Process will restart now.", "bot.ts:SIGUSR2");
 });
 
 process.on("uncaughtException", function (error) {
-	console.log("An error uncaughtException has occured. error is: %s", error);
-	console.log("Process will restart now.");
+	logger.error(
+		`An error uncaughtException has occured. error is: ${JSON.stringify(error)}`,
+		"bot.ts::uncaughtException",
+	);
+	logger.error("Process will restart now.", "bot.ts:uncaughtException");
 	process.exit(1);
 });
 
 process.on("unhandledRejection", function (error) {
-	console.log("An error unhandledRejection has occured. error is: %s", error);
-	console.log("Process will restart now.");
+	logger.error(
+		`An error unhandledRejection has occured. error is: ${JSON.stringify(error)}`,
+		"bot.ts::unhandledRejection",
+	);
+	logger.error("Process will restart now.", "bot.ts:unhandledRejection");
 	process.exit(1);
 });
