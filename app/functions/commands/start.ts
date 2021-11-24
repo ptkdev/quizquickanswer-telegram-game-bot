@@ -12,8 +12,9 @@ import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
-import { TelegramUserInterface } from "@app/types/databases.type";
 import logger from "@app/functions/utils/logger";
+
+import type { MasterInterface } from "@app/types/master.interfaces";
 
 /**
  * command: /start
@@ -24,11 +25,8 @@ import logger from "@app/functions/utils/logger";
 const start = async (): Promise<void> => {
 	bot.command("start", async (ctx) => {
 		logger.info("command: /start", "start.ts:start()");
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
-
-		const users: TelegramUserInterface = await db.users.get({
+		const lang = await telegram.api.message.getLanguage(ctx);
+		const users: MasterInterface = await db.users.get({
 			id: telegram.api.message.getUserID(ctx),
 		});
 

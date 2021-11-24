@@ -9,12 +9,13 @@
  *
  */
 import { Schema, model } from "mongoose";
-import type { SettingsInterface } from "@app/types/databases.type.js";
 import { logger } from "@app/functions/utils/logger";
+
+import type { SettingsInterface } from "@app/types/settings.interfaces";
 
 const schema = new Schema<SettingsInterface>({
 	group_id: { type: Number, default: 0 },
-	language: { type: String, default: "en" },
+	language: { type: String, default: "auto" },
 	pin_message: { type: Boolean, default: true },
 });
 

@@ -9,8 +9,9 @@
  *
  */
 import { Schema, model } from "mongoose";
-import type { QuestionsInterface } from "@app/types/databases.type";
 import { logger } from "@app/functions/utils/logger";
+
+import type { QuestionsInterface } from "@app/types/question.interfaces";
 
 const schema = new Schema<QuestionsInterface>({
 	user_id: { type: String, default: 0 },
@@ -83,7 +84,7 @@ const update = async (search: Record<string, number | string | boolean>, user: Q
  * Get user with questions from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
- * @return {TelegramUserInterface} user.
+ * @return {MasterInterface} user.
  *
  */
 const get = async (search: Record<string, number | string | boolean>): Promise<QuestionsInterface> => {

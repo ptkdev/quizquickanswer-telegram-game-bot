@@ -10,11 +10,11 @@
  */
 import bot from "@app/core/token";
 import translate from "@translations/translate";
-
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 
-import { QuestionsInterface, TelegramUserInterface } from "@app/types/databases.type";
+import { MasterInterface } from "@app/types/master.interfaces";
+import { QuestionsInterface } from "@app/types/question.interfaces";
 
 import logger from "@app/functions/utils/logger";
 
@@ -27,9 +27,7 @@ import logger from "@app/functions/utils/logger";
 const score = async (): Promise<void> => {
 	bot.command("score", async (ctx) => {
 		logger.info("command: /score", "score.ts:score()");
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
@@ -37,7 +35,7 @@ const score = async (): Promise<void> => {
 				telegram.api.message.getText(ctx).trim() === "/score" ||
 				telegram.api.message.getText(ctx).trim() === `/score@${telegram.api.bot.getUsername(ctx)}`
 			) {
-				const score: TelegramUserInterface = await db.scores.get({
+				const score: MasterInterface = await db.scores.get({
 					group_id: telegram.api.message.getChatID(ctx),
 					id: telegram.api.message.getUserID(ctx),
 				});
@@ -67,7 +65,7 @@ const score = async (): Promise<void> => {
 					.replace("@", "")
 					.trim();
 
-				const score: TelegramUserInterface = await db.scores.get({
+				const score: MasterInterface = await db.scores.get({
 					group_id: telegram.api.message.getChatID(ctx),
 					username,
 				});

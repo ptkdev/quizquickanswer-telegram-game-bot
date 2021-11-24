@@ -54,7 +54,7 @@ const replaceParams = (text: string, language_params: TranslateParamsInterface):
  *
  */
 const check = (lang: string, language_id: string): string => {
-	return translations[lang || "en"][language_id];
+	return translations?.[lang]?.[language_id] ?? translations["en"][language_id];
 };
 
 /**

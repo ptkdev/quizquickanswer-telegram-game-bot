@@ -24,9 +24,7 @@ import logger from "@app/functions/utils/logger";
 const settings = async (): Promise<void> => {
 	bot.command("settings", async (ctx) => {
 		logger.info("command: /settings", "settings.ts:settings()");
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		const buttons = new InlineKeyboard();
 
@@ -47,9 +45,7 @@ const settings = async (): Promise<void> => {
 	});
 
 	bot.callbackQuery("settings_languages", async (ctx) => {
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		const buttons = new InlineKeyboard();
 
@@ -67,9 +63,7 @@ const settings = async (): Promise<void> => {
 	});
 
 	bot.callbackQuery("settings_credits", async (ctx) => {
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		const buttons = new InlineKeyboard();
 
@@ -83,9 +77,7 @@ const settings = async (): Promise<void> => {
 	});
 
 	bot.callbackQuery("settings_set_english", async (ctx) => {
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		if (lang.group_id !== 0) {
 			await db.settings.update(
@@ -108,9 +100,7 @@ const settings = async (): Promise<void> => {
 	});
 
 	bot.callbackQuery("settings_set_italian", async (ctx) => {
-		const lang = await db.settings.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
+		const lang = await telegram.api.message.getLanguage(ctx);
 
 		if (lang.group_id !== 0) {
 			await db.settings.update(

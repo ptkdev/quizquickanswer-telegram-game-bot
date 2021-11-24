@@ -9,10 +9,11 @@
  *
  */
 import { Schema, model } from "mongoose";
-import type { TelegramUserInterface } from "@app/types/databases.type";
 import { logger } from "@app/functions/utils/logger";
 
-const schema = new Schema<TelegramUserInterface>({
+import type { MasterInterface } from "@app/types/master.interfaces";
+
+const schema = new Schema<MasterInterface>({
 	id: { type: String, default: "0" },
 	is_bot: { type: Boolean, default: false },
 	first_name: { type: String, default: "" },
@@ -22,16 +23,16 @@ const schema = new Schema<TelegramUserInterface>({
 	score: { type: Number, default: 0 },
 });
 
-const query = model<TelegramUserInterface>("Scores", schema, "scores");
+const query = model<MasterInterface>("Scores", schema, "scores");
 
 /**
  * Scores CRUD
  * =====================
  * Add score to DB
  *
- * @param {TelegramUserInterface} user - user with score to add
+ * @param {MasterInterface} user - user with score to add
  */
-const add = async (user: TelegramUserInterface): Promise<void> => {
+const add = async (user: MasterInterface): Promise<void> => {
 	try {
 		const doc = new query(user);
 		await doc.save();
@@ -66,12 +67,9 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
  * Update score from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
- * @param {TelegramUserInterface} user - user info with score to update
+ * @param {MasterInterface} user - user info with score to update
  */
-const update = async (
-	search: Record<string, number | string | boolean>,
-	user: TelegramUserInterface,
-): Promise<void> => {
+const update = async (search: Record<string, number | string | boolean>, user: MasterInterface): Promise<void> => {
 	try {
 		await query.findOneAndUpdate(search, user, function (err) {
 			if (err) {
@@ -89,10 +87,10 @@ const update = async (
  * Get user with score from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
- * @return {TelegramUserInterface} user.
+ * @return {MasterInterface} user.
 
  */
-const get = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface> => {
+const get = async (search: Record<string, number | string | boolean>): Promise<MasterInterface> => {
 	try {
 		const user = await query.findOne(search, function (error: string) {
 			if (error) {
@@ -114,10 +112,10 @@ const get = async (search: Record<string, number | string | boolean>): Promise<T
  * Get multiple user with score from DB
  *
  * @param {Record<string, number | string | boolean>} search - search condition e.g {id:"123"}
- * @return {TelegramUserInterface[]} user.
+ * @return {MasterInterface[]} user.
 
  */
-const getMultiple = async (search: Record<string, number | string | boolean>): Promise<TelegramUserInterface[]> => {
+const getMultiple = async (search: Record<string, number | string | boolean>): Promise<MasterInterface[]> => {
 	try {
 		const user = await query.find(search, function (error: string) {
 			if (error) {
