@@ -21,6 +21,7 @@ Funny quiz game, play with friends on your telegram group!
 ## 📎 Menu
 
 -   💡 [Features](#-features)
+-   👔 [Screenshot](#-screenshot)
 -   🚀 [How to use](#-installation)
 -   🎮 [How to play](#-how-to-play)
 -   🔨 [Developer Mode](#-developer-mode)
@@ -39,6 +40,10 @@ Funny quiz game, play with friends on your telegram group!
 -   [✔️] MIT License
 -   [✔️] Powered by Grammy Telegram API Framework
 -   [✔️] Quiz game, play with friends on your telegram group
+
+## 👔 Screenshot
+
+[![quizquickanswer-telegram-game-bot](https://raw.githubusercontent.com/ptkdev/quizquickanswer-telegram-game-bot/main/.github/assets/assets/screenshot.png)](https://raw.githubusercontent.com/ptkdev/quizquickanswer-telegram-game-bot/main/.github/assets/screenshot.png)
 
 ## 🚀 Installation
 
