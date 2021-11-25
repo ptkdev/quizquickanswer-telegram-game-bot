@@ -8,6 +8,7 @@
  * @license: MIT License
  *
  */
+import type { UserVotersInterface } from "@app/types/uservoters.interfaces";
 
 /**
  * Voters Interface

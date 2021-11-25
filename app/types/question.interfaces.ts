@@ -10,6 +10,7 @@
  * @license: MIT License
  *
  */
+import type { VotersInterface } from "@app/types/voters.interfaces";
 
 /**
  * Question Interface

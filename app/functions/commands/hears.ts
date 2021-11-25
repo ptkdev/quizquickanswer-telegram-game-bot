@@ -141,7 +141,10 @@ const hears = async (): Promise<void> => {
 
 					await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);
 
-					await bot.api.editMessageReplyMarkup(master.group_id, master.pin_id);
+					try {
+						await bot.api.editMessageReplyMarkup(master?.group_id, master?.pin_id);
+						// eslint-disable-next-line no-empty
+					} catch (e) {}
 
 					const json: MasterInterface = telegram.api.message.getFullUser(ctx);
 					json.question = "";
