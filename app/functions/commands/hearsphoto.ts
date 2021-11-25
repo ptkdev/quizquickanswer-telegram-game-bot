@@ -102,6 +102,8 @@ const hearsPhoto = async (): Promise<void> => {
 									master_in_group?.group_id,
 									master_in_group?.pin_id,
 								);
+
+								bot.api.editMessageReplyMarkup(master.group_id, master.pin_id);
 							}
 						});
 					}
