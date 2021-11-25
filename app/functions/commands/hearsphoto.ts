@@ -8,7 +8,6 @@
  * @license: MIT License
  *
  */
-import { InlineKeyboard } from "grammy";
 import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
@@ -103,7 +102,7 @@ const hearsPhoto = async (): Promise<void> => {
 									master_in_group?.pin_id,
 								);
 
-								bot.api.editMessageReplyMarkup(master.group_id, master.pin_id);
+								await bot.api.editMessageReplyMarkup(master.group_id, master.pin_id);
 							}
 						});
 					}
