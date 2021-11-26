@@ -28,6 +28,7 @@ const groups = async (): Promise<void> => {
 
 		await ctx.reply(translate(lang.language, "groups_command"), {
 			reply_markup: buttons,
+			parse_mode: "HTML",
 		});
 	});
 };

@@ -8,7 +8,7 @@
  * @license: MIT License
  *
  */
-import configs from "@configs/config.json";
+import configs from "@configs/config";
 import Mongoose from "mongoose";
 import { logger } from "@app/functions/utils/logger";
 

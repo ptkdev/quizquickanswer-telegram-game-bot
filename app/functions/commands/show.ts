@@ -30,14 +30,18 @@ const show = async (): Promise<void> => {
 			});
 
 			if (master.description === "") {
-				await ctx.reply(
+				await telegram.api.message.send(
+					ctx,
+					telegram.api.message.getChatID(ctx),
 					translate(lang.language, "show_command_noquiz", {
 						first_name: master?.first_name,
 						username: master?.username,
 					}),
 				);
 			} else {
-				await ctx.reply(
+				await telegram.api.message.send(
+					ctx,
+					telegram.api.message.getChatID(ctx),
 					translate(lang.language, "show_command", {
 						first_name: master?.first_name,
 						username: master?.username,

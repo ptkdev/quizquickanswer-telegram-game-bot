@@ -25,7 +25,6 @@
 	},
 	"scripts": {
 		"init": "npm install && husky install",
-		"init:token": "ts-node scripts/configs.ts && ts-node scripts/init.ts",
 		"setup": "ts-node --skip-project scripts/setup.ts && ts-node --skip-project scripts/changelog.ts && npm run pre-commit",
 		"start": "node dist/core/bot.js",
 		"start-pm2": "pm2 start .pm2-process.json",
@@ -59,8 +58,9 @@
 	},
 	"dependencies": {
 		"@ptkdev/logger": "^1.8.0",
+		"grammy": "^1.4.0",
 		"mongoose": "^5.0.0",
-		"grammy": "^1.4.0"
+		"pm2": "^5.1.2"
 	},
 	"devDependencies": {
 		"@ptkdev/all-shields-cli": "^2.0.2",
@@ -78,7 +78,6 @@
 		"json": "^11.0.0",
 		"markserv": "^1.17.4",
 		"nodemon": "^2.0.14",
-		"pm2": "^5.1.2",
 		"prettier": "^2.4.1",
 		"shelljs": "^0.8.4",
 		"ts-jest": "^27.0.7",

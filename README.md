@@ -56,7 +56,7 @@ Funny quiz game, play with friends on your telegram group!
 ## 🎮 How to play
 
 1. Set a master with `/master @YOUR_NICKNAME`
-2. Master send private message to `@QuizQuickAnswerBot`
+2. Master send private message to [@QuizQuickAnswerBot](https://t.me/QuizQuickAnswerBot)
 3. Master write question with syntax: `QUESTION - TIP`, example: `gameboy - '90s' portable console`
 4. Friends try to answer quickly in the telegram group. Who reply with right answer is the new master!
 
@@ -73,19 +73,21 @@ If you have no telegram groups of friends you can play in the official one, you 
 
 1. Clone this repository or download [nightly](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/archive/nightly.zip), [beta](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/archive/beta.zip) or [stable](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/archive/main.zip).
 2. Write to [@botfather](https://t.me/botfather) on telegram and create new bot (save token and set bot username)
-3. Run with correct values: `npm run init:token --username name_bot --token 1234:asdfghjkl`
-4. Run `npm run init`
-5. Run `npm run dev`
-6. Write `/start` on telegram bot.
+3. Set bot token: `export BOT_TOKEN=1234:asdfghjkl`
+4. Set mongodb connection url: `export MONGODB=mongodb://localhost:27017/quizquickanswerdb`
+5. Run `npm run init`
+6. Run `npm run dev`
+7. Write `/start` on telegram bot.
 
 #### 🚀 Deploy
 
 Deploy bot to your server and:
 
-1. Run with correct values: `npm run init:token --token asdfghjkl`
-2. Run init `npm run init`
-3. Generate release `npm run release`
-4. Start bot `npm run start-pm2`
+1. Set bot token: `export BOT_TOKEN=1234:asdfghjkl`
+2. Set mongodb connection url: `export MONGODB=mongodb://localhost:27017/quizquickanswerdb`
+3. Run init `npm run init`
+4. Generate release `npm run release`
+5. Start bot `npm run start-pm2`
 
 ## 📚 Documentation
 

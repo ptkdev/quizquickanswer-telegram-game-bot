@@ -29,7 +29,7 @@ const ping = async (): Promise<void> => {
 
 			if (message) {
 				await telegram.api.message.pin(ctx, telegram.api.message.getChatID(ctx), message?.message_id, {
-					disable_notification: true,
+					disable_notification: false,
 				});
 
 				setTimeout(async function () {

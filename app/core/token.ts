@@ -9,7 +9,7 @@
  *
  */
 import { Bot } from "grammy";
-import configs from "@configs/config.json";
+import configs from "@configs/config";
 
 const bot = new Bot(configs.telegram.token);
 

@@ -44,6 +44,6 @@
 	"groups_button_official_english": "🇬🇧 Gruppo Ufficiale Inglese",
 	"groups_button_official_italian": "🇮🇹 Gruppo Ufficiale Italiano",
 	"ping_command": "🎮 Venite a giocare! ⏱ La partita sta per iniziare!",
-	"show_command": "👨‍💻 Il master è: ##first_name## (@##username##)\n⏱ Il quiz è: <b>##answer##</b>",
-	"show_command_noquiz": "👨‍💻 Il master è: ##first_name## (@##username##)\n⏱ Il quiz non c'è! Daje un po'! Sbrigati a scriverlo!"
+	"show_command": "👨‍💻 Il master è: ##first_name## (@##username##)\n\n⏱ Il quiz è: <b>##answer##</b>",
+	"show_command_noquiz": "👨‍💻 Il master è: ##first_name## (@##username##)\n\n⏱ Il quiz non c'è! Daje un po'! Sbrigati a scriverlo!"
 }

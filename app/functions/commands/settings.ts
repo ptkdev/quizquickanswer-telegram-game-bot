@@ -41,6 +41,7 @@ const settings = async (): Promise<void> => {
 
 		await ctx.reply(translate(lang.language, "settings_command_options"), {
 			reply_markup: buttons,
+			parse_mode: "HTML",
 		});
 	});
 
@@ -59,6 +60,7 @@ const settings = async (): Promise<void> => {
 
 		await ctx.reply(translate(lang.language, "settings_command_switchlanguage"), {
 			reply_markup: buttons,
+			parse_mode: "HTML",
 		});
 	});
 
@@ -73,6 +75,7 @@ const settings = async (): Promise<void> => {
 
 		await ctx.reply(translate(lang.language, "settings_command_credits"), {
 			reply_markup: buttons,
+			parse_mode: "HTML",
 		});
 	});
 
