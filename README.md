@@ -43,7 +43,7 @@ Funny quiz game, play with friends on your telegram group!
 
 ## 👔 Screenshot
 
-[![quizquickanswer-telegram-game-bot](https://raw.githubusercontent.com/ptkdev/quizquickanswer-telegram-game-bot/main/.github/assets/assets/screenshot.png)](https://raw.githubusercontent.com/ptkdev/quizquickanswer-telegram-game-bot/main/.github/assets/screenshot.png)
+[![quizquickanswer-telegram-game-bot](https://raw.githubusercontent.com/ptkdev/quizquickanswer-telegram-game-bot/main/.github/assets/screenshot.png)](https://raw.githubusercontent.com/ptkdev/quizquickanswer-telegram-game-bot/main/.github/assets/screenshot.png)
 
 ## 🚀 Installation
 
