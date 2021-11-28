@@ -45,7 +45,8 @@ const replaceParams = (text: string, language_params: TranslateInterface): strin
 const check = (lang: string, language_id: string): string => {
 	return (
 		translations?.[lang]?.[language_id] ??
-		(translations?.["en"]?.[language_id] ?? `translation id: ${language_id} in ${lang}.json is undefined`)
+		translations?.["en"]?.[language_id] ??
+		`translation id: ${language_id} in ${lang}.json is undefined`
 	);
 };
 
