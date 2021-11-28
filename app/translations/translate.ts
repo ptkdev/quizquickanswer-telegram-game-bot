@@ -9,18 +9,7 @@
  *
  */
 import translations from "@app/routes/translations";
-
-interface TranslateParamsInterface {
-	username?: string;
-	bot_username?: string;
-	first_name?: string;
-	master_first_name?: string;
-	master_username?: string;
-	text?: string;
-	emoji?: string;
-	answer?: string;
-	score?: number;
-}
+import type { TranslateInterface } from "@app/types/translate.interfaces";
 
 /**
  * Replace Params
@@ -34,9 +23,9 @@ interface TranslateParamsInterface {
  * @return {string} text - text with replaced token
  *
  */
-const replaceParams = (text: string, language_params: TranslateParamsInterface): string => {
+const replaceParams = (text: string, language_params: TranslateInterface): string => {
 	for (const [key, value] of Object.entries(language_params)) {
-		text = text.replace(`##${key}##`, value);
+		text = text.replace(`{{${key}}}`, value);
 	}
 
 	return text;
@@ -54,7 +43,10 @@ const replaceParams = (text: string, language_params: TranslateParamsInterface):
  *
  */
 const check = (lang: string, language_id: string): string => {
-	return translations?.[lang]?.[language_id] ?? translations["en"][language_id];
+	return (
+		translations?.[lang]?.[language_id] ??
+		(translations?.["en"]?.[language_id] ?? `translation id: ${language_id} in ${lang}.json is undefined`)
+	);
 };
 
 /**
@@ -69,7 +61,7 @@ const check = (lang: string, language_id: string): string => {
  * @return {string} text - text of available translation
  *
  */
-const translate = (lang: string, language_id: string, language_params?: TranslateParamsInterface): string => {
+const translate = (lang: string, language_id: string, language_params?: TranslateInterface): string => {
 	let text = "";
 
 	text = check(lang, language_id);

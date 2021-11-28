@@ -39,10 +39,15 @@ const settings = async (): Promise<void> => {
 		buttons.row();
 		buttons.url(translate(lang.language, "settings_command_email"), "https://t.me/QuizQuickAnswerGroup");
 
-		await ctx.reply(translate(lang.language, "settings_command_options"), {
-			reply_markup: buttons,
-			parse_mode: "HTML",
-		});
+		await telegram.api.message.send(
+			ctx,
+			telegram.api.message.getChatID(ctx),
+			translate(lang.language, "settings_command_options"),
+			{
+				reply_markup: buttons,
+				parse_mode: "HTML",
+			},
+		);
 	});
 
 	bot.callbackQuery("settings_languages", async (ctx) => {
@@ -58,10 +63,15 @@ const settings = async (): Promise<void> => {
 			"https://github.com/ptkdev/quizquickanswer-telegram-game-bot/tree/main/app/translations",
 		);
 
-		await ctx.reply(translate(lang.language, "settings_command_switchlanguage"), {
-			reply_markup: buttons,
-			parse_mode: "HTML",
-		});
+		await telegram.api.message.send(
+			ctx,
+			telegram.api.message.getChatID(ctx),
+			translate(lang.language, "settings_command_switchlanguage"),
+			{
+				reply_markup: buttons,
+				parse_mode: "HTML",
+			},
+		);
 	});
 
 	bot.callbackQuery("settings_credits", async (ctx) => {
@@ -73,10 +83,15 @@ const settings = async (): Promise<void> => {
 		buttons.row();
 		buttons.url(translate(lang.language, "settings_command_ali"), "https://github.com/alishadman95/");
 
-		await ctx.reply(translate(lang.language, "settings_command_credits"), {
-			reply_markup: buttons,
-			parse_mode: "HTML",
-		});
+		await telegram.api.message.send(
+			ctx,
+			telegram.api.message.getChatID(ctx),
+			translate(lang.language, "settings_command_credits"),
+			{
+				reply_markup: buttons,
+				parse_mode: "HTML",
+			},
+		);
 	});
 
 	bot.callbackQuery("settings_set_english", async (ctx) => {

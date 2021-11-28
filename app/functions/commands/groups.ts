@@ -26,10 +26,15 @@ const groups = async (): Promise<void> => {
 		buttons.row();
 		buttons.url(translate(lang.language, "groups_button_official_italian"), "https://t.me/QuizQuickAnswerGroupITA");
 
-		await ctx.reply(translate(lang.language, "groups_command"), {
-			reply_markup: buttons,
-			parse_mode: "HTML",
-		});
+		await telegram.api.message.send(
+			ctx,
+			telegram.api.message.getChatID(ctx),
+			translate(lang.language, "groups_command"),
+			{
+				reply_markup: buttons,
+				parse_mode: "HTML",
+			},
+		);
 	});
 };
 

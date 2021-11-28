@@ -91,7 +91,7 @@ const vote = async (ctx, type): Promise<void> => {
 				buttons.text(`👍 ${user_questions?.voters?.users?.upvotes?.length || 0} `, "upvote");
 				buttons.text(`👎 ${user_questions?.voters?.users?.downvotes?.length || 0} `, "downvote");
 
-				ctx.editMessageReplyMarkup({
+				await telegram.api.message.editMessageReplyMarkup(ctx, {
 					reply_markup: buttons,
 				});
 			} else {
@@ -114,7 +114,7 @@ const vote = async (ctx, type): Promise<void> => {
 				buttons.text(`👍 ${is_upvote ? 1 : 0} `, "upvote");
 				buttons.text(`👎 ${is_upvote ? 0 : 1}`, "downvote");
 
-				ctx.editMessageReplyMarkup({
+				await telegram.api.message.editMessageReplyMarkup(ctx, {
 					reply_markup: buttons,
 				});
 			}

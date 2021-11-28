@@ -102,13 +102,10 @@ const hearsPhoto = async (): Promise<void> => {
 									master_in_group?.pin_id,
 								);
 
-								try {
-									await bot.api.editMessageReplyMarkup(
-										master_in_group?.group_id,
-										master_in_group?.pin_id,
-									);
-									// eslint-disable-next-line no-empty
-								} catch (e) {}
+								await telegram.api.message.removeMessageMarkup(
+									master_in_group?.group_id,
+									master_in_group?.pin_id,
+								);
 							}
 						});
 					}

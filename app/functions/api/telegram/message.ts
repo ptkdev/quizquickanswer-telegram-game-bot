@@ -9,8 +9,8 @@
  *
  */
 import logger from "@app/functions/utils/logger";
+import bot from "@app/core/token";
 import db from "@routes/api/database";
-
 import type { Context, RawApi } from "grammy";
 import type { MasterInterface } from "@app/types/master.interfaces";
 import type { SettingsInterface } from "@app/types/settings.interfaces";
@@ -85,6 +85,25 @@ const getMessageID = (ctx: Context): number => {
 
 const getMessageIDFromAction = (ctx: Context): number => {
 	return ctx?.update?.callback_query?.message?.message_id || ctx?.message?.message_id || 0;
+};
+
+const editMessageReplyMarkup = async (
+	ctx: Context,
+	options: Other<RawApi, "editMessageReplyMarkup", "message_id" | "inline_message_id"> | undefined,
+): Promise<void> => {
+	try {
+		await ctx.editMessageReplyMarkup(options);
+	} catch (err: unknown) {
+		logger.error(JSON.stringify(err), "message.ts:editMessageReplyMarkup()");
+	}
+};
+
+const removeMessageMarkup = async (groupd_id: number, pin_id: number): Promise<void> => {
+	try {
+		await bot.api.editMessageReplyMarkup(groupd_id, pin_id);
+	} catch (err: unknown) {
+		logger.error(JSON.stringify(err), "message.ts:removeMessageMarkup()");
+	}
 };
 
 const getLanguage = async (ctx: Context): Promise<SettingsInterface> => {
@@ -188,6 +207,8 @@ export {
 	getMessageID,
 	getUserIDFromAction,
 	getMessageIDFromAction,
+	removeMessageMarkup,
+	editMessageReplyMarkup,
 };
 export default {
 	getFullUser,
@@ -208,4 +229,6 @@ export default {
 	getMessageID,
 	getUserIDFromAction,
 	getMessageIDFromAction,
+	removeMessageMarkup,
+	editMessageReplyMarkup,
 };
