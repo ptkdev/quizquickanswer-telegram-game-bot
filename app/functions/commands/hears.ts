@@ -39,7 +39,7 @@ const hears = async (): Promise<void> => {
 			logger.debug(`master: ${JSON.stringify(master)}`);
 			logger.debug(`${master?.username} === ${telegram.api.message.getUsername(ctx)}`);
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
-				const text = telegram.api.message.getText(ctx).split("-");
+				const text = telegram.api.message.getText(ctx).split("##");
 
 				const json = telegram.api.message.getFullUser(ctx);
 				json.question = text[0]?.trim()?.toLowerCase() || "";

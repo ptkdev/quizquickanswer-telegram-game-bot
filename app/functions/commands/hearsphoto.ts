@@ -37,7 +37,7 @@ const hearsPhoto = async (): Promise<void> => {
 			const photo_id = telegram.api.message.getPhotoFileID(ctx);
 
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
-				const text = telegram.api.message.getPhotoCaption(ctx).split("-");
+				const text = telegram.api.message.getPhotoCaption(ctx).split("##");
 				if (text !== undefined) {
 					const json = telegram.api.message.getFullUser(ctx);
 					json.question = text[0]?.trim()?.toLowerCase() || "";

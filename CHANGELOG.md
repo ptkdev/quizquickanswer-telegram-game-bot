@@ -1,5 +1,7 @@
 # v0.7.0 (TBD, 2021)
 
+-   Fix: now split with two HASHTAGS (##), not with MINUS sign (-)
+-   Feature: TOP10 daily, montlhy and yearly
 -   Fix: Docker
 -   Refactor: wrapper of ctx.reply() and ctx.EditMessage
 
