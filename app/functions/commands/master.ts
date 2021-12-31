@@ -49,7 +49,8 @@ const master = async (): Promise<void> => {
 					language_code: "",
 					question: "",
 					description: "",
-					score: 0,
+					score_2021: 0,
+					score_2022: 0,
 					pin_id: 0,
 					group_id: telegram.api.message.getChatID(ctx),
 				};

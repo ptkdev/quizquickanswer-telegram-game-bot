@@ -47,7 +47,8 @@ export interface QuestionsInterface {
 	 * @param { string } upvotes - user good questions count
 	 *
 	 */
-	upvotes: number;
+	upvotes_2021?: number;
+	upvotes_2022?: number;
 	/**
 	 * Questions Interface
 	 * =====================
@@ -57,7 +58,8 @@ export interface QuestionsInterface {
 	 * @param { number } downvotes - user bad questions count
 	 *
 	 */
-	downvotes: number;
+	downvotes_2021?: number;
+	downvotes_2022?: number;
 	/**
 	 * Questions Interface
 	 * =====================

@@ -64,9 +64,9 @@ const vote = async (ctx, type): Promise<void> => {
 				}
 
 				if (is_upvote) {
-					user_questions.upvotes += 1;
+					user_questions[`upvotes_${new Date().getFullYear()}`] += 1;
 				} else {
-					user_questions.downvotes += 1;
+					user_questions[`downvotes_${new Date().getFullYear()}`] += 1;
 				}
 				user_questions.voters = {
 					message_id,
@@ -97,8 +97,7 @@ const vote = async (ctx, type): Promise<void> => {
 			} else {
 				const json = {
 					user_id,
-					upvotes: is_upvote ? 1 : 0,
-					downvotes: is_upvote ? 0 : 1,
+
 					group_id: group_id,
 					voters: {
 						message_id,
@@ -108,6 +107,9 @@ const vote = async (ctx, type): Promise<void> => {
 						},
 					},
 				};
+
+				json[`upvotes_${new Date().getFullYear()}`] = is_upvote ? 1 : 0;
+				json[`downvotes_${new Date().getFullYear()}`] = is_upvote ? 0 : 1;
 				await db.questions.add(json);
 
 				const buttons = new InlineKeyboard();

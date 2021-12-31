@@ -51,7 +51,7 @@ const getFullUser = (ctx: Context): MasterInterface => {
 	from.username = getUsername(ctx);
 	from.question = "";
 	from.description = "";
-	from.score = 0;
+	from[`score_${new Date().getFullYear()}`] = 0;
 	from.pin_id = 0;
 
 	return from;

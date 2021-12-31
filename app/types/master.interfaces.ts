@@ -108,7 +108,8 @@ export interface MasterInterface {
 	 * @param { number } score - user current score
 	 *
 	 */
-	score: number;
+	score_2021: number;
+	score_2022: number;
 	/**
 	 * Master Interface
 	 * =====================

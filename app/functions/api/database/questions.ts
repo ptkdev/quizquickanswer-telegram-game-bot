@@ -16,8 +16,10 @@ import type { QuestionsInterface } from "@app/types/question.interfaces";
 const schema = new Schema<QuestionsInterface>({
 	user_id: { type: String, default: 0 },
 	group_id: { type: Number, default: 0 },
-	upvotes: { type: Number, default: 0 },
-	downvotes: { type: Number, default: 0 },
+	upvotes_2021: { type: Number, default: 0 },
+	downvotes_2021: { type: Number, default: 0 },
+	upvotes_2022: { type: Number, default: 0 },
+	downvotes_2022: { type: Number, default: 0 },
 	voters: { type: Object, default: { message_id: 0, users: { upvotes: [], downvotes: [] } } },
 });
 

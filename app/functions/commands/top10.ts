@@ -38,13 +38,17 @@ const top10 = async (): Promise<void> => {
 					});
 
 					if (user_questions) {
-						s.score += (user_questions.upvotes || 0) - (user_questions.downvotes || 0);
+						s[`score_${new Date().getFullYear()}`] +=
+							(user_questions[`upvotes_${new Date().getFullYear()}`] || 0) -
+							(user_questions[`downvotes_${new Date().getFullYear()}`] || 0);
 					}
 					return s;
 				}),
 			);
 
-			mapped_scores = mapped_scores.sort((a, b) => b?.score - a?.score).slice(0, 10);
+			mapped_scores = mapped_scores
+				.sort((a, b) => b?.[`score_${new Date().getFullYear()}`] - a?.[`score_${new Date().getFullYear()}`])
+				.slice(0, 10);
 
 			const scores_message = mapped_scores
 				.map((s: MasterInterface, index: number) => {
@@ -52,7 +56,7 @@ const top10 = async (): Promise<void> => {
 						emoji: getTopScoreEmoji(index),
 						first_name: s.first_name,
 						username: s.username,
-						score: s.score,
+						score: s[`score_${new Date().getFullYear()}`],
 					});
 				})
 				.join("");

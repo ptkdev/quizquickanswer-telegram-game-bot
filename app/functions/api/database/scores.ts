@@ -20,7 +20,8 @@ const schema = new Schema<MasterInterface>({
 	username: { type: String, default: "" },
 	language_code: { type: String, default: "en" },
 	group_id: { type: Number, default: 0 },
-	score: { type: Number, default: 0 },
+	score_2021: { type: Number, default: 0 },
+	score_2022: { type: Number, default: 0 },
 });
 
 const query = model<MasterInterface>("Scores", schema, "scores");

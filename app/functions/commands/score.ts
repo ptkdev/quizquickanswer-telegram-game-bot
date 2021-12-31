@@ -45,7 +45,9 @@ const score = async (): Promise<void> => {
 				});
 
 				if (user_questions) {
-					score.score += (user_questions.upvotes || 0) - (user_questions.downvotes || 0);
+					score[`score_${new Date().getFullYear()}`] +=
+						(user_questions[`upvotes_${new Date().getFullYear()}`] || 0) -
+						(user_questions[`downvotes_${new Date().getFullYear()}`] || 0);
 				}
 
 				await telegram.api.message.send(
@@ -54,7 +56,7 @@ const score = async (): Promise<void> => {
 					translate(lang.language, "score_command_show", {
 						first_name: telegram.api.message.getUserFirstName(ctx) || "",
 						username: telegram.api.message.getUsername(ctx) || "",
-						score: score?.score || 0,
+						score: score?.[`score_${new Date().getFullYear()}`] || 0,
 					}),
 				);
 			} else {
@@ -75,7 +77,9 @@ const score = async (): Promise<void> => {
 				});
 
 				if (user_questions) {
-					score.score += (user_questions.upvotes || 0) - (user_questions.downvotes || 0);
+					score[`score_${new Date().getFullYear()}`] +=
+						(user_questions[`upvotes_${new Date().getFullYear()}`] || 0) -
+						(user_questions[`downvotes_${new Date().getFullYear()}`] || 0);
 				}
 
 				await telegram.api.message.send(
@@ -83,7 +87,7 @@ const score = async (): Promise<void> => {
 					telegram.api.message.getChatID(ctx),
 					translate(lang.language, "score_command_show_with_username", {
 						username: username,
-						score: score?.score || 0,
+						score: score?.[`score_${new Date().getFullYear()}`] || 0,
 					}),
 				);
 			}
