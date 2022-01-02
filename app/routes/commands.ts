@@ -10,6 +10,7 @@ import hears from "@app/functions/commands/hears";
 import hearsPhoto from "@app/functions/commands/hearsphoto";
 import settings from "@app/functions/commands/settings";
 import actions from "@app/functions/commands/actions";
+import version from "@app/functions/commands/version";
 
 const commands = {
 	start,
@@ -24,7 +25,8 @@ const commands = {
 	settings,
 	hearsPhoto,
 	actions,
+	version,
 };
 
-export { start, master, score, groups, ping, show, top10, launch, hears, settings, hearsPhoto, actions };
+export { start, master, score, groups, ping, show, top10, launch, hears, settings, hearsPhoto, actions, version };
 export default commands;
