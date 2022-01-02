@@ -22,6 +22,7 @@ import logger from "@app/functions/utils/logger";
 	await commands.master();
 	await commands.version();
 	await commands.top10();
+	await commands.topYearly();
 	await commands.score();
 	await commands.groups();
 	await commands.ping();

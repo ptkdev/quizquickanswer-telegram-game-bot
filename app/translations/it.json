@@ -45,5 +45,6 @@
 	"groups_button_official_italian": "🇮🇹 Gruppo Ufficiale Italiano",
 	"ping_command": "🎮 Venite a giocare! ⏱ La partita sta per iniziare!",
 	"show_command": "👨‍💻 Il master è: {{first_name}} (@{{username}})\n\n⏱ Il quiz è: <b>{{answer}}</b>",
-	"show_command_noquiz": "👨‍💻 Il master è: {{first_name}} (@{{username}})\n\n⏱ Il quiz non c'è! Daje un po'! Sbrigati a scriverlo!"
+	"show_command_noquiz": "👨‍💻 Il master è: {{first_name}} (@{{username}})\n\n⏱ Il quiz non c'è! Daje un po'! Sbrigati a scriverlo!",
+	"top10_commands": "I top10 disponibili sono: \n\n/top2021\n\n/top2022\n\n/topdaily\n\n/topweekly\n\n/topmonthly"
 }

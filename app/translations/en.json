@@ -48,5 +48,6 @@
 	"groups_button_official_italian": "🇮🇹 Official Italian group",
 	"ping_command": "🎮 Come and play! ⏱ The game is about to start!",
 	"show_command": "👨‍💻 The master is: {{first_name}} (@{{username}})\n\n⏱ The quiz is: <b>{{answer}}</b>",
-	"show_command_noquiz": "👨‍💻 The master is: {{first_name}} (@{{username}})\n\n⏱ The quiz is not avaiable! Hurry up to write it!"
+	"show_command_noquiz": "👨‍💻 The master is: {{first_name}} (@{{username}})\n\n⏱ The quiz is not avaiable! Hurry up to write it!",
+	"top10_commands": "The top10 available are: \n\n/top2021\n\n/top2022\n\n/topdaily\n\n/topweekly\n\n/topmonthly"
 }
