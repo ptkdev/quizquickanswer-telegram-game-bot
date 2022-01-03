@@ -24,7 +24,7 @@
 		"node": ">=14.0.0"
 	},
 	"scripts": {
-		"git-info": "ts-node scripts/gitInfo.ts",
+		"git-info": "ts-node scripts/git_info.ts",
 		"init": "npm install && husky install",
 		"setup": "ts-node --skip-project scripts/setup.ts && ts-node --skip-project scripts/changelog.ts && npm run pre-commit",
 		"start": "npm run git-info && node dist/core/bot.js",

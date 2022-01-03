@@ -10,7 +10,7 @@
  */
 import bot from "@app/core/token";
 import { version as V } from "../../../package.json";
-import generatedGitInfo from "@app/configs/generatedGitInfo.json";
+import version_json from "@app/configs/version.json";
 import telegram from "@routes/api/telegram";
 import logger from "@app/functions/utils/logger";
 
@@ -27,7 +27,7 @@ const version = async (): Promise<void> => {
 		await telegram.api.message.send(
 			ctx,
 			telegram.api.message.getChatID(ctx),
-			`v${V || "0.0.0"} (${generatedGitInfo?.gitCommitHash || ""})`,
+			`v${V || "0.0.0"} (${version_json?.gitCommitHash || ""})`,
 		);
 	});
 };

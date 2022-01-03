@@ -22,7 +22,7 @@ const main = () => {
 		gitCommitHash,
 	};
 
-	const filePath = path.resolve("app/configs", "generatedGitInfo.json");
+	const filePath = path.resolve("app/configs", "version.json");
 	const fileContents = JSON.stringify(obj, null, 2);
 
 	fs.writeFileSync(filePath, fileContents);
