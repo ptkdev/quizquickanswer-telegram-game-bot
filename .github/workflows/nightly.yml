@@ -22,9 +22,9 @@ jobs:
             - run: git config --global user.email 'support@ptkdev.io'
             - run: npm ci
             - run: npm run github-workflow-next-version -- --cmd nightly
-            - run: npm run pre-commit
             - id: pkgjson
               run: chmod +x ./scripts/version.sh && ./scripts/version.sh
+			- run: npm run pre-commit
             - run: git add . && git commit -m "[🚀 Release] v${{ steps.pkgjson.outputs.pkgversion }}" && git push
             - run: npm publish --tag nightly
               env:
