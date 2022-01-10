@@ -19,19 +19,20 @@ module.exports = {
 	debug: process.env.DEBUG || true,
 
 	// LOGS
+	// https://github.com/ptkdev/ptkdev-logger
 	logger: {
 		path: {
 			debug_log: "./logs/debug.log",
 			error_log: "./logs/errors.log",
 		},
-		language: "en", // set language of log type, NOTE: please help with translations! (optional, default en - values: en|it|pl)
-		colors: true, // enable/disable colors in terminal (optional, default enabled - values: true|enabled or false|disabled)
-		debug: process.env.DEBUG || true, // enable/disable all logs with method debug (optional, default enabled - values: true|enabled or false|disabled)
-		info: true, // enable/disable all logs with method info (optional, default enabled - values: true|enabled or false|disabled)
-		warning: true, // enable/disable all logs with method warning (optional, default enabled -  values: true|enabled or false|disabled)
-		error: true, // enable/disable all logs with method errors (optional, default enabled - values: true|enabled or false|disabled)
-		sponsor: true, // enable/disable all logs with method sponsor (optional, default enabled - values: true|enabled or false|disabled)
-		write: false, // write the logs into a file, you need set path values (optional, default disabled - values: true|enabled or false|disabled)
-		type: "log", // format of logs in files (optional, default log - values: log|json)
+		language: "en",
+		colors: true,
+		debug: process.env.LOGGER || "enabled",
+		info: process.env.LOGGER || "enabled",
+		warning: process.env.LOGGER || "enabled",
+		error: process.env.LOGGER || "enabled",
+		sponsor: process.env.LOGGER || "enabled",
+		write: process.env.LOGGER_WRITE || false,
+		type: "log",
 	},
 };

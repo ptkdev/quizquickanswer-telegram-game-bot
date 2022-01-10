@@ -9,7 +9,7 @@
  *
  */
 import translations from "@app/routes/translations";
-import type { TranslateInterface } from "@app/types/translate.interfaces";
+import type { TranslateParamsInterface } from "@app/types/translate.interfaces";
 
 /**
  * Replace Params
@@ -23,7 +23,7 @@ import type { TranslateInterface } from "@app/types/translate.interfaces";
  * @return {string} text - text with replaced token
  *
  */
-const replaceParams = (text: string, language_params: TranslateInterface): string => {
+const replaceParams = (text: string, language_params: TranslateParamsInterface): string => {
 	for (const [key, value] of Object.entries(language_params)) {
 		text = text.replace(`{{${key}}}`, value);
 	}
@@ -62,7 +62,7 @@ const check = (lang: string, language_id: string): string => {
  * @return {string} text - text of available translation
  *
  */
-const translate = (lang: string, language_id: string, language_params?: TranslateInterface): string => {
+const translate = (lang: string, language_id: string, language_params?: TranslateParamsInterface): string => {
 	let text = "";
 
 	text = check(lang, language_id);

@@ -1,9 +1,7 @@
-# v0.7.0 (TBD, 2021)
+# v0.7.0 (January 10, 2022)
 
 -   Fix: now split with two HASHTAGS (##), not with MINUS sign (-)
--   Feature: TOP10 daily, montlhy and yearly
--   Fix: Docker
--   Refactor: wrapper of ctx.reply() and ctx.EditMessage
+-   Feature: TOP10 yearly
 
 <!-- all-shields/sponsors-badges:START -->
 

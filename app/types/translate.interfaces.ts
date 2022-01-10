@@ -9,7 +9,7 @@
  *
  */
 
-export interface TranslateInterface {
+export interface TranslateParamsInterface {
 	username?: string;
 	bot_username?: string;
 	first_name?: string;

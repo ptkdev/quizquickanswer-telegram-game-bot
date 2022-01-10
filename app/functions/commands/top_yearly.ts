@@ -21,7 +21,7 @@ import logger from "@app/functions/utils/logger";
 
 const topYearly = async (): Promise<void> => {
 	bot.command(["top2021", "top2022"], async (ctx) => {
-		logger.info("command: /topYearly", "topYearly.ts:topYearly()");
+		logger.info("command: /topyearly", "topYearly.ts:topyearly()");
 		const lang = await telegram.api.message.getLanguage(ctx);
 
 		if (telegram.api.message.getChatID(ctx) < 0) {
@@ -29,7 +29,7 @@ const topYearly = async (): Promise<void> => {
 			const top_scores: MasterInterface[] = await db.scores.getMultiple({
 				group_id: telegram.api.message.getChatID(ctx),
 			});
-			const year = ctx?.update?.message?.text?.split("p")[1] || "";
+			const year = ctx?.update?.message?.text?.substring(4, 8) || 2022;
 
 			let mapped_scores: MasterInterface[] = await Promise.all(
 				top_scores.map(async (s: MasterInterface) => {
@@ -40,7 +40,7 @@ const topYearly = async (): Promise<void> => {
 
 					if (user_questions) {
 						s[`score_${year}`] +=
-							(user_questions[`upvotes_${year}`] || 0) - (user_questions[`downvotes_${year}`] || 0);
+							(user_questions[`upvotes_${year}`] || 0) - (user_questions[`downvotes_${year}`] || 0) || 0;
 					}
 					return s;
 				}),
