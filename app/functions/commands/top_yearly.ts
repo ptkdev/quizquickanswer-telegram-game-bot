@@ -1,5 +1,5 @@
 /**
- * Top10
+ * Top10 Yearly
  * =====================
  *
  * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
