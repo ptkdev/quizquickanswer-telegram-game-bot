@@ -1,4 +1,4 @@
-# v0.7.0 (January 10, 2022)
+# v0.7.2 (January 10, 2022)
 
 -   Fix: now split with two HASHTAGS (##), not with MINUS sign (-)
 -   Feature: TOP10 yearly
