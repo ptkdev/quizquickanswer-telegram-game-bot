@@ -14,7 +14,7 @@
  * =====================
  *
  *
- * @interface [MasterUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+ * @interface [MasterUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
  *
  * @param { number } id - telegram id
  * @param { boolean } is_bot - is user a bot
@@ -33,7 +33,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { string } id - telegram id
 	 *
@@ -43,7 +43,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { boolean } is_bot - is user a bot
 	 *
@@ -53,7 +53,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { string } first_name - user name from telegram
 	 *
@@ -63,7 +63,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { string } username - user username from telegram
 	 *
@@ -73,7 +73,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { string } language_code - user code language from OS
 	 *
@@ -83,7 +83,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { string } question - user submitted question
 	 *
@@ -93,7 +93,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { string } description - user submitted question tip
 	 *
@@ -103,7 +103,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { number } score - user current score
 	 *
@@ -114,7 +114,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { number } pin_id - message pinned id
 	 *
@@ -124,7 +124,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { number } group_id - users group id
 	 *
@@ -134,7 +134,7 @@ export interface MasterInterface {
 	 * Master Interface
 	 * =====================
 	 *
-	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.type.ts)
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
 	 * @param { string } error - error message
 	 *

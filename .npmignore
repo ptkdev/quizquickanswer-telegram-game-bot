@@ -1,5 +1,4 @@
 **/*
-|.github
 !/extra/**/*
 !*.d.ts
 !*.md

@@ -75,7 +75,7 @@ If you have no telegram groups of friends you can play in the official one, you 
 2. Write to [@botfather](https://t.me/botfather) on telegram and create new bot (save token and set bot username)
 3. Set bot token: `export BOT_TOKEN=1234:asdfghjkl`
 4. Set mongodb connection url: `export MONGODB=mongodb://localhost:27017/quizquickanswerdb`
-5. Run `npm run init`
+5. Run `npm install`
 6. Run `npm run dev`
 7. Write `/start` on telegram bot.
 
@@ -85,7 +85,7 @@ Deploy bot to your server and:
 
 1. Set bot token: `export BOT_TOKEN=1234:asdfghjkl`
 2. Set mongodb connection url: `export MONGODB=mongodb://localhost:27017/quizquickanswerdb`
-3. Run init `npm run init`
+3. Run init npm install
 4. Generate release `npm run release`
 5. Start bot `npm run start-pm2`
 
@@ -101,7 +101,7 @@ Thanks to all our backers! 🙏 Donate 3$ or more on [paypal](https://www.paypal
 
 ## 👨‍💻 Contributing
 
-I ❤️ contributions! I will happily accept your pull request! Translations, grammatical corrections (GrammarNazi you are welcome! Yes my English is bad, sorry), etc... Do not be afraid, if the code is not perfect we will work together 👯 and remember to insert your name in `.all-contributorsrc` and `package.json` file.
+I ❤️ contributions! I will happily accept your pull request! (**IMPORTANT**: Only to nightly branch!) Translations, grammatical corrections (GrammarNazi you are welcome! Yes my English is bad, sorry), etc... Do not be afraid, if the code is not perfect we will work together 👯 and remember to insert your name in `.all-contributorsrc` and `package.json` file.
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
@@ -155,4 +155,4 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 -   Images and logos have **CC BY-NC 4.0 License**
 -   Documentations and Translations have **CC BY 4.0 License**
 
-###### Copyleft (c) 2021 [Patryk Rzucidło](https://ptk.dev) ([@PTKDev](https://twitter.com/ptkdev)) <[support@ptkdev.io](mailto:support@ptkdev.io)>
+###### Copyleft (c) 2022 [Patryk Rzucidło](https://ptk.dev) ([@PTKDev](https://twitter.com/ptkdev)) <[support@ptkdev.io](mailto:support@ptkdev.io)>

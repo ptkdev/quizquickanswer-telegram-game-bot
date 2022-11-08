@@ -187,7 +187,7 @@ const hears = async (): Promise<void> => {
 
 			if (
 				similarityPercentage >= 0.7 &&
-				telegram.api.message.getText(ctx).trim().toLowerCase().split("").length >= 3
+				telegram.api.message.getText(ctx).trim().toLowerCase().split("").length > 4
 			) {
 				await telegram.api.message.send(
 					ctx,

@@ -9,7 +9,7 @@
 		"resolveJsonModule": true,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"noImplicitThis": true,
 		"declaration": false,
 		"skipLibCheck": true,
@@ -32,5 +32,5 @@
 		]
 	},
 	"include": ["app/**/*"],
-	"exclude": ["node_modules/*", "dist/*", "scripts/*"]
+	"exclude": ["node_modules/*", "dist/*", "scripts/*", "examples/*"]
 }

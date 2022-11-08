@@ -121,6 +121,7 @@ npm-debug.log
 
 # App #
 #######
+.env
 /app/configs/config.js
 /app/configs/config.ts
 /app/configs/config.json

@@ -24,14 +24,13 @@
 		"node": ">=14.0.0"
 	},
 	"scripts": {
-		"init": "npm install && husky install",
 		"setup": "ts-node --skip-project scripts/setup.ts && ts-node --skip-project scripts/changelog.ts && npm run pre-commit",
 		"start": "npm run git-hash && node dist/core/bot.js",
 		"start-pm2": "pm2 start .pm2-process.json",
 		"stop-pm2": "pm2 stop .pm2-process.json",
-		"dev": "npm run git-hash && ts-node scripts/configs.ts && ts-node scripts/rmdist.ts && nodemon --exec 'ts-node app/core/bot.ts'",
-		"build": "tsc",
-		"release": "npm run git-hash && ts-node scripts/configs.ts && npm run build && tsc --declaration --emitDeclarationOnly",
+		"dev": "npm run git-hash && ts-node scripts/configs.ts && ts-node scripts/rmdist.ts && ts-node scripts/debug.ts --enable && nodemon --exec 'ts-node app/core/bot.ts'",
+		"build": "ts-node scripts/configs.ts && ts-node scripts/rmdist.ts && ts-node scripts/debug.ts --disable && tsc",
+		"release": "npm run git-hash && npm run build && tsc --declaration --emitDeclarationOnly",
 		"test": "jest app",
 		"migrate": "ts-node scripts/migration.ts",
 		"mongodump": "mongodump -d quizquickanswerdb -o .",
@@ -53,11 +52,11 @@
 		"contributors-generate": "all-contributors generate",
 		"all-shields-generate": "all-shields-generate",
 		"pre-commit": "npm run contributors-generate && npm run all-shields-generate && npm run lint-fix && npm run test",
-		"pkg-clean": "rm -rf node_modules package-lock.json && npm install && husky install",
+		"pkg-clean": "rm -rf node_modules package-lock.json && npm install && npm install eslint@7 @types/yargs@16 --save-dev && husky install",
 		"pkg-update": "npm update",
-		"pkg-upgrade": "npx --yes npm-check-updates -u && npm install && husky install",
+		"pkg-upgrade": "npx --yes npm-check-updates -u && npm install && npm install eslint@7 @types/yargs@16 --save-dev && husky install",
 		"postinstall": "rm ./node_modules/mongoose/index.d.ts",
-		"prepare": "ts-patch install -s"
+		"prepare": "ts-patch install -s && husky install"
 	},
 	"dependencies": {
 		"@ptkdev/logger": "^1.8.0",
