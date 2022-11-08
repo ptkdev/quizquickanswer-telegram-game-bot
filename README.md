@@ -109,11 +109,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://ptk.dev"><img src="https://avatars1.githubusercontent.com/u/442844?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Patryk Rzucidło</b></sub></a><br /><a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=ptkdev" title="Code">💻</a> <a href="#translation-ptkdev" title="Translation">🌍</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=ptkdev" title="Documentation">📖</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/issues?q=author%3Aptkdev" title="Bug reports">🐛</a></td>
-    <td align="center"><img src="https://avatars1.githubusercontent.com/u/50172746?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alì Shadman</b></sub><br /><a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=AliShadman95" title="Code">💻</a> <a href="#translation-AliShadman95" title="Translation">🌍</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=AliShadman95" title="Documentation">📖</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/issues?q=author%3AAliShadman95" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://instagram.com/den_karina"><img src="https://avatars1.githubusercontent.com/u/91738047?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Denise Scazzari</b></sub></a><br /><a href="#translation-DeniseKarina" title="Translation">🌍</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="16.66%"><a href="https://ptk.dev"><img src="https://avatars1.githubusercontent.com/u/442844?v=4?s=100" width="100px;" alt="Patryk Rzucidło"/><br /><sub><b>Patryk Rzucidło</b></sub></a><br /><a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=ptkdev" title="Code">💻</a> <a href="#translation-ptkdev" title="Translation">🌍</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=ptkdev" title="Documentation">📖</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/issues?q=author%3Aptkdev" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="16.66%"><img src="https://avatars1.githubusercontent.com/u/50172746?v=4?s=100" width="100px;" alt="Alì Shadman"/><br /><sub><b>Alì Shadman</b></sub><br /><a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=AliShadman95" title="Code">💻</a> <a href="#translation-AliShadman95" title="Translation">🌍</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=AliShadman95" title="Documentation">📖</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/issues?q=author%3AAliShadman95" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://instagram.com/den_karina"><img src="https://avatars1.githubusercontent.com/u/91738047?v=4?s=100" width="100px;" alt="Denise Scazzari"/><br /><sub><b>Denise Scazzari</b></sub></a><br /><a href="#translation-DeniseKarina" title="Translation">🌍</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->

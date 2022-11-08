@@ -63,6 +63,15 @@ const getChatID = (ctx: Context): number => {
 	);
 };
 
+const getThreadID = (ctx: any): number => {
+	return (
+		ctx?.update.message?.message_thread_id ||
+		ctx?.message?.message_thread_id ||
+		ctx?.update?.callback_query?.message?.message_thread_id ||
+		null
+	);
+};
+
 const getActionType = (ctx: Context): string => {
 	return ctx?.update?.callback_query?.data || "";
 };
@@ -125,10 +134,15 @@ const send = async (
 	ctx: Context,
 	group_id: number,
 	text: string,
-	options: Other<RawApi, "sendPhoto", "photo"> = { parse_mode: "HTML" },
+	options: any = { parse_mode: "HTML" },
 ): Promise<Context["message"]> => {
 	if (group_id && text) {
 		let message;
+
+		const thread_id = getThreadID(ctx);
+		if (thread_id) {
+			options.message_thread_id = thread_id;
+		}
 
 		try {
 			message = await ctx.api.sendMessage(group_id, text, options);
@@ -143,10 +157,15 @@ const sendPhoto = async (
 	ctx: Context,
 	group_id: number,
 	photo: string,
-	options: Other<RawApi, "sendPhoto", "photo"> | undefined = { parse_mode: "HTML" },
+	options: any = { parse_mode: "HTML" },
 ): Promise<Context["message"]> => {
 	if (group_id && photo) {
 		let message;
+
+		const thread_id = getThreadID(ctx);
+		if (thread_id) {
+			options.message_thread_id = thread_id;
+		}
 
 		try {
 			message = await ctx.api.sendPhoto(group_id, photo, options);
@@ -161,12 +180,17 @@ const pin = async (
 	ctx: Context,
 	group_id: number,
 	message_id: number,
-	options: Other<RawApi, "sendPhoto", "photo"> = { disable_notification: true },
+	options: any = { disable_notification: true },
 ): Promise<void> => {
 	logger.debug(`group_id: ${group_id}`, "message.ts:pin()");
 	logger.debug(`message_id: ${message_id}`, "message.ts:pin()");
 
 	if (group_id && message_id) {
+		const thread_id = getThreadID(ctx);
+		if (thread_id) {
+			options.message_thread_id = thread_id;
+		}
+
 		try {
 			await ctx.api.pinChatMessage(group_id, message_id, options);
 		} catch (err: unknown) {
@@ -175,13 +199,18 @@ const pin = async (
 	}
 };
 
-const unpin = async (ctx: Context, group_id: number, message_id: number): Promise<void> => {
+const unpin = async (ctx: Context, group_id: number, message_id: number, options?: any): Promise<void> => {
 	logger.debug(`group_id: ${group_id}`, "message.ts:unpin()");
 	logger.debug(`message_id: ${message_id}`, "message.ts:unpin()");
 
 	if (group_id && message_id) {
+		const thread_id = getThreadID(ctx);
+		if (thread_id) {
+			options.message_thread_id = thread_id;
+		}
+
 		try {
-			await ctx.api.unpinChatMessage(group_id, message_id);
+			await ctx.api.unpinChatMessage(group_id, message_id, options);
 		} catch (err: unknown) {
 			logger.error(JSON.stringify(err), "message.ts:unpin()");
 		}
@@ -192,6 +221,7 @@ export {
 	getFullUser,
 	getUsername,
 	getChatID,
+	getThreadID,
 	getText,
 	getLanguage,
 	getUserID,
@@ -214,6 +244,7 @@ export default {
 	getFullUser,
 	getUsername,
 	getChatID,
+	getThreadID,
 	getText,
 	getLanguage,
 	getUserID,

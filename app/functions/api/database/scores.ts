@@ -51,12 +51,7 @@ const add = async (user: MasterInterface): Promise<void> => {
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
-		query.findOneAndDelete(search, function (err) {
-			if (err) {
-				return err;
-			}
-			logger.info("User with score deleted");
-		});
+		query.findOneAndDelete(search);
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "scores.ts:remove()");
 	}
@@ -72,11 +67,7 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
  */
 const update = async (search: Record<string, number | string | boolean>, user: MasterInterface): Promise<void> => {
 	try {
-		await query.findOneAndUpdate(search, user, function (err) {
-			if (err) {
-				return err;
-			}
-		});
+		await query.findOneAndUpdate(search, user);
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "scores.ts:update()");
 	}
@@ -93,11 +84,7 @@ const update = async (search: Record<string, number | string | boolean>, user: M
  */
 const get = async (search: Record<string, number | string | boolean>): Promise<MasterInterface> => {
 	try {
-		const user = await query.findOne(search, function (error: string) {
-			if (error) {
-				logger.error(JSON.stringify(error || ""), "scores.ts:get()");
-			}
-		});
+		const user = await query.findOne(search);
 
 		return (await user) || new query().toJSON();
 	} catch (error: unknown) {
@@ -118,11 +105,7 @@ const get = async (search: Record<string, number | string | boolean>): Promise<M
  */
 const getMultiple = async (search: Record<string, number | string | boolean>): Promise<MasterInterface[]> => {
 	try {
-		const user = await query.find(search, function (error: string) {
-			if (error) {
-				logger.error(JSON.stringify(error || ""), "scores.ts:getMultiple()");
-			}
-		});
+		const user = await query.find(search);
 		return user || [];
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "scores.ts:getMultiple()");
