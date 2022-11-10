@@ -14,7 +14,7 @@ import type { UserVotersInterface } from "@app/types/uservoters.interfaces";
  * Voters Interface
  * =====================
  *
- * @interface [VotersInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/types/game.type.ts)
+ * @interface [VotersInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/types/game.interfaces.ts)
  *
  * @param { string | number } message_id - message id
  * @param {  string[] } voters - user id of the voters

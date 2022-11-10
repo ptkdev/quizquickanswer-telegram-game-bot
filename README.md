@@ -2,7 +2,7 @@
 
 <!-- all-shields/header-badges:START -->
 
-[![v0.7.2-beta.1](https://img.shields.io/badge/version-v0.7.2--beta.1-lightgray.svg?style=flat&logo=)](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/@ptkdev/quizquickanswer-telegram-game-bot?color=CC3534&logo=npm)](https://www.npmjs.com/package/@ptkdev/quizquickanswer-telegram-game-bot) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/LICENSE.md) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![Framework: Grammy](https://img.shields.io/badge/powered%20by-grammy-009dca.svg?style=flat&logo=telegram)](https://grammy.dev/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
+[![v0.7.3-nightly.306](https://img.shields.io/badge/version-v0.7.3--nightly.306-lightgray.svg?style=flat&logo=)](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/@ptkdev/quizquickanswer-telegram-game-bot?color=CC3534&logo=npm)](https://www.npmjs.com/package/@ptkdev/quizquickanswer-telegram-game-bot) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/LICENSE.md) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![Framework: Grammy](https://img.shields.io/badge/powered%20by-grammy-009dca.svg?style=flat&logo=telegram)](https://grammy.dev/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
 
 <!-- all-shields/header-badges:END -->
 
@@ -75,7 +75,7 @@ If you have no telegram groups of friends you can play in the official one, you 
 2. Write to [@botfather](https://t.me/botfather) on telegram and create new bot (save token and set bot username)
 3. Set bot token: `export BOT_TOKEN=1234:asdfghjkl`
 4. Set mongodb connection url: `export MONGODB=mongodb://localhost:27017/quizquickanswerdb`
-5. Run `npm run init`
+5. Run `npm install`
 6. Run `npm run dev`
 7. Write `/start` on telegram bot.
 
@@ -85,7 +85,7 @@ Deploy bot to your server and:
 
 1. Set bot token: `export BOT_TOKEN=1234:asdfghjkl`
 2. Set mongodb connection url: `export MONGODB=mongodb://localhost:27017/quizquickanswerdb`
-3. Run init `npm run init`
+3. Run init npm install
 4. Generate release `npm run release`
 5. Start bot `npm run start-pm2`
 
@@ -101,7 +101,7 @@ Thanks to all our backers! 🙏 Donate 3$ or more on [paypal](https://www.paypal
 
 ## 👨‍💻 Contributing
 
-I ❤️ contributions! I will happily accept your pull request! Translations, grammatical corrections (GrammarNazi you are welcome! Yes my English is bad, sorry), etc... Do not be afraid, if the code is not perfect we will work together 👯 and remember to insert your name in `.all-contributorsrc` and `package.json` file.
+I ❤️ contributions! I will happily accept your pull request! (**IMPORTANT**: Only to nightly branch!) Translations, grammatical corrections (GrammarNazi you are welcome! Yes my English is bad, sorry), etc... Do not be afraid, if the code is not perfect we will work together 👯 and remember to insert your name in `.all-contributorsrc` and `package.json` file.
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
@@ -109,11 +109,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://ptk.dev"><img src="https://avatars1.githubusercontent.com/u/442844?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Patryk Rzucidło</b></sub></a><br /><a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=ptkdev" title="Code">💻</a> <a href="#translation-ptkdev" title="Translation">🌍</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=ptkdev" title="Documentation">📖</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/issues?q=author%3Aptkdev" title="Bug reports">🐛</a></td>
-    <td align="center"><img src="https://avatars1.githubusercontent.com/u/50172746?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alì Shadman</b></sub><br /><a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=AliShadman95" title="Code">💻</a> <a href="#translation-AliShadman95" title="Translation">🌍</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=AliShadman95" title="Documentation">📖</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/issues?q=author%3AAliShadman95" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://instagram.com/den_karina"><img src="https://avatars1.githubusercontent.com/u/91738047?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Denise Scazzari</b></sub></a><br /><a href="#translation-DeniseKarina" title="Translation">🌍</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="16.66%"><a href="https://ptk.dev"><img src="https://avatars1.githubusercontent.com/u/442844?v=4?s=100" width="100px;" alt="Patryk Rzucidło"/><br /><sub><b>Patryk Rzucidło</b></sub></a><br /><a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=ptkdev" title="Code">💻</a> <a href="#translation-ptkdev" title="Translation">🌍</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=ptkdev" title="Documentation">📖</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/issues?q=author%3Aptkdev" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="16.66%"><img src="https://avatars1.githubusercontent.com/u/50172746?v=4?s=100" width="100px;" alt="Alì Shadman"/><br /><sub><b>Alì Shadman</b></sub><br /><a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=AliShadman95" title="Code">💻</a> <a href="#translation-AliShadman95" title="Translation">🌍</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/commits?author=AliShadman95" title="Documentation">📖</a> <a href="https://github.com/ptkdev/ptkdev/quizquickanswer-telegram-game-bot/issues?q=author%3AAliShadman95" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="16.66%"><a href="https://instagram.com/den_karina"><img src="https://avatars1.githubusercontent.com/u/91738047?v=4?s=100" width="100px;" alt="Denise Scazzari"/><br /><sub><b>Denise Scazzari</b></sub></a><br /><a href="#translation-DeniseKarina" title="Translation">🌍</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
@@ -155,4 +157,4 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 -   Images and logos have **CC BY-NC 4.0 License**
 -   Documentations and Translations have **CC BY 4.0 License**
 
-###### Copyleft (c) 2021 [Patryk Rzucidło](https://ptk.dev) ([@PTKDev](https://twitter.com/ptkdev)) <[support@ptkdev.io](mailto:support@ptkdev.io)>
+###### Copyleft (c) 2022 [Patryk Rzucidło](https://ptk.dev) ([@PTKDev](https://twitter.com/ptkdev)) <[support@ptkdev.io](mailto:support@ptkdev.io)>

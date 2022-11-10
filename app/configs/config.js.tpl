@@ -16,7 +16,7 @@ module.exports = {
 	database: { URL: process.env.MONGODB || "mongodb://localhost:27017/quizquickanswerdb" },
 
 	// Debug
-	debug: process.env.DEBUG || true,
+	debug: process.env.DEBUG || "disabled",
 
 	// LOGS
 	// https://github.com/ptkdev/ptkdev-logger

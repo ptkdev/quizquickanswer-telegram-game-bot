@@ -50,11 +50,7 @@ const add = async (user: QuestionsInterface): Promise<void> => {
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
-		await query.findOneAndDelete(search, function (err) {
-			if (err) {
-				return err;
-			}
-		});
+		await query.findOneAndDelete(search);
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "question.ts:remove()");
 	}
@@ -70,11 +66,7 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
  */
 const update = async (search: Record<string, number | string | boolean>, user: QuestionsInterface): Promise<void> => {
 	try {
-		await query.findOneAndUpdate(search, user, function (err) {
-			if (err) {
-				return err;
-			}
-		});
+		await query.findOneAndUpdate(search, user);
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "question.ts:update()");
 	}
@@ -91,11 +83,7 @@ const update = async (search: Record<string, number | string | boolean>, user: Q
  */
 const get = async (search: Record<string, number | string | boolean>): Promise<QuestionsInterface> => {
 	try {
-		const user = await query.findOne(search, function (error: string) {
-			if (error) {
-				logger.error(JSON.stringify(error || ""), "question.ts:get()");
-			}
-		});
+		const user = await query.findOne(search);
 
 		return (await user) || new query().toJSON();
 	} catch (error: unknown) {
