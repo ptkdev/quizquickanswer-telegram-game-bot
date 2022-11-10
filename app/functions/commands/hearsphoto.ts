@@ -43,6 +43,7 @@ const hearsPhoto = async (): Promise<void> => {
 					json.question = text[0]?.trim()?.toLowerCase() || "";
 					json.description = text[1]?.trim() || "";
 					json.group_id = master?.group_id || 0;
+					json.message_thread_id = master?.message_thread_id;
 
 					if (json.question === undefined || json.question === "") {
 						await telegram.api.message.send(
@@ -78,12 +79,14 @@ const hearsPhoto = async (): Promise<void> => {
 											],
 										],
 									},
+									message_thread_id: master_in_group.message_thread_id,
 								},
 							);
 
 							if (quiz) {
 								await telegram.api.message.pin(ctx, master_in_group?.group_id, quiz?.message_id, {
 									disable_notification: true,
+									message_thread_id: master_in_group.message_thread_id,
 								});
 
 								master_in_group.pin_id = quiz?.message_id || 0;

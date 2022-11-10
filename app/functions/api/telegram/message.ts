@@ -68,7 +68,7 @@ const getThreadID = (ctx: any): number => {
 		ctx?.update.message?.message_thread_id ||
 		ctx?.message?.message_thread_id ||
 		ctx?.update?.callback_query?.message?.message_thread_id ||
-		null
+		0
 	);
 };
 
@@ -139,8 +139,10 @@ const send = async (
 	if (group_id && text) {
 		let message;
 
+		logger.error(JSON.stringify(options), "message.ts:send()");
+
 		const thread_id = getThreadID(ctx);
-		if (thread_id) {
+		if (thread_id !== 0) {
 			options.message_thread_id = thread_id;
 		}
 
@@ -163,7 +165,7 @@ const sendPhoto = async (
 		let message;
 
 		const thread_id = getThreadID(ctx);
-		if (thread_id) {
+		if (thread_id !== 0) {
 			options.message_thread_id = thread_id;
 		}
 
@@ -187,7 +189,7 @@ const pin = async (
 
 	if (group_id && message_id) {
 		const thread_id = getThreadID(ctx);
-		if (thread_id) {
+		if (thread_id !== 0) {
 			options.message_thread_id = thread_id;
 		}
 
@@ -204,11 +206,6 @@ const unpin = async (ctx: Context, group_id: number, message_id: number, options
 	logger.debug(`message_id: ${message_id}`, "message.ts:unpin()");
 
 	if (group_id && message_id) {
-		const thread_id = getThreadID(ctx);
-		if (thread_id) {
-			options.message_thread_id = thread_id;
-		}
-
 		try {
 			await ctx.api.unpinChatMessage(group_id, message_id, options);
 		} catch (err: unknown) {
