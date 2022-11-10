@@ -13,7 +13,7 @@
  * UserVoters Interface
  * =====================
  *
- * @interface [UserVotersInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/types/game.type.ts)
+ * @interface [UserVotersInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/types/game.interfaces.ts)
  *
  * @param { string[]  } upvotes - user id of the voters that had upvoted
  * @param {  string[]  } downvotes - user id of the voters that had downvoted

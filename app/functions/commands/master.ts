@@ -53,6 +53,7 @@ const master = async (): Promise<void> => {
 					score_2022: 0,
 					pin_id: 0,
 					group_id: telegram.api.message.getChatID(ctx),
+					message_thread_id: telegram.api.message.getThreadID(ctx),
 				};
 
 				const master: MasterInterface = await db.master.get({

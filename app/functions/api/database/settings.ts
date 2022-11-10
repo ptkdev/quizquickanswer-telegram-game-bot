@@ -46,11 +46,7 @@ const add = async (settings: SettingsInterface): Promise<void> => {
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
-		await query.findOneAndDelete(search, function (error: string) {
-			if (error) {
-				logger.error(error || "");
-			}
-		});
+		await query.findOneAndDelete(search);
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:remove()");
 	}
@@ -69,11 +65,7 @@ const update = async (
 	settings: SettingsInterface,
 ): Promise<void> => {
 	try {
-		await query.findOneAndUpdate(search, settings, function (error: string) {
-			if (error) {
-				logger.error(error || "");
-			}
-		});
+		await query.findOneAndUpdate(search, settings);
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "settings.ts:update()");
 	}

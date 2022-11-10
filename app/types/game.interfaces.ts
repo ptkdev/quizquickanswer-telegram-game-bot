@@ -14,7 +14,7 @@ import type { MasterInterface } from "@app/types/master.interfaces";
  * GameInterface
  * =====================
  *
- * @interface [GameInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/types/game.type.ts)
+ * @interface [GameInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/types/game.interfaces.ts)
  *
  * @param { string } question - game question
  * @param { string } description - game tip

@@ -23,6 +23,7 @@ const schema = new Schema<MasterInterface>({
 	question: { type: String, default: "" },
 	description: { type: String, default: "" },
 	pin_id: { type: Number, default: 0 },
+	message_thread_id: { type: Number, default: 0 },
 });
 
 const query = model<MasterInterface>("Master", schema, "master");
@@ -52,11 +53,7 @@ const add = async (user: MasterInterface): Promise<void> => {
  */
 const remove = async (search: Record<string, number | string | boolean>): Promise<void> => {
 	try {
-		await query.findOneAndDelete(search, function (error: string) {
-			if (error) {
-				logger.error(error || "");
-			}
-		});
+		await query.findOneAndDelete(search);
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "master.ts:remove()");
 	}
@@ -72,11 +69,7 @@ const remove = async (search: Record<string, number | string | boolean>): Promis
  */
 const update = async (search: Record<string, number | string | boolean>, user: MasterInterface): Promise<void> => {
 	try {
-		await query.findOneAndUpdate(search, user, function (error: string) {
-			if (error) {
-				logger.error(error || "");
-			}
-		});
+		await query.findOneAndUpdate(search, user);
 	} catch (error: unknown) {
 		logger.error(JSON.stringify(error || ""), "master.ts:update()");
 	}
