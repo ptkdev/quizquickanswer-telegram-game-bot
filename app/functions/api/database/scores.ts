@@ -22,6 +22,9 @@ const schema = new Schema<MasterInterface>({
 	group_id: { type: Number, default: 0 },
 	score_2021: { type: Number, default: 0 },
 	score_2022: { type: Number, default: 0 },
+	score_2023: { type: Number, default: 0 },
+	score_2024: { type: Number, default: 0 },
+	score_2025: { type: Number, default: 0 },
 });
 
 const query = model<MasterInterface>("Scores", schema, "scores");

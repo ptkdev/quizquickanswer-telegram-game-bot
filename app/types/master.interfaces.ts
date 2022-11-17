@@ -110,6 +110,9 @@ export interface MasterInterface {
 	 */
 	score_2021: number;
 	score_2022: number;
+	score_2023: number;
+	score_2024: number;
+	score_2025: number;
 	/**
 	 * Master Interface
 	 * =====================
