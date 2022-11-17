@@ -39,8 +39,10 @@ const topYearly = async (): Promise<void> => {
 					});
 
 					if (user_questions) {
-						s[`score_${year}`] +=
-							(user_questions[`upvotes_${year}`] || 0) - (user_questions[`downvotes_${year}`] || 0) || 0;
+						s[`score_${year}`] =
+							s[`score_${year}`] +
+							user_questions[`upvotes_${year}`] -
+							user_questions[`downvotes_${year}`];
 					}
 					return s;
 				}),

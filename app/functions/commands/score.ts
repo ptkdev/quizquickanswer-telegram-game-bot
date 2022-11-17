@@ -45,9 +45,10 @@ const score = async (): Promise<void> => {
 				});
 
 				if (user_questions) {
-					score[`score_${new Date().getFullYear()}`] +=
-						(user_questions[`upvotes_${new Date().getFullYear()}`] || 0) -
-						(user_questions[`downvotes_${new Date().getFullYear()}`] || 0);
+					score[`score_${new Date().getFullYear()}`] =
+						score[`score_${new Date().getFullYear()}`] +
+						user_questions[`upvotes_${new Date().getFullYear()}`] -
+						user_questions[`downvotes_${new Date().getFullYear()}`];
 				}
 
 				await telegram.api.message.send(
@@ -73,13 +74,14 @@ const score = async (): Promise<void> => {
 				});
 				const user_questions: QuestionsInterface = await db.questions.get({
 					group_id: telegram.api.message.getChatID(ctx),
-					user_id: telegram.api.message.getUserID(ctx),
+					user_id: score.id,
 				});
 
 				if (user_questions) {
-					score[`score_${new Date().getFullYear()}`] +=
-						(user_questions[`upvotes_${new Date().getFullYear()}`] || 0) -
-						(user_questions[`downvotes_${new Date().getFullYear()}`] || 0);
+					score[`score_${new Date().getFullYear()}`] =
+						score[`score_${new Date().getFullYear()}`] +
+						user_questions[`upvotes_${new Date().getFullYear()}`] -
+						user_questions[`downvotes_${new Date().getFullYear()}`];
 				}
 
 				await telegram.api.message.send(

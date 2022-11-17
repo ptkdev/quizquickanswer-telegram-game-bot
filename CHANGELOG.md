@@ -1,6 +1,7 @@
 # v0.7.5 (November 18, 2022)
 
 -   New: vote buttons in win message
+-   Fix: `/score @nickname`
 
 <!-- all-shields/sponsors-badges:START -->
 
