@@ -16,15 +16,11 @@ import translate from "@translations/translate";
 import type { MasterInterface } from "@app/types/master.interfaces";
 import type { QuestionsInterface } from "@app/types/question.interfaces";
 
-const vote = async (ctx, type): Promise<void> => {
+const vote = async (ctx, type, user_id): Promise<void> => {
 	const lang = await telegram.api.message.getLanguage(ctx);
 
 	if (telegram.api.message.getChatID(ctx) < 0) {
 		// is group chat
-
-		const { id: user_id }: MasterInterface = await db.master.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
 
 		const voter_user_id = telegram.api.message.getUserIDFromAction(ctx);
 		const message_id = telegram.api.message.getMessageIDFromAction(ctx);
@@ -88,8 +84,8 @@ const vote = async (ctx, type): Promise<void> => {
 				await db.questions.update({ group_id, user_id }, user_questions);
 
 				const buttons = new InlineKeyboard();
-				buttons.text(`👍 ${user_questions?.voters?.users?.upvotes?.length || 0} `, "upvote");
-				buttons.text(`👎 ${user_questions?.voters?.users?.downvotes?.length || 0} `, "downvote");
+				buttons.text(`👍 ${user_questions?.voters?.users?.upvotes?.length || 0} `, `upvote ${user_id}`);
+				buttons.text(`👎 ${user_questions?.voters?.users?.downvotes?.length || 0} `, `downvote ${user_id}`);
 
 				await telegram.api.message.editMessageReplyMarkup(ctx, {
 					reply_markup: buttons,
@@ -113,8 +109,8 @@ const vote = async (ctx, type): Promise<void> => {
 				await db.questions.add(json);
 
 				const buttons = new InlineKeyboard();
-				buttons.text(`👍 ${is_upvote ? 1 : 0} `, "upvote");
-				buttons.text(`👎 ${is_upvote ? 0 : 1}`, "downvote");
+				buttons.text(`👍 ${is_upvote ? 1 : 0} `, `upvote ${user_id}`);
+				buttons.text(`👎 ${is_upvote ? 0 : 1}`, `downvote ${user_id}`);
 
 				await telegram.api.message.editMessageReplyMarkup(ctx, {
 					reply_markup: buttons,
