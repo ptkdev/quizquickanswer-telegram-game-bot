@@ -132,8 +132,8 @@ const hears = async (): Promise<void> => {
 					});
 
 					const buttons = new InlineKeyboard();
-					buttons.text(`👍 0`, "upvote");
-					buttons.text(`👎 0`, "downvote");
+					buttons.text(`👍 0`, `upvote ${master.id}`);
+					buttons.text(`👎 0`, `downvote ${master.id}`);
 
 					const win_message = await telegram.api.message.send(
 						ctx,
@@ -220,11 +220,16 @@ const hears = async (): Promise<void> => {
 		}
 	});
 
-	bot.callbackQuery("upvote", async (ctx) => {
-		await vote(ctx, "upvote");
+	bot.callbackQuery(/upvote (.*)/, async (ctx) => {
+		const match: any = ctx.match;
+
+		await vote(ctx, "upvote", match.input.replace("upvote ", ""));
 	});
-	bot.callbackQuery("downvote", async (ctx) => {
-		await vote(ctx, "downvote");
+
+	bot.callbackQuery(/downvote (.*)/, async (ctx) => {
+		const match: any = ctx.match;
+
+		await vote(ctx, "downvote", match.input.replace("downvote ", ""));
 	});
 };
 

@@ -136,13 +136,6 @@ const hearsPhoto = async (): Promise<void> => {
 			}
 		}
 	});
-
-	bot.callbackQuery("upvote", async (ctx) => {
-		await vote(ctx, "upvote");
-	});
-	bot.callbackQuery("downvote", async (ctx) => {
-		await vote(ctx, "downvote");
-	});
 };
 
 export { hearsPhoto };

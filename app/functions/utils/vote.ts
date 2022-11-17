@@ -16,15 +16,11 @@ import translate from "@translations/translate";
 import type { MasterInterface } from "@app/types/master.interfaces";
 import type { QuestionsInterface } from "@app/types/question.interfaces";
 
-const vote = async (ctx, type): Promise<void> => {
+const vote = async (ctx, type, user_id): Promise<void> => {
 	const lang = await telegram.api.message.getLanguage(ctx);
 
 	if (telegram.api.message.getChatID(ctx) < 0) {
 		// is group chat
-
-		const { id: user_id }: MasterInterface = await db.master.get({
-			group_id: telegram.api.message.getChatID(ctx),
-		});
 
 		const voter_user_id = telegram.api.message.getUserIDFromAction(ctx);
 		const message_id = telegram.api.message.getMessageIDFromAction(ctx);
