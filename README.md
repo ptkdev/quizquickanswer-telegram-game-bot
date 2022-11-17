@@ -2,7 +2,7 @@
 
 <!-- all-shields/header-badges:START -->
 
-[![v0.7.4-beta.1](https://img.shields.io/badge/version-v0.7.4--beta.1-lightgray.svg?style=flat&logo=)](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/@ptkdev/quizquickanswer-telegram-game-bot?color=CC3534&logo=npm)](https://www.npmjs.com/package/@ptkdev/quizquickanswer-telegram-game-bot) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/LICENSE.md) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![Framework: Grammy](https://img.shields.io/badge/powered%20by-grammy-009dca.svg?style=flat&logo=telegram)](https://grammy.dev/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
+[![v0.7.5-nightly.0](https://img.shields.io/badge/version-v0.7.5--nightly.0-lightgray.svg?style=flat&logo=)](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/CHANGELOG.md) [![](https://img.shields.io/npm/v/@ptkdev/quizquickanswer-telegram-game-bot?color=CC3534&logo=npm)](https://www.npmjs.com/package/@ptkdev/quizquickanswer-telegram-game-bot) [![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat&logo=license)](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/LICENSE.md) [![Language: TypeScript](https://img.shields.io/badge/language-typescript-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![Framework: Grammy](https://img.shields.io/badge/powered%20by-grammy-009dca.svg?style=flat&logo=telegram)](https://grammy.dev/) [![ECMAScript: 2019](https://img.shields.io/badge/ES-9-F7DF1E.svg?style=flat&logo=javascript)](https://github.com/tc39/ecma262) [![Discord Server](https://discordapp.com/api/guilds/383373985666301975/embed.png)](https://discord.ptkdev.io)
 
 <!-- all-shields/header-badges:END -->
 
@@ -50,14 +50,14 @@ Funny quiz game, play with friends on your telegram group!
 1. Add [@QuizQuickAnswerBot](https://t.me/QuizQuickAnswerBot) to your Telegram group
 2. Make **@QuizQuickAnswerBot** admin of your group
 3. Run `/start` or `/start@QuizQuickAnswerBot`
-4. Make yourself master of game, run `/master @YOUR_NICKNAME`
+4. Make yourself master of game, run `/master @nickname`
 5. Follow instructions and Play with friends!
 
 ## 🎮 How to play
 
-1. Set a master with `/master @YOUR_NICKNAME`
+1. Set a master with `/master @nickname`
 2. Master send private message to [@QuizQuickAnswerBot](https://t.me/QuizQuickAnswerBot)
-3. Master write question with syntax: `QUESTION - TIP`, example: `gameboy - '90s' portable console`
+3. Master write question with syntax: `QUESTION ## TIP`, example: `gameboy ## '90s' portable console`
 4. Friends try to answer quickly in the telegram group. Who reply with right answer is the new master!
 
 ## ⏱ Official Group

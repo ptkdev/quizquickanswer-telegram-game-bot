@@ -139,6 +139,16 @@ export interface MasterInterface {
 	 *
 	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
+	 * @param { number } win_message_id - id of win message
+	 *
+	 */
+	win_message_id: number;
+	/**
+	 * Master Interface
+	 * =====================
+	 *
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
+	 *
 	 * @param { number } message_thread_id - thread id if group is a topic
 	 *
 	 */
