@@ -58,6 +58,10 @@ const hearsPhoto = async (): Promise<void> => {
 							translate(lang.language, "hears_missing_tip"),
 						);
 					} else {
+						if (master?.pin_id > 0) {
+							await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);
+						}
+
 						await db.master.update({ username: telegram.api.message.getUsername(ctx) }, json);
 
 						const master_in_multi_groups = await db.master.getMultiple({
