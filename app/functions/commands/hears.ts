@@ -142,7 +142,8 @@ const hears = async (): Promise<void> => {
 							first_name: telegram.api.message.getUserFirstName(ctx),
 							username: telegram.api.message.getUsername(ctx),
 							bot_username: telegram.api.bot.getUsername(ctx),
-							answer: telegram.api.message.getText(ctx),
+							answer: master.question,
+							tip: master.description,
 							score: user_questions
 								? (user_score?.[`score_${new Date().getFullYear()}`] || 0) +
 								  10 +

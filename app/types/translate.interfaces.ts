@@ -17,5 +17,6 @@ export interface TranslateParamsInterface {
 	master_username?: string;
 	emoji?: string;
 	answer?: string;
+	tip?: string;
 	score?: number;
 }
