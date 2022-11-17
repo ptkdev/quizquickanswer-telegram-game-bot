@@ -27,6 +27,8 @@ const master = async (): Promise<void> => {
 		logger.info("command: /master", "master.ts:master()");
 		const lang = await telegram.api.message.getLanguage(ctx);
 
+		const username = telegram.api.message.getText(ctx).replace("/master ", "").replace("@", "").trim();
+
 		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
 			if (
@@ -38,9 +40,13 @@ const master = async (): Promise<void> => {
 					telegram.api.message.getChatID(ctx),
 					translate(lang.language, "master_command_empty"),
 				);
+			} else if (username === "off") {
+				await telegram.api.message.send(
+					ctx,
+					telegram.api.message.getChatID(ctx),
+					translate(lang.language, "master_off"),
+				);
 			} else {
-				const username = telegram.api.message.getText(ctx).replace("/master ", "").replace("@", "").trim();
-
 				const json = {
 					id: "0",
 					is_bot: false,
@@ -51,6 +57,9 @@ const master = async (): Promise<void> => {
 					description: "",
 					score_2021: 0,
 					score_2022: 0,
+					score_2023: 0,
+					score_2024: 0,
+					score_2025: 0,
 					pin_id: 0,
 					group_id: telegram.api.message.getChatID(ctx),
 					message_thread_id: telegram.api.message.getThreadID(ctx),
@@ -59,6 +68,11 @@ const master = async (): Promise<void> => {
 				const master: MasterInterface = await db.master.get({
 					group_id: telegram.api.message.getChatID(ctx),
 				});
+
+				if (master?.pin_id > 0) {
+					await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);
+				}
+
 				logger.debug(`master:${JSON.stringify(master)}`);
 				if (master.group_id < 0) {
 					await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
