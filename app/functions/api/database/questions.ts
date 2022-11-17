@@ -20,6 +20,12 @@ const schema = new Schema<QuestionsInterface>({
 	downvotes_2021: { type: Number, default: 0 },
 	upvotes_2022: { type: Number, default: 0 },
 	downvotes_2022: { type: Number, default: 0 },
+	upvotes_2023: { type: Number, default: 0 },
+	downvotes_2023: { type: Number, default: 0 },
+	upvotes_2024: { type: Number, default: 0 },
+	downvotes_2024: { type: Number, default: 0 },
+	upvotes_2025: { type: Number, default: 0 },
+	downvotes_2025: { type: Number, default: 0 },
 	voters: { type: Object, default: { message_id: 0, users: { upvotes: [], downvotes: [] } } },
 });
 

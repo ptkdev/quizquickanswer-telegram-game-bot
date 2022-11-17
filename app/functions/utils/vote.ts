@@ -30,14 +30,14 @@ const vote = async (ctx, type): Promise<void> => {
 		const message_id = telegram.api.message.getMessageIDFromAction(ctx);
 
 		// If it's a self vote (Comment this part for debugging)
-		if (user_id === voter_user_id) {
+		/* if (user_id === voter_user_id) {
 			await telegram.api.message.send(
 				ctx,
 				telegram.api.message.getChatID(ctx),
 				translate(lang.language, "goodquestion_not_autovote"),
 			);
 			return;
-		}
+		}*/
 
 		if (user_id && user_id !== "") {
 			const group_id = telegram.api.message.getChatID(ctx);

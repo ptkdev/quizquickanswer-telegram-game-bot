@@ -60,6 +60,10 @@ const hears = async (): Promise<void> => {
 						translate(lang.language, "hears_missing_tip"),
 					);
 				} else {
+					if (master?.win_message_id > 0) {
+						await telegram.api.message.removeMessageMarkup(master?.group_id, master?.win_message_id);
+					}
+
 					if (master?.pin_id > 0) {
 						await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);
 					}
@@ -71,16 +75,11 @@ const hears = async (): Promise<void> => {
 					});
 
 					master_in_multi_groups.forEach(async (master_in_group) => {
-						const buttons = new InlineKeyboard();
-						buttons.text(`👍 0`, "upvote");
-						buttons.text(`👎 0`, "downvote");
-
 						const quiz = await telegram.api.message.send(
 							ctx,
 							master_in_group?.group_id,
 							`⏱ ${json.description || ""}`,
 							{
-								reply_markup: buttons,
 								message_thread_id: master_in_group.message_thread_id,
 							},
 						);
@@ -132,7 +131,11 @@ const hears = async (): Promise<void> => {
 						user_id: telegram.api.message.getUserID(ctx),
 					});
 
-					await telegram.api.message.send(
+					const buttons = new InlineKeyboard();
+					buttons.text(`👍 0`, "upvote");
+					buttons.text(`👎 0`, "downvote");
+
+					const win_message = await telegram.api.message.send(
 						ctx,
 						master?.group_id,
 						translate(lang.language, "hears_win", {
@@ -147,16 +150,22 @@ const hears = async (): Promise<void> => {
 								  user_questions[`downvotes_${new Date().getFullYear()}`]
 								: (user_score?.[`score_${new Date().getFullYear()}`] || 0) + 10,
 						}),
+						{ reply_markup: buttons, parse_mode: "HTML" },
 					);
 
-					await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);
+					if (master?.win_message_id > 0) {
+						await telegram.api.message.removeMessageMarkup(master?.group_id, master?.win_message_id);
+					}
 
-					await telegram.api.message.removeMessageMarkup(master?.group_id, master?.pin_id);
+					if (master?.pin_id > 0) {
+						await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);
+					}
 
 					const json: MasterInterface = telegram.api.message.getFullUser(ctx);
 					json.question = "";
 					json.description = "";
 					json.group_id = telegram.api.message.getChatID(ctx);
+					json.win_message_id = win_message?.message_id || 0;
 					json.message_thread_id = telegram.api.message.getThreadID(ctx);
 
 					await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);

@@ -20,7 +20,7 @@ import type { QuestionsInterface } from "@app/types/question.interfaces";
 import logger from "@app/functions/utils/logger";
 
 const topYearly = async (): Promise<void> => {
-	bot.command(["top2021", "top2022"], async (ctx) => {
+	bot.command(["top2021", "top2022", "top2023", "top2024", "top2025"], async (ctx) => {
 		logger.info("command: /topyearly", "topYearly.ts:topyearly()");
 		const lang = await telegram.api.message.getLanguage(ctx);
 

@@ -61,6 +61,7 @@ const master = async (): Promise<void> => {
 					score_2024: 0,
 					score_2025: 0,
 					pin_id: 0,
+					win_message_id: 0,
 					group_id: telegram.api.message.getChatID(ctx),
 					message_thread_id: telegram.api.message.getThreadID(ctx),
 				};
@@ -68,6 +69,10 @@ const master = async (): Promise<void> => {
 				const master: MasterInterface = await db.master.get({
 					group_id: telegram.api.message.getChatID(ctx),
 				});
+
+				if (master?.win_message_id > 0) {
+					await telegram.api.message.removeMessageMarkup(master?.group_id, master?.win_message_id);
+				}
 
 				if (master?.pin_id > 0) {
 					await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);

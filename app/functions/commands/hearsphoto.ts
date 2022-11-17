@@ -58,6 +58,10 @@ const hearsPhoto = async (): Promise<void> => {
 							translate(lang.language, "hears_missing_tip"),
 						);
 					} else {
+						if (master?.win_message_id > 0) {
+							await telegram.api.message.removeMessageMarkup(master?.group_id, master?.win_message_id);
+						}
+
 						if (master?.pin_id > 0) {
 							await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);
 						}
@@ -75,14 +79,7 @@ const hearsPhoto = async (): Promise<void> => {
 								photo_id,
 								{
 									caption: `⏱ ${json.description || ""}`,
-									reply_markup: {
-										inline_keyboard: [
-											[
-												{ text: `👍 0`, callback_data: "upvote" },
-												{ text: `👎 0`, callback_data: "downvote" },
-											],
-										],
-									},
+
 									message_thread_id: master_in_group.message_thread_id,
 								},
 							);
@@ -102,6 +99,13 @@ const hearsPhoto = async (): Promise<void> => {
 								await db.master.remove({
 									group_id: master_in_group?.group_id,
 								});
+
+								if (master?.win_message_id > 0) {
+									await telegram.api.message.removeMessageMarkup(
+										master?.group_id,
+										master?.win_message_id,
+									);
+								}
 
 								await telegram.api.message.unpin(
 									ctx,
