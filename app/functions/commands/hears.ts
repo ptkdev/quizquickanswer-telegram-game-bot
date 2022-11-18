@@ -84,6 +84,12 @@ const hears = async (): Promise<void> => {
 							},
 						);
 
+						await telegram.api.message.send(
+							ctx,
+							telegram.api.message.getChatID(ctx),
+							translate(lang.language, "hears_question_success"),
+						);
+
 						if (quiz) {
 							await telegram.api.message.pin(ctx, master_in_group?.group_id, quiz?.message_id, {
 								disable_notification: true,
@@ -142,6 +148,7 @@ const hears = async (): Promise<void> => {
 							first_name: telegram.api.message.getUserFirstName(ctx),
 							username: telegram.api.message.getUsername(ctx),
 							bot_username: telegram.api.bot.getUsername(ctx),
+							master: master.username,
 							answer: master.question,
 							tip: master.description,
 							score: user_questions

@@ -11,6 +11,7 @@
 
 export interface TranslateParamsInterface {
 	username?: string;
+	master?: string;
 	bot_username?: string;
 	first_name?: string;
 	master_first_name?: string;

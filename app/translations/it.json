@@ -12,7 +12,7 @@
 	"hears_missing_tip": "🤬 Hai dimenticato i due hashtag. Devi mettere prima la parola che devono indovinare, due HASHTAG, e poi il suggerimento. Se stai mandando una foto inseriscila nella didascalia. Tutto in un unico messaggio, Esempio:\n\n<code>gameboy ## console anni '90</code>\n\ngameboy è la parola che devono indovinare, dopo i due HASHTAG è il suggerimento che gli dai tu (console anni '90). Riprova!",
 	"hears_missing_caption": "🤬 Hai dimenticato la caption. Devi mettere prima la parola che devono indovinare, due HASHTAG, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\n<code>gameboy ## console anni '90</code>\n\ngameboy è la parola che devono indovinare, dopo i due HASHTAG è il suggerimento che gli dai tu (console anni '90). Riprova!",
 	"hears_missing_photo_caption": "🤬 Hai dimenticato la didascalia quando hai inviato la foto. Devi mettere come didascalia prima la parola che devono indovinare, due HASHTAG, e poi il suggerimento. Tutto in un unico messaggio, Esempio:\n\n<code>gameboy ## console anni '90</code>\n\ngameboy è la parola che devono indovinare, dopo i due HASHTAG è il suggerimento che gli dai tu (console anni '90). Riprova!",
-	"hears_win": "🏆 <b>HAI VINTO</b> {{first_name}} (@{{username}})!!!\n\n❓ La domanda era: <b>{{tip}}</b>\n✍️ La risposta giusta era: <b>{{answer}}</b>\n👑 Ora sei il nuovo <b>master</b>! ⚽️ Il tuo punteggio é <b>{{score}}</b> 🔥\n\nContatta in privato @{{bot_username}} (clicca sul nickname) e segui le istruzioni.\n\nTi è piaciuta la domanda? Votala:",
+	"hears_win": "🏆 <b>HAI VINTO</b> {{first_name}} (@{{username}})!!!\n\n❓ La domanda era: <b>{{tip}}</b>\n✍️ La risposta giusta era: <b>{{answer}}</b>\n👑 Ora sei il nuovo <b>master</b>! ⚽️ Il tuo punteggio é <b>{{score}}</b> 🔥\n\nContatta in privato @{{bot_username}} (clicca sul nickname) e segui le istruzioni.\n\nTi è piaciuta la domanda di {{master}}? Votala:",
 	"hears_win_but_not_master": "🏆 HAI VINTO {{first_name}}!! Ma non puoi diventare master perchè non hai impostato un username su telegram. Vai nelle impostazioni di telegram, entra su modifica in alto e imposta un @nickname! Il master è rimasto {{master_first_name}} (@{{master_username}}).",
 	"master_command_empty": "Inserisci un nickname, ad esempio:\n\n<code>/master @ptkdev</code>",
 	"master_command_success": "Ora sei diventato master @{{username}}!\n\nContatta in privato @{{bot_username}} (clicca sul nickname) e scrivigli la parola o frase che gli altri devono indovinare, a seguire sempre nello stesso messaggio, aggiungi due HASHTAG per dare un suggerimento, esempio: \n\n<code>gameboy ## console anni '90</code>",
@@ -47,5 +47,7 @@
 	"show_command": "👨‍💻 Il master è: {{first_name}} (@{{username}})\n\n⏱ Il quiz è: <b>{{answer}}</b>",
 	"show_command_noquiz": "👨‍💻 Il master è: {{first_name}} (@{{username}})\n\n⏱ Il quiz non c'è! Daje un po'! Sbrigati a scriverlo!",
 	"top10_commands": "Le Top10 disponibili sono: \n\n/top2021\n\n/top2022\n\n/top2023",
-	"master_off": "🌙🌙🌙 Notte Time 🌙🌙🌙\n\nSi gioca 9:00-00:00 domenica-giovedì, 9:00-01:00 venerdì e sabato.\n\nA domani!"
+	"master_off": "🌙🌙🌙 Notte Time 🌙🌙🌙\n\nSi gioca 9:00-00:00 domenica-giovedì, 9:00-01:00 venerdì e sabato.\n\nA domani!",
+	"master_command_penality": "🚨 @{{username}} hai ceduto il master, verrai punito con -10 punti.",
+	"hears_question_success": "👍 Fatto, torna sul gruppo!"
 }

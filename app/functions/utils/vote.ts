@@ -13,7 +13,6 @@ import telegram from "@routes/api/telegram";
 import db from "@routes/api/database";
 import translate from "@translations/translate";
 
-import type { MasterInterface } from "@app/types/master.interfaces";
 import type { QuestionsInterface } from "@app/types/question.interfaces";
 
 const vote = async (ctx, type, user_id): Promise<void> => {

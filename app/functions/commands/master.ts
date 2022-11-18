@@ -14,6 +14,7 @@ import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 import logger from "@app/functions/utils/logger";
 
+import type { QuestionsInterface } from "@app/types/question.interfaces";
 import type { MasterInterface } from "@app/types/master.interfaces";
 
 /**
@@ -76,6 +77,29 @@ const master = async (): Promise<void> => {
 
 				if (master?.pin_id > 0) {
 					await telegram.api.message.unpin(ctx, master?.group_id, master?.pin_id);
+				}
+
+				if (master.username === telegram.api.message.getUsername(ctx)) {
+					const user_questions: QuestionsInterface = await db.questions.get({
+						group_id: telegram.api.message.getChatID(ctx),
+						user_id: telegram.api.message.getUserID(ctx),
+					});
+
+					user_questions[`downvotes_${new Date().getFullYear()}`] += 10;
+
+					await db.questions.update(
+						{ group_id: telegram.api.message.getChatID(ctx), user_id: telegram.api.message.getUserID(ctx) },
+						user_questions,
+					);
+
+					await telegram.api.message.send(
+						ctx,
+						telegram.api.message.getChatID(ctx),
+						translate(lang.language, "master_command_penality", {
+							username: master.username,
+							bot_username: telegram.api.bot.getUsername(ctx),
+						}),
+					);
 				}
 
 				logger.debug(`master:${JSON.stringify(master)}`);
