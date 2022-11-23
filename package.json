@@ -2,7 +2,7 @@
 	"name": "@ptkdev/quizquickanswer-telegram-game-bot",
 	"displayName": "Quiz Quick Answer Bot",
 	"description": "Funny quiz game for telegram groups",
-	"version": "0.7.6-nightly.6",
+	"version": "0.7.6-nightly.7",
 	"main": "dist/core/bot.js",
 	"publishConfig": {
 		"access": "public"
@@ -80,7 +80,7 @@
 		"json": "^11.0.0",
 		"markserv": "^1.17.4",
 		"nodemon": "^2.0.20",
-		"prettier": "^2.7.1",
+		"prettier": "^2.8.0",
 		"shelljs": "^0.8.5",
 		"ts-jest": "^29.0.3",
 		"ts-node": "^10.9.1",
