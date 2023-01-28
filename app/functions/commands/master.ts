@@ -85,7 +85,7 @@ const master = async (): Promise<void> => {
 						user_id: telegram.api.message.getUserID(ctx),
 					});
 
-					user_questions[`downvotes_${new Date().getFullYear()}`] += 10;
+					user_questions[`downvotes_${new Date().getFullYear()}`] += 15;
 
 					await db.questions.update(
 						{ group_id: telegram.api.message.getChatID(ctx), user_id: telegram.api.message.getUserID(ctx) },

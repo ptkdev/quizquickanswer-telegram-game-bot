@@ -51,6 +51,6 @@
 	"show_command_noquiz": "👨‍💻 The master is: {{first_name}} (@{{username}})\n\n⏱ The quiz is not avaiable! Hurry up to write it!",
 	"top10_commands": "The top10 available are: \n\n/top2021\n\n/top2022\n\n/top2023",
 	"master_off": "🌙🌙🌙 Night mode 🌙🌙🌙\n\nWe play 9:00-12:00 Sunday-Thursday, 9:00-1:00 Friday and Saturday.\n\nSee you tomorrow!",
-	"master_command_penality": "🚨 @{{username}} you gave up the master, you will be punished with -10 points.",
+	"master_command_penality": "🚨 @{{username}} you gave up the master, you will be punished with -15 points.",
 	"hears_question_success": "👍 Done, come back to the group!"
 }
