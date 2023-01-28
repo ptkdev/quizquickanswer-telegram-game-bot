@@ -5,6 +5,8 @@ import groups from "@app/functions/commands/groups";
 import ping from "@app/functions/commands/ping";
 import show from "@app/functions/commands/show";
 import top10 from "@app/functions/commands/top10";
+import topDaily from "@app/functions/commands/top_daily";
+import topMonthly from "@app/functions/commands/top_monthly";
 import topYearly from "@app/functions/commands/top_yearly";
 import launch from "@app/functions/commands/launch";
 import hears from "@app/functions/commands/hears";
@@ -21,6 +23,8 @@ const commands = {
 	ping,
 	show,
 	top10,
+	topDaily,
+	topMonthly,
 	topYearly,
 	launch,
 	hears,
@@ -38,6 +42,8 @@ export {
 	ping,
 	show,
 	top10,
+	topDaily,
+	topMonthly,
 	topYearly,
 	launch,
 	hears,

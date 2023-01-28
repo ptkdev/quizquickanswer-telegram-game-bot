@@ -180,6 +180,8 @@ const hears = async (): Promise<void> => {
 
 					if (user_score.group_id < 0) {
 						user_score[`score_${new Date().getFullYear()}`] += 10;
+						user_score[`score_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] += 10;
+						user_score[`score_daily`] += 10;
 						await db.scores.update(
 							{
 								group_id: telegram.api.message.getChatID(ctx),
@@ -190,6 +192,8 @@ const hears = async (): Promise<void> => {
 					} else {
 						const json_score: MasterInterface = telegram.api.message.getFullUser(ctx);
 						json_score[`score_${new Date().getFullYear()}`] = 10;
+						json_score[`score_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] += 10;
+						json_score[`score_daily`] += 10;
 						await db.scores.add(json_score);
 					}
 				} else {

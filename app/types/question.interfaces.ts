@@ -47,8 +47,48 @@ export interface QuestionsInterface {
 	 * @param { string } upvotes - user good questions count
 	 *
 	 */
+	upvotes_daily: number;
 	upvotes_2021?: number;
 	upvotes_2022?: number;
+	upvotes_2023?: number;
+	upvotes_1_2023?: number;
+	upvotes_2_2023?: number;
+	upvotes_3_2023?: number;
+	upvotes_4_2023?: number;
+	upvotes_5_2023?: number;
+	upvotes_6_2023?: number;
+	upvotes_7_2023?: number;
+	upvotes_8_2023?: number;
+	upvotes_9_2023?: number;
+	upvotes_10_2023?: number;
+	upvotes_11_2023?: number;
+	upvotes_12_2023?: number;
+	upvotes_2024?: number;
+	upvotes_1_2024?: number;
+	upvotes_2_2024?: number;
+	upvotes_3_2024?: number;
+	upvotes_4_2024?: number;
+	upvotes_5_2024?: number;
+	upvotes_6_2024?: number;
+	upvotes_7_2024?: number;
+	upvotes_8_2024?: number;
+	upvotes_9_2024?: number;
+	upvotes_10_2024?: number;
+	upvotes_11_2024?: number;
+	upvotes_12_2024?: number;
+	upvotes_2025?: number;
+	upvotes_1_2025?: number;
+	upvotes_2_2025?: number;
+	upvotes_3_2025?: number;
+	upvotes_4_2025?: number;
+	upvotes_5_2025?: number;
+	upvotes_6_2025?: number;
+	upvotes_7_2025?: number;
+	upvotes_8_2025?: number;
+	upvotes_9_2025?: number;
+	upvotes_10_2025?: number;
+	upvotes_11_2025?: number;
+	upvotes_12_2025?: number;
 	/**
 	 * Questions Interface
 	 * =====================
@@ -58,8 +98,48 @@ export interface QuestionsInterface {
 	 * @param { number } downvotes - user bad questions count
 	 *
 	 */
+	downvotes_daily: number;
 	downvotes_2021?: number;
 	downvotes_2022?: number;
+	downvotes_2023?: number;
+	downvotes_1_2023?: number;
+	downvotes_2_2023?: number;
+	downvotes_3_2023?: number;
+	downvotes_4_2023?: number;
+	downvotes_5_2023?: number;
+	downvotes_6_2023?: number;
+	downvotes_7_2023?: number;
+	downvotes_8_2023?: number;
+	downvotes_9_2023?: number;
+	downvotes_10_2023?: number;
+	downvotes_11_2023?: number;
+	downvotes_12_2023?: number;
+	downvotes_2024?: number;
+	downvotes_1_2024?: number;
+	downvotes_2_2024?: number;
+	downvotes_3_2024?: number;
+	downvotes_4_2024?: number;
+	downvotes_5_2024?: number;
+	downvotes_6_2024?: number;
+	downvotes_7_2024?: number;
+	downvotes_8_2024?: number;
+	downvotes_9_2024?: number;
+	downvotes_10_2024?: number;
+	downvotes_11_2024?: number;
+	downvotes_12_2024?: number;
+	downvotes_2025?: number;
+	downvotes_1_2025?: number;
+	downvotes_2_2025?: number;
+	downvotes_3_2025?: number;
+	downvotes_4_2025?: number;
+	downvotes_5_2025?: number;
+	downvotes_6_2025?: number;
+	downvotes_7_2025?: number;
+	downvotes_8_2025?: number;
+	downvotes_9_2025?: number;
+	downvotes_10_2025?: number;
+	downvotes_11_2025?: number;
+	downvotes_12_2025?: number;
 	/**
 	 * Questions Interface
 	 * =====================
