@@ -108,11 +108,48 @@ export interface MasterInterface {
 	 * @param { number } score - user current score
 	 *
 	 */
+	score_daily: number;
 	score_2021: number;
 	score_2022: number;
 	score_2023: number;
+	score_1_2023: number;
+	score_2_2023: number;
+	score_3_2023: number;
+	score_4_2023: number;
+	score_5_2023: number;
+	score_6_2023: number;
+	score_7_2023: number;
+	score_8_2023: number;
+	score_9_2023: number;
+	score_10_2023: number;
+	score_11_2023: number;
+	score_12_2023: number;
 	score_2024: number;
+	score_1_2024: number;
+	score_2_2024: number;
+	score_3_2024: number;
+	score_4_2024: number;
+	score_5_2024: number;
+	score_6_2024: number;
+	score_7_2024: number;
+	score_8_2024: number;
+	score_9_2024: number;
+	score_10_2024: number;
+	score_11_2024: number;
+	score_12_2024: number;
 	score_2025: number;
+	score_1_2025: number;
+	score_2_2025: number;
+	score_3_2025: number;
+	score_4_2025: number;
+	score_5_2025: number;
+	score_6_2025: number;
+	score_7_2025: number;
+	score_8_2025: number;
+	score_9_2025: number;
+	score_10_2025: number;
+	score_11_2025: number;
+	score_12_2025: number;
 	/**
 	 * Master Interface
 	 * =====================

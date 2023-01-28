@@ -52,6 +52,8 @@ const getFullUser = (ctx: Context): MasterInterface => {
 	from.question = "";
 	from.description = "";
 	from[`score_${new Date().getFullYear()}`] = 0;
+	from[`score_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] = 0;
+	from[`score_daily`] = 0;
 	from.pin_id = 0;
 
 	return from;
@@ -214,6 +216,16 @@ const unpin = async (ctx: Context, group_id: number, message_id: number, options
 	}
 };
 
+const getDate = (gmt = 60): Date => {
+	function addMinutes(date, min) {
+		date.setMinutes(date.getMinutes() + min);
+
+		return date;
+	}
+
+	return new Date(addMinutes(new Date(), gmt));
+};
+
 export {
 	getFullUser,
 	getUsername,
@@ -236,6 +248,7 @@ export {
 	getMessageIDFromAction,
 	removeMessageMarkup,
 	editMessageReplyMarkup,
+	getDate,
 };
 export default {
 	getFullUser,
@@ -259,4 +272,5 @@ export default {
 	getMessageIDFromAction,
 	removeMessageMarkup,
 	editMessageReplyMarkup,
+	getDate,
 };

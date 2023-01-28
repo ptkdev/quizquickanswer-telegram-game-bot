@@ -46,7 +46,7 @@
 	"ping_command": "🎮 Venite a giocare! ⏱ La partita sta per iniziare!",
 	"show_command": "👨‍💻 Il master è: {{first_name}} (@{{username}})\n\n⏱ Il quiz è: <b>{{answer}}</b>",
 	"show_command_noquiz": "👨‍💻 Il master è: {{first_name}} (@{{username}})\n\n⏱ Il quiz non c'è! Daje un po'! Sbrigati a scriverlo!",
-	"top10_commands": "Le Top10 disponibili sono: \n\n/top2021\n\n/top2022\n\n/top2023",
+	"top10_commands": "Le Top10 disponibili sono: \n\n/top10daily\n\n/top10monthly\n\n/top2021\n\n/top2022\n\n/top2023",
 	"master_off": "🌙🌙🌙 Notte Time 🌙🌙🌙\n\nSi gioca 9:00-00:00 domenica-giovedì, 9:00-01:00 venerdì e sabato.\n\nA domani!",
 	"master_command_penality": "🚨 @{{username}} hai ceduto il master, verrai punito con -10 punti.",
 	"hears_question_success": "👍 Fatto, torna sul gruppo!"
