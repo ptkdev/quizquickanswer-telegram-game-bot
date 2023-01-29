@@ -44,10 +44,7 @@ export interface QuestionsInterface {
 	 *
 	 * @interface [QuestionsUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
-	 * @param { string } upvotes - user good questions count
-	 *
 	 */
-	upvotes_daily: number;
 	upvotes_2021?: number;
 	upvotes_2022?: number;
 	upvotes_2023?: number;
@@ -95,10 +92,8 @@ export interface QuestionsInterface {
 	 *
 	 * @interface [QuestionsUserInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
-	 * @param { number } downvotes - user bad questions count
 	 *
 	 */
-	downvotes_daily: number;
 	downvotes_2021?: number;
 	downvotes_2022?: number;
 	downvotes_2023?: number;

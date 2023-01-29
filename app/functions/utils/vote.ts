@@ -25,14 +25,14 @@ const vote = async (ctx, type, user_id): Promise<void> => {
 		const message_id = telegram.api.message.getMessageIDFromAction(ctx);
 
 		// If it's a self vote (Comment this part for debugging)
-		if (user_id === voter_user_id) {
+		/* if (user_id === voter_user_id) {
 			await telegram.api.message.send(
 				ctx,
 				telegram.api.message.getChatID(ctx),
 				translate(lang.language, "goodquestion_not_autovote"),
 			);
 			return;
-		}
+		}*/
 
 		if (user_id && user_id !== "") {
 			const group_id = telegram.api.message.getChatID(ctx);
@@ -60,8 +60,10 @@ const vote = async (ctx, type, user_id): Promise<void> => {
 
 				if (is_upvote) {
 					user_questions[`upvotes_${new Date().getFullYear()}`] += 1;
+					user_questions[`upvotes_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] += 1;
 				} else {
 					user_questions[`downvotes_${new Date().getFullYear()}`] += 1;
+					user_questions[`downvotes_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] += 1;
 				}
 				user_questions.voters = {
 					message_id,
@@ -92,7 +94,6 @@ const vote = async (ctx, type, user_id): Promise<void> => {
 			} else {
 				const json = {
 					user_id,
-
 					group_id: group_id,
 					voters: {
 						message_id,
@@ -105,6 +106,8 @@ const vote = async (ctx, type, user_id): Promise<void> => {
 
 				json[`upvotes_${new Date().getFullYear()}`] = is_upvote ? 1 : 0;
 				json[`downvotes_${new Date().getFullYear()}`] = is_upvote ? 0 : 1;
+				json[`upvotes_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] = is_upvote ? 1 : 0;
+				json[`downvotes_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] = is_upvote ? 0 : 1;
 				await db.questions.add(json);
 
 				const buttons = new InlineKeyboard();

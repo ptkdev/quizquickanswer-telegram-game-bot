@@ -16,8 +16,6 @@ import type { QuestionsInterface } from "@app/types/question.interfaces";
 const schema = new Schema<QuestionsInterface>({
 	user_id: { type: String, default: 0 },
 	group_id: { type: Number, default: 0 },
-	upvotes_daily: { type: Number, default: 0 },
-	downvotes_daily: { type: Number, default: 0 },
 	upvotes_2021: { type: Number, default: 0 },
 	downvotes_2021: { type: Number, default: 0 },
 	upvotes_2022: { type: Number, default: 0 },

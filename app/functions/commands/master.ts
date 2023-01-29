@@ -56,7 +56,6 @@ const master = async (): Promise<void> => {
 					language_code: "",
 					question: "",
 					description: "",
-					score_daily: 0,
 					score_2021: 0,
 					score_2022: 0,
 					score_2023: 0,
@@ -123,6 +122,7 @@ const master = async (): Promise<void> => {
 					});
 
 					user_questions[`downvotes_${new Date().getFullYear()}`] += 15;
+					user_questions[`downvotes_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] += 15;
 
 					await db.questions.update(
 						{ group_id: telegram.api.message.getChatID(ctx), user_id: telegram.api.message.getUserID(ctx) },

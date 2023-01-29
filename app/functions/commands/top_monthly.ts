@@ -29,7 +29,7 @@ const topMonthly = async (): Promise<void> => {
 			const top_scores: MasterInterface[] = await db.scores.getMultiple({
 				group_id: telegram.api.message.getChatID(ctx),
 			});
-			const year = ctx?.update?.message?.text?.substring(4, 8) || 2022;
+			const year = new Date().getFullYear();
 			const month = new Date().getMonth() + 1;
 
 			let mapped_scores: MasterInterface[] = await Promise.all(
@@ -39,11 +39,16 @@ const topMonthly = async (): Promise<void> => {
 						user_id: s?.id || "",
 					});
 
+					console.log(user_questions);
+
 					if (user_questions) {
 						s[`score_${month}_${year}`] =
 							s[`score_${month}_${year}`] +
 							user_questions[`upvotes_${month}_${year}`] -
 							user_questions[`downvotes_${month}_${year}`];
+						console.log(s[`score_${month}_${year}`]);
+						console.log(user_questions[`upvotes_${month}_${year}`]);
+						console.log(user_questions[`downvotes_${month}_${year}`]);
 					}
 					return s;
 				}),
