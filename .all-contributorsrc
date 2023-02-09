@@ -41,6 +41,17 @@
 			"contributions": [
 				"translation"
 			]
+		},
+		{
+			"login": "ImAl3x03",
+			"name": "Alessandro Di Maria",
+			"avatar_url": "",
+			"profile": "https://instagram.com/i.m_al3x",
+			"contributions": [
+				"code",
+				"bug",
+				"translation"
+			]
 		}
 	],
 	"contributorsPerLine": 6,
