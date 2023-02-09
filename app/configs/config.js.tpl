@@ -1,4 +1,8 @@
-module.exports = {
+import { config } from "dotenv";
+
+config();
+
+export default {
 	telegram: {
 		// from @botfather on telegram
 		token: process.env.BOT_TOKEN || "1234:asdfghjkl",
