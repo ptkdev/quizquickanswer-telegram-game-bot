@@ -49,5 +49,6 @@
 	"top10_commands": "Le Top10 disponibili sono: \n\n/top10monthly\n\n/top2021\n\n/top2022\n\n/top2023",
 	"master_off": "🌙🌙🌙 Notte Time 🌙🌙🌙\n\nSi gioca 9:00-00:00 domenica-giovedì, 9:00-01:00 venerdì e sabato.\n\nA domani!",
 	"master_command_penality": "🚨 @{{username}} hai ceduto il master, verrai punito con -15 punti.",
-	"hears_question_success": "👍 Fatto, torna sul gruppo!"
+	"hears_question_success": "👍 Fatto, torna sul gruppo!",
+	"not_authorized": "⛔️ @{{username}} non sei autorizzato a cambiare il master\n\nPer favore contatta un amministratore del gruppo"
 }

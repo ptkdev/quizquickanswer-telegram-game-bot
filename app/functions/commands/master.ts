@@ -4,6 +4,7 @@
  *
  * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
  *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ * 				  Alessandro Di Maria [@ImAl3x03] (https://github.com/ImAl3x03)
  *
  * @license: MIT License
  *
@@ -139,7 +140,27 @@ const master = async (): Promise<void> => {
 					);
 				}
 
+				const memberId = Number(telegram.api.message.getUserID(ctx));
+
+				const { user, status } = await ctx.getChatMember(memberId);
+
 				logger.debug(`master:${JSON.stringify(master)}`);
+
+				// Just checking if the user whose lauunching the command is an admin of the group or the current master
+				if (status !== "creator" && status !== "administrator" && user?.username !== master?.username) {
+					logger.error(`${user.username} wasn't authorized to change the master`);
+
+					await telegram.api.message.send(
+						ctx,
+						telegram.api.message.getChatID(ctx),
+						translate(lang.language, "not_authorized", {
+							username: username,
+						}),
+					);
+
+					return;
+				}
+
 				if (master.group_id < 0) {
 					await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
 				} else {
