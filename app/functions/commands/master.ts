@@ -156,7 +156,7 @@ const master = async (): Promise<void> => {
 						ctx,
 						telegram.api.message.getChatID(ctx),
 						translate(lang.language, "not_authorized", {
-							username: username,
+							username: user.username,
 						}),
 					);
 
