@@ -123,6 +123,14 @@ const hears = async (): Promise<void> => {
 				group_id: telegram.api.message.getChatID(ctx),
 			});
 
+			const username = telegram.api.message.getUsername(ctx);
+
+			if (master.username === username) {
+				return;
+			}
+
+			logger.debug(`Username ${username}`);
+
 			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master?.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
 					const user_score: MasterInterface = await db.scores.get({
