@@ -56,7 +56,7 @@ const master = async (): Promise<void> => {
 					username: username,
 					language_code: "",
 					question: "",
-					description: "",
+					description: [] as Array<string>,
 					score_2021: 0,
 					score_2022: 0,
 					score_2023: 0,
@@ -102,6 +102,7 @@ const master = async (): Promise<void> => {
 					win_message_id: 0,
 					group_id: telegram.api.message.getChatID(ctx),
 					message_thread_id: telegram.api.message.getThreadID(ctx),
+					count: 0,
 				};
 
 				const master: MasterInterface = await db.master.get({
