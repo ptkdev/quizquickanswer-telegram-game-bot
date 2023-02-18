@@ -67,17 +67,17 @@
 	"devDependencies": {
 		"@ptkdev/all-shields-cli": "^2.0.2",
 		"@types/jest": "^29.4.0",
-		"@types/node": "^18.13.0",
+		"@types/node": "^18.14.0",
 		"@types/shelljs": "^0.8.11",
 		"@types/yargs": "^16.0.5",
-		"@typescript-eslint/eslint-plugin": "^5.51.0",
-		"@typescript-eslint/parser": "^5.51.0",
+		"@typescript-eslint/eslint-plugin": "^5.52.0",
+		"@typescript-eslint/parser": "^5.52.0",
 		"all-contributors-cli": "^6.24.0",
 		"eslint": "^7.32.0",
 		"eslint-plugin-jest": "^27.2.1",
-		"eslint-plugin-jsdoc": "^39.8.0",
+		"eslint-plugin-jsdoc": "^40.0.0",
 		"husky": "^8.0.3",
-		"jest": "^29.4.2",
+		"jest": "^29.4.3",
 		"json": "^11.0.0",
 		"markserv": "^1.17.4",
 		"nodemon": "^2.0.20",
@@ -88,7 +88,7 @@
 		"ts-patch": "^2.1.0",
 		"typescript": "^4.9.5",
 		"typescript-transform-paths": "^3.4.6",
-		"yargs": "^17.6.2"
+		"yargs": "^17.7.0"
 	},
 	"keywords": [
 		"ptkdev",
