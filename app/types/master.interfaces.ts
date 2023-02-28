@@ -4,6 +4,7 @@
  *
  * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
  *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ * 				  Alessandro Di Maria [@ImAl3x03] (https://github.com/ImAl3x03)
  *
  * @license: MIT License
  *
@@ -22,9 +23,10 @@
  * @param { string } username - user username from telegram
  * @param { string } language_code - user code language from OS
  * @param { string } question - user submitted question
- * @param { string } description - user submitted question tip
+ * @param { string[] } description - user submitted question tip
  * @param { number } score - user current score
  * @param { number } group_id - users group id
+ * @param { number } count - count answer
  * @param { string } error - error message
  *
  */
@@ -95,10 +97,10 @@ export interface MasterInterface {
 	 *
 	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
-	 * @param { string } description - user submitted question tip
+	 * @param { string[] } description - user submitted question tip
 	 *
 	 */
-	description?: string;
+	description: string[];
 	/**
 	 * Master Interface
 	 * =====================
@@ -189,6 +191,16 @@ export interface MasterInterface {
 	 *
 	 */
 	message_thread_id: number;
+	/**
+	 * Master Interface
+	 * =====================
+	 *
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
+	 *
+	 * @param { number } count - count answer
+	 *
+	 */
+	count: number;
 	/**
 	 * Master Interface
 	 * =====================

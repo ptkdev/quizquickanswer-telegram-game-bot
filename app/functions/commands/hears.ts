@@ -4,6 +4,7 @@
  *
  * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
  *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ * 				  Alessandro Di Maria [@ImAl3x03] (https://github.com/ImAl3x03)
  *
  * @license: MIT License
  *
@@ -75,13 +76,16 @@ const hears = async (): Promise<void> => {
 			logger.debug(`master: ${JSON.stringify(master)}`);
 			logger.debug(`${master?.username} === ${telegram.api.message.getUsername(ctx)}`);
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
-				const text = telegram.api.message.getText(ctx).split("##");
+				const [text, ...hint] = telegram.api.message.getText(ctx).split("##");
 
 				const json = telegram.api.message.getFullUser(ctx);
-				json.question = text[0]?.trim()?.toLowerCase() || "";
-				json.description = text[1]?.trim() || "";
+				json.question = text.trim()?.toLowerCase() || "";
+				json.description = hint.map((ele: string) => {
+					return ele.trim() || "";
+				});
 				json.group_id = master?.group_id || 0;
 				json.message_thread_id = master?.message_thread_id;
+				json.count = 0;
 
 				if (json.question === undefined || json.question === "") {
 					await telegram.api.message.send(
@@ -89,7 +93,7 @@ const hears = async (): Promise<void> => {
 						telegram.api.message.getChatID(ctx),
 						translate(lang.language, "hears_missing_question"),
 					);
-				} else if (json.description === undefined || json.description === "") {
+				} else if (json.description === undefined || json.description.every((ele: string) => ele === "")) {
 					await telegram.api.message.send(
 						ctx,
 						telegram.api.message.getChatID(ctx),
@@ -114,7 +118,7 @@ const hears = async (): Promise<void> => {
 						const quiz = await telegram.api.message.send(
 							ctx,
 							master_in_group?.group_id,
-							`⏱ ${json.description || ""}`,
+							`⏱ ${json.description[0] || ""}`,
 							{
 								message_thread_id: master_in_group.message_thread_id,
 							},
@@ -159,13 +163,14 @@ const hears = async (): Promise<void> => {
 				group_id: telegram.api.message.getChatID(ctx),
 			});
 
+			const hint = master.count / 15;
+
 			const username = telegram.api.message.getUsername(ctx);
 
 			if (master.username === username) {
 				return;
 			}
 
-			logger.debug(`Username ${username}`);
 
 			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master?.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
@@ -194,7 +199,7 @@ const hears = async (): Promise<void> => {
 							bot_username: telegram.api.bot.getUsername(ctx),
 							master: master.username,
 							answer: master.question,
-							tip: master.description,
+							tip: master.description[0],
 							score: user_questions
 								? (user_score?.[`score_${new Date().getFullYear()}`] || 0) +
 								  10 +
@@ -215,7 +220,7 @@ const hears = async (): Promise<void> => {
 
 					const json: MasterInterface = telegram.api.message.getFullUser(ctx);
 					json.question = "";
-					json.description = "";
+					json.description = [];
 					json.group_id = telegram.api.message.getChatID(ctx);
 					json.win_message_id = win_message?.message_id || 0;
 					json.message_thread_id = telegram.api.message.getThreadID(ctx);
@@ -250,6 +255,9 @@ const hears = async (): Promise<void> => {
 					);
 				}
 				return;
+			} else {
+				master.count++;
+				await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, master);
 			}
 
 			const similarityPercentage: number = similarity(

@@ -13,7 +13,6 @@ import translate from "@translations/translate";
 import db from "@routes/api/database";
 import telegram from "@routes/api/telegram";
 import logger from "@app/functions/utils/logger";
-import { vote } from "@app/functions/utils/vote";
 
 import type { MasterInterface } from "@app/types/master.interfaces";
 
@@ -43,11 +42,13 @@ const hearsPhoto = async (): Promise<void> => {
 			const photo_id = telegram.api.message.getPhotoFileID(ctx);
 
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
-				const text = telegram.api.message.getPhotoCaption(ctx).split("##");
+				const [text, ...hint] = telegram.api.message.getPhotoCaption(ctx).split("##");
 				if (text !== undefined) {
 					const json = telegram.api.message.getFullUser(ctx);
 					json.question = text[0]?.trim()?.toLowerCase() || "";
-					json.description = text[1]?.trim() || "";
+					json.description = hint.map((ele: string) => {
+						return ele.trim() || "";
+					});
 					json.group_id = master?.group_id || 0;
 					json.message_thread_id = master?.message_thread_id;
 
@@ -57,7 +58,7 @@ const hearsPhoto = async (): Promise<void> => {
 							telegram.api.message.getChatID(ctx),
 							translate(lang.language, "hears_missing_question"),
 						);
-					} else if (json.description === undefined || json.description === "") {
+					} else if (json.description === undefined || json.description.every((ele: string) => ele === "")) {
 						await telegram.api.message.send(
 							ctx,
 							telegram.api.message.getChatID(ctx),

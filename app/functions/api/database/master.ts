@@ -4,6 +4,7 @@
  *
  * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
  *                Alì Shadman [@AliShadman95] (https://github.com/AliShadman95)
+ *				  Alessandro Di Maria [@ImAl3x03] (https://github.com/ImAl3x03)
  *
  * @license: MIT License
  *
@@ -21,11 +22,12 @@ const schema = new Schema<MasterInterface>({
 	language_code: { type: String, default: "en" },
 	group_id: { type: Number, default: 0 },
 	question: { type: String, default: "" },
-	description: { type: String, default: "" },
+	description: { type: Array<string>, default: [] },
 	pin_id: { type: Number, default: 0 },
 	timezone: { type: String, default: "" },
 	win_message_id: { type: Number, default: 0 },
 	message_thread_id: { type: Number, default: 0 },
+	count: { type: Number, default: 0 },
 });
 
 const query = model<MasterInterface>("Master", schema, "master");
