@@ -34,6 +34,12 @@ const hearsPhoto = async (): Promise<void> => {
 				username: telegram.api.message.getUsername(ctx),
 			});
 
+			const username = telegram.api.message.getUsername(ctx);
+
+			if (master.username === username) {
+				return;
+			}
+
 			const photo_id = telegram.api.message.getPhotoFileID(ctx);
 
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
@@ -82,6 +88,12 @@ const hearsPhoto = async (): Promise<void> => {
 
 									message_thread_id: master_in_group.message_thread_id,
 								},
+							);
+
+							await telegram.api.message.send(
+								ctx,
+								telegram.api.message.getChatID(ctx),
+								translate(lang.language, "hears_question_success"),
 							);
 
 							if (quiz) {

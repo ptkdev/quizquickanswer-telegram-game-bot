@@ -23,6 +23,7 @@ const schema = new Schema<MasterInterface>({
 	question: { type: String, default: "" },
 	description: { type: String, default: "" },
 	pin_id: { type: Number, default: 0 },
+	timezone: { type: String, default: "" },
 	win_message_id: { type: Number, default: 0 },
 	message_thread_id: { type: Number, default: 0 },
 });

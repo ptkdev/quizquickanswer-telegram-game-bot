@@ -9,6 +9,7 @@
  *
  */
 import { InlineKeyboard } from "grammy";
+import { CronJob } from "cron";
 import bot from "@app/core/token";
 import translate from "@translations/translate";
 import db from "@routes/api/database";
@@ -27,6 +28,7 @@ import type { QuestionsInterface } from "@app/types/question.interfaces";
  *
  */
 const hears = async (): Promise<void> => {
+	const cron_run: boolean[] = [];
 	bot.on("message:text", async (ctx) => {
 		logger.info("hears: text", "hears.ts:on(text)");
 		const lang = await telegram.api.message.getLanguage(ctx);
@@ -36,6 +38,40 @@ const hears = async (): Promise<void> => {
 			const master: MasterInterface = await db.master.get({
 				username: telegram.api.message.getUsername(ctx),
 			});
+
+			if (cron_run[`${telegram.api.message.getChatID(ctx)}`] === undefined) {
+				cron_run[`${telegram.api.message.getChatID(ctx)}`] = true;
+				new CronJob(
+					"1 0 * * 0-4",
+					function () {
+						telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), "!master off", {});
+					},
+					null,
+					true,
+					"Europe/Rome",
+				);
+
+				new CronJob(
+					"1 00 * * 5-6",
+					function () {
+						telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), "!master off", {});
+					},
+					null,
+					true,
+					"Europe/Rome",
+				);
+
+				new CronJob(
+					"1 0 * * *",
+					function () {
+						telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), "!master on", {});
+					},
+					null,
+					true,
+					"Europe/Rome",
+				);
+			}
+
 			logger.debug(`master: ${JSON.stringify(master)}`);
 			logger.debug(`${master?.username} === ${telegram.api.message.getUsername(ctx)}`);
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
