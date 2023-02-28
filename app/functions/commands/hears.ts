@@ -129,9 +129,12 @@ const hears = async (): Promise<void> => {
 
 			const hint = master.count / 15;
 
-			if (master.count % 15 === 0 && hint >= 1 && hint < master.description.length) {
-				await telegram.api.message.send(ctx, master?.group_id || 0, master.description[hint]);
+			const username = telegram.api.message.getUsername(ctx);
+
+			if (master.username === username) {
+				return;
 			}
+
 
 			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master?.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
