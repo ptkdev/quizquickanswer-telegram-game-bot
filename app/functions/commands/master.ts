@@ -103,7 +103,6 @@ const master = async (): Promise<void> => {
 					telegram.api.message.getChatID(ctx),
 					translate(lang.language, "master_off"),
 				);
-
 			} else {
 				const json = {
 					id: "0",
@@ -161,9 +160,8 @@ const master = async (): Promise<void> => {
 					count: 0,
 				};
 
-
 				await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
-			} else {
+
 				const master: MasterInterface = await db.master.get({
 					group_id: telegram.api.message.getChatID(ctx),
 				});

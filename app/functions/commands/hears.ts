@@ -171,7 +171,6 @@ const hears = async (): Promise<void> => {
 				return;
 			}
 
-
 			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master?.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
 					const user_score: MasterInterface = await db.scores.get({
