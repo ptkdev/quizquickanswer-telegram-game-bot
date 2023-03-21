@@ -62,6 +62,8 @@ const master = async (): Promise<void> => {
 					score_2025: 0,
 					pin_id: 0,
 					win_message_id: 0,
+					timezone: "",
+					off: false,
 					group_id: telegram.api.message.getChatID(ctx),
 					message_thread_id: telegram.api.message.getThreadID(ctx),
 				};

@@ -159,6 +159,17 @@ export interface MasterInterface {
 	 *
 	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
+	 * @param { string } timezone - timezone
+	 *
+	 */
+	timezone: string;
+	off: boolean;
+	/**
+	 * Master Interface
+	 * =====================
+	 *
+	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
+	 *
 	 * @param { string } error - error message
 	 *
 	 */

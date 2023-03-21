@@ -50,5 +50,6 @@
 	"show_command": "👨‍💻 The master is: {{first_name}} (@{{username}})\n\n⏱ The quiz is: <b>{{answer}}</b>",
 	"show_command_noquiz": "👨‍💻 The master is: {{first_name}} (@{{username}})\n\n⏱ The quiz is not avaiable! Hurry up to write it!",
 	"top10_commands": "The top10 available are: \n\n/top2021\n\n/top2022\n\n/top2023",
-	"master_off": "🌙🌙🌙 Night mode 🌙🌙🌙\n\nWe play 9:00-12:00 Sunday-Thursday, 9:00-1:00 Friday and Saturday.\n\nSee you tomorrow!"
+	"master_off": "🌙🌙🌙 Night mode 🌙🌙🌙\n\nWe play 9:00-12:00 Sunday-Thursday, 9:00-1:00 Friday and Saturday.\n\nSee you tomorrow!",
+	"master_on": "🌞🌞🌞 Good Morning 🌞🌞🌞\n\n⏱ Quiz is: programming language."
 }

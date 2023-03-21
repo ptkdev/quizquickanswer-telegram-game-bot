@@ -84,6 +84,12 @@ const hearsPhoto = async (): Promise<void> => {
 								},
 							);
 
+							await telegram.api.message.send(
+								ctx,
+								telegram.api.message.getChatID(ctx),
+								translate(lang.language, "hears_question_success"),
+							);
+
 							if (quiz) {
 								await telegram.api.message.pin(ctx, master_in_group?.group_id, quiz?.message_id, {
 									disable_notification: true,

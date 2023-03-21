@@ -25,6 +25,8 @@ const schema = new Schema<MasterInterface>({
 	pin_id: { type: Number, default: 0 },
 	win_message_id: { type: Number, default: 0 },
 	message_thread_id: { type: Number, default: 0 },
+	off: { type: Boolean, default: false },
+	timezone: { type: String, default: "" },
 });
 
 const query = model<MasterInterface>("Master", schema, "master");

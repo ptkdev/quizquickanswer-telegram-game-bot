@@ -16,6 +16,7 @@ import telegram from "@routes/api/telegram";
 import logger from "@app/functions/utils/logger";
 import { similarity } from "@app/functions/utils/utils";
 import { vote } from "@app/functions/utils/vote";
+import { CronJob } from "cron";
 
 import type { MasterInterface } from "@app/types/master.interfaces";
 import type { QuestionsInterface } from "@app/types/question.interfaces";
@@ -27,6 +28,7 @@ import type { QuestionsInterface } from "@app/types/question.interfaces";
  *
  */
 const hears = async (): Promise<void> => {
+	const cron_run: boolean[] = [];
 	bot.on("message:text", async (ctx) => {
 		logger.info("hears: text", "hears.ts:on(text)");
 		const lang = await telegram.api.message.getLanguage(ctx);
@@ -36,6 +38,7 @@ const hears = async (): Promise<void> => {
 			const master: MasterInterface = await db.master.get({
 				username: telegram.api.message.getUsername(ctx),
 			});
+
 			logger.debug(`master: ${JSON.stringify(master)}`);
 			logger.debug(`${master?.username} === ${telegram.api.message.getUsername(ctx)}`);
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
@@ -117,6 +120,175 @@ const hears = async (): Promise<void> => {
 				group_id: telegram.api.message.getChatID(ctx),
 			});
 
+			if (cron_run[`${telegram.api.message.getChatID(ctx)}`] === undefined && master.timezone !== "") {
+				cron_run[`${telegram.api.message.getChatID(ctx)}`] = true;
+				new CronJob(
+					"59 23 * * 0-4",
+					async function () {
+						telegram.api.message.send(
+							ctx,
+							telegram.api.message.getChatID(ctx),
+							translate(lang.language, "master_off"),
+						);
+
+						const json = {
+							id: "0",
+							is_bot: false,
+							first_name: telegram.api.bot.getUsername(ctx),
+							username: telegram.api.bot.getUsername(ctx),
+							language_code: "",
+							question: "",
+							description: "Night Mode, Bot Spento",
+							score_2021: 0,
+							score_2022: 0,
+							score_2023: 0,
+							score_2024: 0,
+							score_2025: 0,
+							pin_id: 0,
+							win_message_id: 0,
+							timezone: "Europe/Rome",
+							off: true,
+							group_id: telegram.api.message.getChatID(ctx),
+							message_thread_id: telegram.api.message.getThreadID(ctx),
+						};
+
+						await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
+					},
+					null,
+					true,
+					"Europe/Rome",
+				);
+
+				new CronJob(
+					"0 1 * * 5-6",
+					async function () {
+						telegram.api.message.send(
+							ctx,
+							telegram.api.message.getChatID(ctx),
+							translate(lang.language, "master_off"),
+						);
+
+						const json = {
+							id: "0",
+							is_bot: false,
+							first_name: telegram.api.bot.getUsername(ctx),
+							username: telegram.api.bot.getUsername(ctx),
+							language_code: "",
+							question: "",
+							description: "Night Mode, Bot Spento",
+							score_2021: 0,
+							score_2022: 0,
+							score_2023: 0,
+							score_2024: 0,
+							score_2025: 0,
+							pin_id: 0,
+							win_message_id: 0,
+							timezone: "Europe/Rome",
+							off: true,
+							group_id: telegram.api.message.getChatID(ctx),
+							message_thread_id: telegram.api.message.getThreadID(ctx),
+						};
+
+						await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
+					},
+					null,
+					true,
+					"Europe/Rome",
+				);
+
+				new CronJob(
+					"54 18 * * *",
+					async function () {
+						telegram.api.message.send(
+							ctx,
+							telegram.api.message.getChatID(ctx),
+							translate(lang.language, "master_on"),
+						);
+
+						const programming_languages = [
+							"Java",
+							"Python",
+							"JavaScript",
+							"Ruby",
+							"C#",
+							"Swift",
+							"Kotlin",
+							"Go",
+							"TypeScript",
+							"PHP",
+							"Rust",
+							"Scala",
+							"C++",
+							"Dart",
+							"Lua",
+							"R",
+							"MATLAB",
+							"Julia",
+							"Perl",
+							"Objective-C",
+							"Visual Basic",
+							"Groovy",
+							"Shell",
+							"Haskell",
+							"F#",
+							"Erlang",
+							"Lisp",
+							"Clojure",
+							"Prolog",
+							"SQL",
+							"Kotlin",
+							"COBOL",
+							"Fortran",
+							"Pascal",
+							"Ada",
+							"Assembly",
+							"BASIC",
+							"Smalltalk",
+							"Tcl",
+							"Scheme",
+							"Swift",
+							"Objective-C",
+							"C",
+							"PowerShell",
+							"Visual Basic .NET",
+							"Delphi",
+							"ActionScript",
+							"Scratch",
+						];
+
+						const json = {
+							id: "0",
+							is_bot: false,
+							first_name: telegram.api.bot.getUsername(ctx),
+							username: telegram.api.bot.getUsername(ctx),
+							language_code: "",
+							question: programming_languages[Math.floor(Math.random() * programming_languages.length)],
+							description: "linguaggio di programmazione",
+							score_2021: 0,
+							score_2022: 0,
+							score_2023: 0,
+							score_2024: 0,
+							score_2025: 0,
+							pin_id: 0,
+							win_message_id: 0,
+							timezone: "Europe/Rome",
+							off: false,
+							group_id: telegram.api.message.getChatID(ctx),
+							message_thread_id: telegram.api.message.getThreadID(ctx),
+						};
+
+						await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
+					},
+					null,
+					true,
+					"Europe/Rome",
+				);
+			}
+
+			if (master.off) {
+				return;
+			}
+
 			if (telegram.api.message.getText(ctx).trim().toLowerCase() == master?.question?.trim()?.toLowerCase()) {
 				if (telegram.api.message.getUsername(ctx)) {
 					const user_score: MasterInterface = await db.scores.get({
@@ -173,6 +345,7 @@ const hears = async (): Promise<void> => {
 
 					if (user_score.group_id < 0) {
 						user_score[`score_${new Date().getFullYear()}`] += 10;
+						user_score[`score_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] += 10;
 						await db.scores.update(
 							{
 								group_id: telegram.api.message.getChatID(ctx),
@@ -183,6 +356,7 @@ const hears = async (): Promise<void> => {
 					} else {
 						const json_score: MasterInterface = telegram.api.message.getFullUser(ctx);
 						json_score[`score_${new Date().getFullYear()}`] = 10;
+						json_score[`score_${new Date().getMonth() + 1}_${new Date().getFullYear()}`] += 10;
 						await db.scores.add(json_score);
 					}
 				} else {

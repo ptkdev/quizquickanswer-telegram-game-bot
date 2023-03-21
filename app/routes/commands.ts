@@ -6,6 +6,7 @@ import ping from "@app/functions/commands/ping";
 import show from "@app/functions/commands/show";
 import top10 from "@app/functions/commands/top10";
 import topYearly from "@app/functions/commands/top_yearly";
+import topMonthly from "@app/functions/commands/top_monthly";
 import launch from "@app/functions/commands/launch";
 import hears from "@app/functions/commands/hears";
 import hearsPhoto from "@app/functions/commands/hearsphoto";
@@ -22,6 +23,7 @@ const commands = {
 	show,
 	top10,
 	topYearly,
+	topMonthly,
 	launch,
 	hears,
 	settings,
@@ -39,6 +41,7 @@ export {
 	show,
 	top10,
 	topYearly,
+	topMonthly,
 	launch,
 	hears,
 	settings,
