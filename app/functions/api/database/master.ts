@@ -22,12 +22,12 @@ const schema = new Schema<MasterInterface>({
 	language_code: { type: String, default: "en" },
 	group_id: { type: Number, default: 0 },
 	question: { type: String, default: "" },
-	description: { type: Array<string>, default: [] },
+	description: { type: String, default: "" },
 	pin_id: { type: Number, default: 0 },
 	timezone: { type: String, default: "" },
 	win_message_id: { type: Number, default: 0 },
 	message_thread_id: { type: Number, default: 0 },
-	count: { type: Number, default: 0 },
+	off: { type: Boolean, default: false },
 });
 
 const query = model<MasterInterface>("Master", schema, "master");

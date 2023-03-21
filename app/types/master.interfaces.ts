@@ -23,10 +23,9 @@
  * @param { string } username - user username from telegram
  * @param { string } language_code - user code language from OS
  * @param { string } question - user submitted question
- * @param { string[] } description - user submitted question tip
+ * @param { string } description - user submitted question tip
  * @param { number } score - user current score
  * @param { number } group_id - users group id
- * @param { number } count - count answer
  * @param { string } error - error message
  *
  */
@@ -97,10 +96,10 @@ export interface MasterInterface {
 	 *
 	 * @interface [MasterInterface](https://github.com/ptkdev/quizquickanswer-telegram-game-bot/blob/main/app/webcomponent/types/databases.interfaces.ts)
 	 *
-	 * @param { string[] } description - user submitted question tip
+	 * @param { string } description - user submitted question tip
 	 *
 	 */
-	description: string[];
+	description: string;
 	/**
 	 * Master Interface
 	 * =====================
@@ -200,7 +199,8 @@ export interface MasterInterface {
 	 * @param { number } count - count answer
 	 *
 	 */
-	count: number;
+	off: boolean;
+	timezone: string;
 	/**
 	 * Master Interface
 	 * =====================

@@ -26,11 +26,16 @@ const topMonthly = async (): Promise<void> => {
 
 		if (telegram.api.message.getChatID(ctx) < 0) {
 			// is group chat
+			let month = new Date().getMonth() + 1;
+			if (ctx?.match) {
+				if (parseInt(ctx?.match) >= 1 && parseInt(ctx?.match) <= 12) {
+					month = parseInt(ctx?.match);
+				}
+			}
 			const top_scores: MasterInterface[] = await db.scores.getMultiple({
 				group_id: telegram.api.message.getChatID(ctx),
 			});
 			const year = new Date().getFullYear();
-			const month = new Date().getMonth() + 1;
 
 			let mapped_scores: MasterInterface[] = await Promise.all(
 				top_scores.map(async (s: MasterInterface) => {
@@ -46,9 +51,6 @@ const topMonthly = async (): Promise<void> => {
 							s[`score_${month}_${year}`] +
 							user_questions[`upvotes_${month}_${year}`] -
 							user_questions[`downvotes_${month}_${year}`];
-						console.log(s[`score_${month}_${year}`]);
-						console.log(user_questions[`upvotes_${month}_${year}`]);
-						console.log(user_questions[`downvotes_${month}_${year}`]);
 					}
 					return s;
 				}),

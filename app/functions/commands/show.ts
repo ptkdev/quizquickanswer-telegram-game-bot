@@ -30,11 +30,7 @@ const show = async (): Promise<void> => {
 				group_id: telegram.api.message.getChatID(ctx),
 			});
 
-			logger.debug(`Count: ${master.count}`);
-
-			const hint = master.count / 15;
-
-			if (master.description?.every((ele: string) => ele === "")) {
+			if (master.description === "") {
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
@@ -44,22 +40,13 @@ const show = async (): Promise<void> => {
 					}),
 				);
 			} else {
-				logger.debug(`Hint ${hint}`);
-
 				await telegram.api.message.send(
 					ctx,
 					telegram.api.message.getChatID(ctx),
 					translate(lang.language, "show_command", {
 						first_name: master?.first_name,
 						username: master?.username,
-						answer: master.description
-							.reduce((result: string, ele: string, index: number) => {
-								if (index < master.description.length && index <= hint) {
-									result = `${result} ${ele} - `;
-								}
-								return result;
-							}, "")
-							.slice(0, -3),
+						answer: master?.description,
 					}),
 				);
 			}

@@ -40,52 +40,16 @@ const hears = async (): Promise<void> => {
 				username: telegram.api.message.getUsername(ctx),
 			});
 
-			if (cron_run[`${telegram.api.message.getChatID(ctx)}`] === undefined) {
-				cron_run[`${telegram.api.message.getChatID(ctx)}`] = true;
-				new CronJob(
-					"1 0 * * 0-4",
-					function () {
-						telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), "!master off", {});
-					},
-					null,
-					true,
-					"Europe/Rome",
-				);
-
-				new CronJob(
-					"1 00 * * 5-6",
-					function () {
-						telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), "!master off", {});
-					},
-					null,
-					true,
-					"Europe/Rome",
-				);
-
-				new CronJob(
-					"1 0 * * *",
-					function () {
-						telegram.api.message.send(ctx, telegram.api.message.getChatID(ctx), "!master on", {});
-					},
-					null,
-					true,
-					"Europe/Rome",
-				);
-			}
-
 			logger.debug(`master: ${JSON.stringify(master)}`);
 			logger.debug(`${master?.username} === ${telegram.api.message.getUsername(ctx)}`);
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
-				const [text, ...hint] = telegram.api.message.getText(ctx).split("##");
+				const text = telegram.api.message.getText(ctx).split("##");
 
 				const json = telegram.api.message.getFullUser(ctx);
-				json.question = text.trim()?.toLowerCase() || "";
-				json.description = hint.map((ele: string) => {
-					return ele.trim() || "";
-				});
+				json.question = text[0]?.trim()?.toLowerCase() || "";
+				json.description = text[1]?.trim() || "";
 				json.group_id = master?.group_id || 0;
 				json.message_thread_id = master?.message_thread_id;
-				json.count = 0;
 
 				if (json.question === undefined || json.question === "") {
 					await telegram.api.message.send(
@@ -93,7 +57,7 @@ const hears = async (): Promise<void> => {
 						telegram.api.message.getChatID(ctx),
 						translate(lang.language, "hears_missing_question"),
 					);
-				} else if (json.description === undefined || json.description.every((ele: string) => ele === "")) {
+				} else if (json.description === undefined || json.description === "") {
 					await telegram.api.message.send(
 						ctx,
 						telegram.api.message.getChatID(ctx),
@@ -118,7 +82,7 @@ const hears = async (): Promise<void> => {
 						const quiz = await telegram.api.message.send(
 							ctx,
 							master_in_group?.group_id,
-							`⏱ ${json.description[0] || ""}`,
+							`⏱ ${json.description || ""}`,
 							{
 								message_thread_id: master_in_group.message_thread_id,
 							},
@@ -163,7 +127,282 @@ const hears = async (): Promise<void> => {
 				group_id: telegram.api.message.getChatID(ctx),
 			});
 
-			const hint = master.count / 15;
+			if (cron_run[`${telegram.api.message.getChatID(ctx)}`] === undefined && master.timezone !== "") {
+				cron_run[`${telegram.api.message.getChatID(ctx)}`] = true;
+				new CronJob(
+					"59 23 * * 0-4",
+					async function () {
+						telegram.api.message.send(
+							ctx,
+							telegram.api.message.getChatID(ctx),
+							translate(lang.language, "master_off"),
+						);
+
+						const json = {
+							id: "0",
+							is_bot: false,
+							first_name: telegram.api.bot.getUsername(ctx),
+							username: telegram.api.bot.getUsername(ctx),
+							language_code: "",
+							question: "",
+							description: "Night Mode, Bot Spento",
+							score_2021: 0,
+							score_2022: 0,
+							score_2023: 0,
+							score_1_2023: 0,
+							score_2_2023: 0,
+							score_3_2023: 0,
+							score_4_2023: 0,
+							score_5_2023: 0,
+							score_6_2023: 0,
+							score_7_2023: 0,
+							score_8_2023: 0,
+							score_9_2023: 0,
+							score_10_2023: 0,
+							score_11_2023: 0,
+							score_12_2023: 0,
+							score_2024: 0,
+							score_1_2024: 0,
+							score_2_2024: 0,
+							score_3_2024: 0,
+							score_4_2024: 0,
+							score_5_2024: 0,
+							score_6_2024: 0,
+							score_7_2024: 0,
+							score_8_2024: 0,
+							score_9_2024: 0,
+							score_10_2024: 0,
+							score_11_2024: 0,
+							score_12_2024: 0,
+							score_2025: 0,
+							score_1_2025: 0,
+							score_2_2025: 0,
+							score_3_2025: 0,
+							score_4_2025: 0,
+							score_5_2025: 0,
+							score_6_2025: 0,
+							score_7_2025: 0,
+							score_8_2025: 0,
+							score_9_2025: 0,
+							score_10_2025: 0,
+							score_11_2025: 0,
+							score_12_2025: 0,
+							pin_id: 0,
+							win_message_id: 0,
+							timezone: "Europe/Rome",
+							off: true,
+							group_id: telegram.api.message.getChatID(ctx),
+							message_thread_id: telegram.api.message.getThreadID(ctx),
+						};
+
+						await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
+					},
+					null,
+					true,
+					"Europe/Rome",
+				);
+
+				new CronJob(
+					"0 1 * * 5-6",
+					async function () {
+						telegram.api.message.send(
+							ctx,
+							telegram.api.message.getChatID(ctx),
+							translate(lang.language, "master_off"),
+						);
+
+						const json = {
+							id: "0",
+							is_bot: false,
+							first_name: telegram.api.bot.getUsername(ctx),
+							username: telegram.api.bot.getUsername(ctx),
+							language_code: "",
+							question: "",
+							description: "Night Mode, Bot Spento",
+							score_2021: 0,
+							score_2022: 0,
+							score_2023: 0,
+							score_1_2023: 0,
+							score_2_2023: 0,
+							score_3_2023: 0,
+							score_4_2023: 0,
+							score_5_2023: 0,
+							score_6_2023: 0,
+							score_7_2023: 0,
+							score_8_2023: 0,
+							score_9_2023: 0,
+							score_10_2023: 0,
+							score_11_2023: 0,
+							score_12_2023: 0,
+							score_2024: 0,
+							score_1_2024: 0,
+							score_2_2024: 0,
+							score_3_2024: 0,
+							score_4_2024: 0,
+							score_5_2024: 0,
+							score_6_2024: 0,
+							score_7_2024: 0,
+							score_8_2024: 0,
+							score_9_2024: 0,
+							score_10_2024: 0,
+							score_11_2024: 0,
+							score_12_2024: 0,
+							score_2025: 0,
+							score_1_2025: 0,
+							score_2_2025: 0,
+							score_3_2025: 0,
+							score_4_2025: 0,
+							score_5_2025: 0,
+							score_6_2025: 0,
+							score_7_2025: 0,
+							score_8_2025: 0,
+							score_9_2025: 0,
+							score_10_2025: 0,
+							score_11_2025: 0,
+							score_12_2025: 0,
+							pin_id: 0,
+							win_message_id: 0,
+							timezone: "Europe/Rome",
+							off: true,
+							group_id: telegram.api.message.getChatID(ctx),
+							message_thread_id: telegram.api.message.getThreadID(ctx),
+						};
+
+						await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
+					},
+					null,
+					true,
+					"Europe/Rome",
+				);
+
+				new CronJob(
+					"0 9 * * *",
+					async function () {
+						telegram.api.message.send(
+							ctx,
+							telegram.api.message.getChatID(ctx),
+							translate(lang.language, "master_on"),
+						);
+
+						const programming_languages = [
+							"Java",
+							"Python",
+							"JavaScript",
+							"Ruby",
+							"C#",
+							"Swift",
+							"Kotlin",
+							"Go",
+							"TypeScript",
+							"PHP",
+							"Rust",
+							"Scala",
+							"C++",
+							"Dart",
+							"Lua",
+							"R",
+							"MATLAB",
+							"Julia",
+							"Perl",
+							"Objective-C",
+							"Visual Basic",
+							"Groovy",
+							"Shell",
+							"Haskell",
+							"F#",
+							"Erlang",
+							"Lisp",
+							"Clojure",
+							"Prolog",
+							"SQL",
+							"Kotlin",
+							"COBOL",
+							"Fortran",
+							"Pascal",
+							"Ada",
+							"Assembly",
+							"BASIC",
+							"Smalltalk",
+							"Tcl",
+							"Scheme",
+							"Swift",
+							"Objective-C",
+							"C",
+							"PowerShell",
+							"Visual Basic .NET",
+							"Delphi",
+							"ActionScript",
+							"Scratch",
+						];
+
+						const json = {
+							id: "0",
+							is_bot: false,
+							first_name: telegram.api.bot.getUsername(ctx),
+							username: telegram.api.bot.getUsername(ctx),
+							language_code: "",
+							question: programming_languages[Math.floor(Math.random() * programming_languages.length)],
+							description: "linguaggio di programmazione",
+							score_2021: 0,
+							score_2022: 0,
+							score_2023: 0,
+							score_1_2023: 0,
+							score_2_2023: 0,
+							score_3_2023: 0,
+							score_4_2023: 0,
+							score_5_2023: 0,
+							score_6_2023: 0,
+							score_7_2023: 0,
+							score_8_2023: 0,
+							score_9_2023: 0,
+							score_10_2023: 0,
+							score_11_2023: 0,
+							score_12_2023: 0,
+							score_2024: 0,
+							score_1_2024: 0,
+							score_2_2024: 0,
+							score_3_2024: 0,
+							score_4_2024: 0,
+							score_5_2024: 0,
+							score_6_2024: 0,
+							score_7_2024: 0,
+							score_8_2024: 0,
+							score_9_2024: 0,
+							score_10_2024: 0,
+							score_11_2024: 0,
+							score_12_2024: 0,
+							score_2025: 0,
+							score_1_2025: 0,
+							score_2_2025: 0,
+							score_3_2025: 0,
+							score_4_2025: 0,
+							score_5_2025: 0,
+							score_6_2025: 0,
+							score_7_2025: 0,
+							score_8_2025: 0,
+							score_9_2025: 0,
+							score_10_2025: 0,
+							score_11_2025: 0,
+							score_12_2025: 0,
+							pin_id: 0,
+							win_message_id: 0,
+							timezone: "Europe/Rome",
+							off: false,
+							group_id: telegram.api.message.getChatID(ctx),
+							message_thread_id: telegram.api.message.getThreadID(ctx),
+						};
+
+						await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, json);
+					},
+					null,
+					true,
+					"Europe/Rome",
+				);
+			}
+
+			if (master.off) {
+				return;
+			}
 
 			const username = telegram.api.message.getUsername(ctx);
 
@@ -198,7 +437,7 @@ const hears = async (): Promise<void> => {
 							bot_username: telegram.api.bot.getUsername(ctx),
 							master: master.username,
 							answer: master.question,
-							tip: master.description[0],
+							tip: master.description,
 							score: user_questions
 								? (user_score?.[`score_${new Date().getFullYear()}`] || 0) +
 								  10 +
@@ -219,7 +458,7 @@ const hears = async (): Promise<void> => {
 
 					const json: MasterInterface = telegram.api.message.getFullUser(ctx);
 					json.question = "";
-					json.description = [];
+					json.description = "";
 					json.group_id = telegram.api.message.getChatID(ctx);
 					json.win_message_id = win_message?.message_id || 0;
 					json.message_thread_id = telegram.api.message.getThreadID(ctx);
@@ -255,7 +494,6 @@ const hears = async (): Promise<void> => {
 				}
 				return;
 			} else {
-				master.count++;
 				await db.master.update({ group_id: telegram.api.message.getChatID(ctx) }, master);
 			}
 

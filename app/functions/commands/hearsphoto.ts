@@ -42,13 +42,11 @@ const hearsPhoto = async (): Promise<void> => {
 			const photo_id = telegram.api.message.getPhotoFileID(ctx);
 
 			if (master?.username === telegram.api.message.getUsername(ctx)) {
-				const [text, ...hint] = telegram.api.message.getPhotoCaption(ctx).split("##");
+				const text = telegram.api.message.getText(ctx).split("##");
 				if (text !== undefined) {
 					const json = telegram.api.message.getFullUser(ctx);
 					json.question = text[0]?.trim()?.toLowerCase() || "";
-					json.description = hint.map((ele: string) => {
-						return ele.trim() || "";
-					});
+					json.description = text[1]?.trim() || "";
 					json.group_id = master?.group_id || 0;
 					json.message_thread_id = master?.message_thread_id;
 
@@ -58,7 +56,7 @@ const hearsPhoto = async (): Promise<void> => {
 							telegram.api.message.getChatID(ctx),
 							translate(lang.language, "hears_missing_question"),
 						);
-					} else if (json.description === undefined || json.description.every((ele: string) => ele === "")) {
+					} else if (json.description === undefined || json.description === "") {
 						await telegram.api.message.send(
 							ctx,
 							telegram.api.message.getChatID(ctx),
