@@ -99,7 +99,7 @@ export interface MasterInterface {
 	 * @param { string } description - user submitted question tip
 	 *
 	 */
-	description: string;
+	description?: string;
 	/**
 	 * Master Interface
 	 * =====================
