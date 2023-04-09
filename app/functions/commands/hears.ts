@@ -203,7 +203,7 @@ const hears = async (): Promise<void> => {
 				);
 
 				new CronJob(
-					"0 1 * * 5-6",
+					"0 1 * * 6,0",
 					async function () {
 						telegram.api.message.send(
 							ctx,
