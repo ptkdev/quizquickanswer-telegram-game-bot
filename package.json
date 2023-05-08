@@ -2,7 +2,7 @@
 	"name": "@ptkdev/quizquickanswer-telegram-game-bot",
 	"displayName": "Quiz Quick Answer Bot",
 	"description": "Funny quiz game for telegram groups",
-	"version": "0.7.9-nightly.36",
+	"version": "0.7.9-nightly.37",
 	"main": "dist/core/bot.js",
 	"publishConfig": {
 		"access": "public"
@@ -68,15 +68,15 @@
 	"devDependencies": {
 		"@ptkdev/all-shields-cli": "^2.0.2",
 		"@types/jest": "^29.5.1",
-		"@types/node": "^20.1.0",
+		"@types/node": "^20.1.1",
 		"@types/shelljs": "^0.8.12",
 		"@types/yargs": "^16.0.5",
-		"@typescript-eslint/eslint-plugin": "^5.59.2",
-		"@typescript-eslint/parser": "^5.59.2",
+		"@typescript-eslint/eslint-plugin": "^5.59.5",
+		"@typescript-eslint/parser": "^5.59.5",
 		"all-contributors-cli": "^6.25.0",
 		"eslint": "^7.32.0",
 		"eslint-plugin-jest": "^27.2.1",
-		"eslint-plugin-jsdoc": "^44.0.0",
+		"eslint-plugin-jsdoc": "^44.0.1",
 		"husky": "^8.0.3",
 		"jest": "^29.5.0",
 		"json": "^11.0.0",
