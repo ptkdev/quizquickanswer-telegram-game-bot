@@ -15,6 +15,7 @@ import type { Context, RawApi } from "grammy";
 import type { MasterInterface } from "@app/types/master.interfaces";
 import type { SettingsInterface } from "@app/types/settings.interfaces";
 import { Other } from "grammy/out/core/api";
+import { Message } from "grammy/out/types.node";
 
 const getUsername = (ctx: Context): string => {
 	const username = ctx?.update?.message?.from?.username;
@@ -140,8 +141,6 @@ const send = async (
 	if (group_id && text) {
 		let message;
 
-		logger.error(JSON.stringify(options), "message.ts:send()");
-
 		const thread_id = getThreadID(ctx);
 		if (thread_id !== 0) {
 			options.message_thread_id = thread_id;
@@ -225,6 +224,14 @@ const getDate = (gmt = 60): Date => {
 	return new Date(addMinutes(new Date(), gmt));
 };
 
+const reply = async (
+	ctx: Context,
+	messageText: string,
+	options: Other<RawApi, "sendMessage", "chat_id" | "text">,
+): Promise<Message> => {
+	return await ctx.reply(messageText, options);
+};
+
 export {
 	getFullUser,
 	getUsername,
@@ -248,6 +255,7 @@ export {
 	removeMessageMarkup,
 	editMessageReplyMarkup,
 	getDate,
+	reply,
 };
 export default {
 	getFullUser,
@@ -272,4 +280,5 @@ export default {
 	removeMessageMarkup,
 	editMessageReplyMarkup,
 	getDate,
+	reply,
 };
